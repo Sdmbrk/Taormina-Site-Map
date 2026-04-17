@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Taormina Village – Site Map</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#eaeae6;min-height:100vh;display:flex;flex-direction:column}
+
+/* Toolbar */
+.bar{background:#fff;border-bottom:2px solid #ccc;padding:7px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;position:sticky;top:0;z-index:100;box-shadow:0 2px 5px rgba(0,0,0,.1)}
+.bar-logo{font-weight:900;font-size:14px;color:#1a1a1a;white-space:nowrap;letter-spacing:.2px}
+.sep{width:1px;height:22px;background:#ddd;flex-shrink:0}
+.lbl{font-size:11px;font-weight:700;color:#777;white-space:nowrap}
+.btn{border:1.5px solid #bbb;border-radius:5px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;background:#fff;color:#444;font-family:inherit;white-space:nowrap;transition:.15s}
+.btn:hover{background:#f0f0f0}
+.btn.on{box-shadow:inset 0 0 0 1.5px currentColor;background:#f8f8f5}
+.g{border-color:#2e6008;color:#2e6008}.g.on,.g:hover{background:#e6f2d4}
+.bn{border-color:#7a4206;color:#7a4206}.bn.on,.bn:hover{background:#faeacc}
+.cl{border-color:#982020;color:#982020}.cl:hover{background:#fce4e4}
+.add-btn{border-color:#3a6ab0;color:#3a6ab0}.add-btn:hover{background:#e8f0fa}
+.prt-btn{border-color:#555;color:#555}.prt-btn:hover{background:#f0f0f0}
+
+/* Tabs */
+.ptabs{display:flex;gap:4px;flex-wrap:wrap}
+.ptab{padding:4px 12px;border-radius:5px;border:1.5px solid #ccc;font-size:12px;font-weight:700;cursor:pointer;background:#fff;color:#777;font-family:inherit;transition:.15s}
+.ptab.on{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.ptab:hover:not(.on){background:#f0f0f0}
+
+/* Page */
+.pgarea{padding:10px 14px;flex:1}
+.pg{display:none}.pg.on{display:block}
+
+/* Header */
+.mhdr{text-align:center;margin-bottom:8px;display:flex;flex-direction:column;align-items:center;gap:5px}
+.mhtitle{font-size:20px;font-weight:900;color:#111;cursor:pointer;padding:2px 8px;border-radius:4px;border:1.5px dashed transparent;letter-spacing:.2px}
+.mhtitle:hover{border-color:#bbb;background:#f5f5f2}
+.mhtitle input{font-size:20px;font-weight:900;border:none;outline:none;background:transparent;color:#111;font-family:inherit;text-align:center;width:400px}
+.mhrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center}
+.mstat{font-size:13px;font-weight:700;color:#ad1a1a}
+.pbwrap{display:flex;align-items:center;gap:6px}
+.pb{width:180px;height:7px;background:#ddd;border-radius:4px;overflow:hidden}
+.pbf{height:100%;background:#3d8010;border-radius:4px;transition:width .4s}
+.pbpct{font-size:11px;color:#555;font-weight:700}
+
+/* SVG map */
+.svgwrap{background:#fff;border:2px solid #c0c0bc;border-radius:8px;max-width:1120px;margin:0 auto;position:relative;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.svgwrap svg{display:block;width:100%;height:auto}
+
+/* Legend */
+.leg{display:flex;gap:18px;justify-content:center;margin-top:8px;flex-wrap:wrap;padding:6px 0}
+.li{display:flex;align-items:center;gap:5px;font-size:12px;color:#444;font-weight:700}
+.ld{width:24px;height:14px;border-radius:3px;border:2px solid rgba(0,0,0,.25)}
+
+/* Popup */
+.popup{position:absolute;top:12px;right:12px;background:#fff;border:2px solid #c0c0bc;border-radius:9px;padding:12px 15px;min-width:195px;max-width:230px;display:none;z-index:50;box-shadow:0 4px 18px rgba(0,0,0,.15)}
+.popup.on{display:block}
+.pu-name{font-size:15px;font-weight:900;color:#111;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid #eee}
+.pu-row{display:flex;justify-content:space-between;gap:8px;padding:2px 0;font-size:12px;color:#666}
+.pu-val{font-weight:700;color:#111}
+.pu-info{font-size:11px;background:#f5f5f2;border-radius:5px;padding:6px 8px;margin-top:6px;line-height:1.6;color:#444}
+.pu-info b{color:#111}
+.pu-acts{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
+.sm{padding:5px 10px;font-size:11px;font-weight:700;border-radius:5px;border:1.5px solid;cursor:pointer;background:#fff;font-family:inherit;transition:.15s}
+.smg{border-color:#2e6008;color:#2e6008}.smg:hover{background:#e6f2d4}
+.smb{border-color:#7a4206;color:#7a4206}.smb:hover{background:#faeacc}
+.smr{border-color:#982020;color:#982020}.smr:hover{background:#fce4e4}
+.sma{border-color:#3a6ab0;color:#3a6ab0;font-size:10px}.sma:hover{background:#e8f0fa}
+
+/* Modal */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300;display:flex;align-items:center;justify-content:center}
+.modal{background:#fff;border-radius:12px;padding:24px;width:310px;box-shadow:0 8px 30px rgba(0,0,0,.18)}
+.modal h3{font-size:16px;font-weight:900;margin-bottom:14px;color:#111}
+.modal input{width:100%;padding:8px 10px;border:1.5px solid #c0c0c0;border-radius:6px;font-size:13px;font-family:inherit;outline:none;margin-bottom:12px}
+.modal input:focus{border-color:#3a6ab0}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end}
+.modal-btns button{padding:7px 16px;border-radius:6px;border:1.5px solid #ccc;font-size:12px;font-weight:700;cursor:pointer;background:#fff;font-family:inherit}
+.modal-btns .mpri{background:#1a4c8c;color:#fff;border-color:#1a4c8c}
+
+/* ── Layout Editor ─────────────────────────────────────────────────────── */
+.ed-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:400;display:flex;align-items:stretch;justify-content:flex-end}
+.ed-panel{background:#1e1e2e;color:#cdd6f4;width:min(920px,99vw);display:flex;flex-direction:column;overflow:hidden;box-shadow:-6px 0 40px rgba(0,0,0,.5)}
+.ed-hdr{background:#181825;padding:11px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #313244;flex-shrink:0}
+.ed-hdr h2{font-size:15px;font-weight:800;color:#cba6f7;letter-spacing:.3px;margin:0}
+.ed-tabs{display:flex;gap:2px;background:#11111b;padding:6px 14px;border-bottom:1px solid #313244;flex-shrink:0}
+.ed-tab{padding:5px 14px;border-radius:5px;border:none;font-size:11px;font-weight:700;cursor:pointer;color:#7c7f93;background:transparent;font-family:inherit;transition:.15s}
+.ed-tab.on{background:#313244;color:#cba6f7}
+.ed-tab:hover:not(.on){background:#1a1a2e;color:#a6adc8}
+.ed-body{display:flex;flex:1;overflow:hidden}
+.ed-left{width:300px;flex-shrink:0;background:#181825;border-right:1px solid #313244;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:14px}
+.ed-section{display:flex;flex-direction:column;gap:7px}
+.ed-section h3{font-size:10px;font-weight:800;color:#7c7f93;text-transform:uppercase;letter-spacing:1.2px;margin:0 0 2px}
+.ed-row{display:flex;align-items:center;gap:7px}
+.ed-row label{font-size:11px;color:#a6adc8;width:100px;flex-shrink:0}
+.ed-row input[type=range]{flex:1;accent-color:#cba6f7;height:4px;cursor:pointer}
+.ed-num{width:60px;background:#313244;border:1px solid #45475a;border-radius:4px;color:#cdd6f4;font-size:12px;padding:3px 6px;font-family:inherit;outline:none}
+.ed-num:focus{border-color:#cba6f7}
+.ed-input{width:100%;background:#313244;border:1px solid #45475a;border-radius:4px;color:#cdd6f4;font-size:12px;padding:5px 8px;font-family:inherit;outline:none}
+.ed-input:focus{border-color:#cba6f7}
+.ed-select{width:100%;background:#313244;border:1px solid #45475a;border-radius:4px;color:#cdd6f4;font-size:12px;padding:5px 7px;font-family:inherit;outline:none}
+.ed-select:focus{border-color:#cba6f7}
+.ed-textarea{width:100%;background:#1a1a2e;border:1px solid #45475a;border-radius:4px;color:#a6e3a1;font-size:11px;font-family:'Courier New',monospace;padding:7px 8px;resize:vertical;min-height:70px;outline:none;line-height:1.5}
+.ed-textarea:focus{border-color:#a6e3a1}
+.ed-hint{font-size:10px;color:#585b70;line-height:1.4}
+.ed-info{font-size:10px;color:#6c7086;background:#11111b;border-radius:4px;padding:5px 7px;line-height:1.5}
+.ed-btn{width:100%;padding:7px 10px;border-radius:5px;border:none;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;text-align:left}
+.ed-btn-row{display:flex;gap:5px}
+.ed-btn-row .ed-btn{width:auto;flex:1;text-align:center}
+.eb-apply{background:#a6e3a1;color:#1e1e2e}.eb-apply:hover{background:#89dcb0}
+.eb-info{background:#89b4fa;color:#1e1e2e}.eb-info:hover{background:#74a8f5}
+.eb-warn{background:#fab387;color:#1e1e2e}.eb-warn:hover{background:#f0a070}
+.eb-reset{background:#45475a;color:#cdd6f4}.eb-reset:hover{background:#585b70}
+.eb-danger{background:#f38ba8;color:#1e1e2e}.eb-danger:hover{background:#e07090}
+.ed-divider{height:1px;background:#313244;margin:2px 0}
+/* Block list in Blocks tab */
+.ed-blocklist{display:flex;flex-direction:column;gap:3px;max-height:260px;overflow-y:auto}
+.ed-bitem{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:5px;cursor:pointer;border:1.5px solid transparent;font-size:11px}
+.ed-bitem:hover{background:#262637}
+.ed-bitem.sel{background:#2a2a3e;border-color:#cba6f7}
+.ed-bitem-name{flex:1;font-weight:700;color:#cdd6f4;font-family:'Courier New',monospace;font-size:10px}
+.ed-bitem-count{font-size:10px;color:#7c7f93}
+.ed-bitem-del{margin-left:auto;background:none;border:none;color:#45475a;cursor:pointer;font-size:13px;padding:0 2px;line-height:1}
+.ed-bitem-del:hover{color:#f38ba8}
+/* Vertex editor */
+.ed-vtx-list{display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto}
+.ed-vtx-row{display:flex;align-items:center;gap:5px;padding:3px 0;border-bottom:1px solid #2a2a3e}
+.ed-vtx-row label{font-size:10px;color:#7c7f93;width:18px;flex-shrink:0;font-weight:700}
+.ed-vtx-xy{width:65px;background:#313244;border:1px solid #45475a;border-radius:3px;color:#cdd6f4;font-size:11px;padding:2px 5px;font-family:'Courier New',monospace;outline:none}
+.ed-vtx-xy:focus{border-color:#89b4fa}
+.ed-vtx-del{background:none;border:none;color:#45475a;cursor:pointer;font-size:12px;padding:0 2px}
+.ed-vtx-del:hover{color:#f38ba8}
+/* Right canvas */
+.ed-right{flex:1;background:#11111b;display:flex;flex-direction:column;overflow:hidden}
+.ed-canvas-hdr{padding:7px 14px;background:#181825;border-bottom:1px solid #313244;display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap}
+.ed-canvas-hdr span{font-size:11px;color:#7c7f93}
+.ed-canvas-wrap{flex:1;overflow:auto;padding:14px;background:#0d0d1a}
+#edCanvas{background:#fff;display:block;cursor:crosshair;border:1px solid #313244}
+.ed-status{padding:4px 14px 5px;font-size:10px;color:#585b70;background:#181825;border-top:1px solid #313244;flex-shrink:0;display:flex;gap:16px}
+.ed-status span{color:#7c7f93}
+/* Close btn */
+.ed-close{background:none;border:none;color:#585b70;font-size:18px;cursor:pointer;padding:2px 5px;line-height:1;border-radius:4px}
+.ed-close:hover{color:#f38ba8;background:#2a1a20}
+/* Tab pages */
+.ed-tabpage{display:none}.ed-tabpage.on{display:flex;flex-direction:column;gap:12px}
+/* Nudge grid */
+.nudge-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px}
+.nudge-grid .ed-btn{padding:5px;text-align:center;font-size:12px}
+
+/* ── Villa Count Editor ──────────────────────────────────────────────────── */
+.ve-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;display:flex;align-items:center;justify-content:center}
+.ve-modal{background:#fff;border-radius:12px;width:min(680px,96vw);max-height:88vh;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,.25);overflow:hidden}
+.ve-hdr{padding:14px 20px;background:#f8f8f6;border-bottom:1px solid #e0e0dc;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.ve-hdr h2{font-size:16px;font-weight:800;color:#1a1a1a;margin:0}
+.ve-hdr p{font-size:11px;color:#888;margin:2px 0 0}
+.ve-close{background:none;border:none;font-size:20px;cursor:pointer;color:#888;padding:2px 6px;border-radius:4px}
+.ve-close:hover{background:#fee2e2;color:#b91c1c}
+.ve-body{overflow-y:auto;padding:16px 20px;flex:1}
+.ve-search{width:100%;padding:8px 12px;border:1.5px solid #e0e0dc;border-radius:7px;font-size:13px;font-family:inherit;outline:none;margin-bottom:12px;background:#fafaf8}
+.ve-search:focus{border-color:#0e7490}
+.ve-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.ve-card{border:1.5px solid #e0e0dc;border-radius:8px;padding:9px 11px;background:#fafaf8;display:flex;flex-direction:column;gap:4px;transition:.15s}
+.ve-card:hover{border-color:#0e7490;background:#f0fafb}
+.ve-card-name{font-size:11px;font-weight:800;color:#1a1a1a;font-family:'Courier New',monospace}
+.ve-card-row{display:flex;align-items:center;gap:6px}
+.ve-card-row label{font-size:10px;color:#888;flex:1}
+.ve-card-input{width:70px;padding:4px 7px;border:1.5px solid #d0d0cc;border-radius:5px;font-size:13px;font-weight:700;font-family:inherit;outline:none;text-align:right;background:#fff;color:#1a1a1a}
+.ve-card-input:focus{border-color:#0e7490;background:#f0fafb}
+.ve-card-orig{font-size:9px;color:#aaa;margin-top:1px}
+.ve-footer{padding:12px 20px;border-top:1px solid #e0e0dc;display:flex;align-items:center;gap:10px;flex-shrink:0;background:#f8f8f6}
+.ve-footer-stat{font-size:12px;color:#666;flex:1}
+.ve-footer-stat b{color:#1a1a1a}
+.ve-fbtn{padding:8px 18px;border-radius:7px;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s}
+.ve-fbtn-apply{background:#0e7490;color:#fff}.ve-fbtn-apply:hover{background:#0c6380}
+.ve-fbtn-reset{background:#e0e0dc;color:#555}.ve-fbtn-reset:hover{background:#d0d0cc}
+.ve-fbtn-close{background:#fff;color:#888;border:1.5px solid #ddd}.ve-fbtn-close:hover{background:#f0f0ee}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="bar-logo">🏗 Taormina Village</span>
+  <div class="sep"></div>
+  <span class="lbl">Mode:</span>
+  <button class="btn g on" id="bG" onclick="setMode('green')">✓ Done</button>
+  <button class="btn bn" id="bB" onclick="setMode('brown')">~ Partial</button>
+  <button class="btn cl" id="bC" onclick="setMode('clear')">✕ Clear</button>
+  <div class="sep"></div>
+  <button class="btn add-btn" onclick="openModal()">＋ Add Map</button>
+  <div class="sep"></div>
+  <div class="ptabs" id="ptabs"></div>
+  <div class="sep"></div>
+  <button class="btn prt-btn" onclick="doPrint()">⎙ Print / PDF</button>
+  <div class="sep"></div>
+  <button class="btn" id="edBtn" style="border-color:#7b3fb5;color:#7b3fb5" onclick="openEditor()">⚙ Layout Editor</button>
+  <div class="sep"></div>
+  <button class="btn" style="border-color:#0e7490;color:#0e7490" onclick="openVillaEditor()">✎ Edit Villas</button>
+</div>
+
+<div class="pgarea" id="pgarea"></div>
+
+<div class="modal-bg" id="addModal" style="display:none">
+  <div class="modal">
+    <h3>New Map Page</h3>
+    <input id="newTitle" placeholder="e.g. Electrical Phase 1" maxlength="60"/>
+    <div class="modal-btns">
+      <button onclick="closeModal()">Cancel</button>
+      <button class="mpri" onclick="confirmAdd()">Create</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+
+// ════════════════════════════════════════════════════════════════════════
+// POLYGON DATA — 56 actual DXF polygons from PROGRESS MAP layer
+// Each polygon is a real CAD geometry block (matches original drawing)
+// Multi-block TH rows have polygons named TH-RXX-B1, TH-RXX-B2, etc.
+// Each block contains N villa sub-units (total: 530 villas)
+// ════════════════════════════════════════════════════════════════════════
+
+// 56 actual CAD polygons (exact DXF geometry, SVG coordinate space)
+// All coords scaled to fit inside a 40px margin on all sides (within 1600x1000 canvas)
+// Scale factor: x * 0.95 + 40,  y * 0.93 + 35  — keeps all polygons well inside the border
+const _S = (pts) => pts.trim().split(' ').map(p => {
+  const [x,y] = p.split(',').map(Number);
+  return `${(x*0.95+40).toFixed(1)},${(y*0.93+35).toFixed(1)}`;
+}).join(' ');
+
+const BLOCK_POLYS = {
+  'TH-18':   _S('450.4,176.8 534.6,202.7 513.0,252.0 430.5,226.4 450.5,176.8'),
+  'TH-21':   _S('429.5,228.9 543.4,264.2 520.9,317.9 406.8,282.8 429.5,228.9'),
+  'TH-R01':  _S('685.2,140.0 663.3,192.3 955.4,282.1 977.3,229.7 685.3,139.9'),
+  'TH-R02-B1':_S('998.2,236.1 1230.3,307.5 1208.3,359.9 976.2,288.5 998.2,236.1'),
+  'TH-R02-B2':_S('1235.9,309.2 1438.1,371.3 1418.9,416.8 1408.5,421.4 1213.9,361.6 1235.9,309.2'),
+  'TH-R03':  _S('1487.7,439.2 1570.0,590.0 1552.2,648.2 1537.7,645.4 1429.7,464.6 1487.7,439.2'),
+  'TH-R04':  _S('1558.0,685.1 1497.0,930.0 1462.1,931.7 1530.4,672.6 1558.0,685.1'),
+  'TH-R05-B1':_S('980.4,880.0 970.4,935.0 1280.0,975.0 1290.0,920.0 980.4,880.0'),
+  'TH-R05-B2':_S('1227.5,912.4 1452.0,942.0 1458.0,948.0 1449.0,992.0 1217.4,962.0 1227.5,912.4'),
+  'TH-R06':  _S('455.2,866.4 699.0,898.9 709.0,843.8 465.3,811.2 455.3,866.4'),
+  'TH-R07-B1':_S('75.0,757.5 169.0,770.1 159.0,825.1 65.0,812.6 75.0,757.5'),
+  'TH-R07-B2':_S('159.0,825.1 253.0,837.7 263.0,782.6 169.0,770.1'),
+  'TH-R07-B3':_S('263.0,782.6 357.0,795.2 347.0,850.3 253.0,837.7'),
+  'TH-R08-B1':_S('52.0,573.2 115.0,586.7 138.0,507.7 75.0,494.3 52.0,573.2'),
+  'TH-R08-B2':_S('29.0,652.2 92.0,665.8 115.0,586.8 52.0,573.4 29.0,652.2'),
+  'TH-R08-B3':_S('136.0,689.3 149.0,646.1 212.0,659.9 200.0,702.6 136.0,689.3'),
+  'TH-R08-B4':_S('20.0,731.3 70.0,744.6 92.0,665.8 29.0,652.2 20.0,731.3'),
+  'TH-R09-B1':_S('172.3,135.5 235.6,148.9 223.3,191.6 160.0,178.2 172.4,135.5'),
+  'TH-R09-B2':_S('142.7,238.3 205.9,251.7 223.2,191.6 160.0,178.2 142.7,238.3'),
+  'TH-R09-B3':_S('119.9,317.4 183.1,330.7 205.9,251.7 142.7,238.4 119.9,317.4'),
+  'TH-R09-B4':_S('97.1,396.5 160.3,409.8 183.1,330.7 119.9,317.4 97.1,396.5'),
+  'TH-R10':  _S('229.0,20.0 207.2,72.0 529.2,151.1 551.1,98.9 229.0,20.0'),
+  'TH-R11':  _S('1001.7,349.2 1293.8,439.0 1271.8,491.4 979.7,401.6 1001.7,349.2'),
+  'TH-R12':  _S('1392.3,633.2 1450.2,607.8 1366.9,468.3 1308.9,493.7 1392.3,633.2'),
+  'TH-R13':  _S('1467.0,667.7 1412.0,862.0 1348.0,849.0 1403.0,655.5 1467.0,667.7'),
+  'TH-R14-B1':_S('1025.6,836.9 1332.2,877.9 1342.3,822.8 1035.6,781.8 1025.6,836.9'),
+  'TH-R14-B2':_S('979.6,879.8 969.6,932.0 1209.0,962.0 1219.0,909.0 979.6,879.8'),
+  'TH-R15-B1':_S('556.6,717.7 768.9,746.0 758.8,801.1 546.5,772.7 556.6,717.7'),
+  'TH-R15-B2':_S('713.4,844.4 956.3,876.8 946.5,929.0 703.3,897.0 713.4,844.3'),
+  'TH-R15-B3':_S('772.8,746.6 1016.5,779.2 1006.5,834.2 762.7,801.7 772.8,746.6'),
+  'TH-R16-B1':_S('376.6,696.0 366.6,751.1 460.6,763.7 470.6,708.6 376.6,696.0'),
+  'TH-R16-B2':_S('357.0,795.2 451.0,807.7 441.0,860.0 347.0,848.0 357.0,795.2'),
+  'TH-R17-B1':_S('96.0,415.0 159.0,428.4 136.0,507.6 73.0,494.3 96.0,415.1'),
+  'TH-R17-B2':_S('193.0,488.6 170.0,567.9 233.0,580.9 256.0,501.8 193.0,488.6'),
+  'TH-R17-B3':_S('216.0,409.0 193.0,488.6 256.0,501.8 279.0,422.2 216.0,409.0'),
+  'TH-R19':  _S('624.9,233.3 917.0,323.1 895.0,375.6 602.9,285.8 624.9,233.3'),
+  'TH-R20-B1':_S('602.9,285.8 580.8,338.2 872.9,428.0 895.0,375.6 602.9,285.8'),
+  'TH-R20-B2':_S('635.0,458.7 865.9,529.6 887.9,477.1 657.0,406.3 635.0,458.7'),
+  'TH-R22-B1':_S('256.5,251.2 319.7,264.5 297.7,342.9 233.9,329.5 256.5,251.2'),
+  'TH-R22-B2':_S('328.0,267.3 391.2,280.6 347.4,432.7 284.2,419.4 328.0,267.3'),
+  'TH-R22-B3':_S('233.9,329.5 211.6,409.0 274.3,422.2 297.7,342.9 233.9,329.5'),
+  'TH-R23-B1':_S('280.7,432.6 342.4,445.6 291.0,620.0 228.6,607.0 280.7,432.6'),
+  'TH-R23-B2':_S('228.6,580.9 205.8,657.0 142.7,644.0 165.3,567.9 228.6,580.9'),
+  'TH-R24':  _S('481.0,650.0 470.9,703.0 290.1,679.0 300.1,625.9 481.0,650.0'),
+  'TH-R25':  _S('782.8,687.5 1026.8,720.0 1016.7,775.1 772.9,742.5 782.8,687.5'),
+  'TH-R26-B1':_S('1031.4,623.8 1243.7,652.1 1233.6,707.2 1021.2,678.2 1031.4,623.8'),
+  'TH-R26-B2':_S('1045.8,722.9 1289.6,755.5 1279.5,808.0 1035.8,776.0 1045.8,722.9'),
+  'TH-R27':  _S('1344.4,671.1 1352.4,667.6 1409.2,678.6 1382.9,775.0 1319.4,763.0 1344.4,671.2'),
+  'TH-R28':  _S('1334.3,658.5 1392.3,633.2 1323.4,517.9 1273.4,539.8 1269.3,549.7 1334.3,658.5'),
+  'TH-R29':  _S('979.7,401.6 957.7,454.1 1249.8,543.9 1271.8,491.4 979.7,401.6'),
+  'TH-R30':  _S('902.1,481.6 1194.2,571.3 1172.3,623.8 881.2,534.3 903.2,481.9'),
+  'TH-R31':  _S('653.9,405.1 631.8,457.5 429.8,395.4 451.6,342.9 653.9,405.1'),
+  'TH-R32-B1':_S('404.4,539.9 585.2,564.1 575.2,619.1 394.4,594.9 404.4,539.9'),
+  'TH-R32-B2':_S('566.5,658.8 778.6,687.1 768.7,740.0 556.5,712.0 566.5,658.8'),
+  'TH-R32-B3':_S('579.7,619.9 821.8,652.3 831.8,597.3 589.7,564.9 579.7,619.9'),
+  'TH-R33':  _S('845.7,599.1 1025.1,623.0 1015.0,675.0 835.9,651.0 845.7,599.1')
+};
+
+// Parent TH row → [block names]  (for group-level operations)
+const PARENT_GROUPS = {
+  'TH-18':["TH-18"],
+  'TH-21':["TH-21"],
+  'TH-R01':["TH-R01"],
+  'TH-R02':["TH-R02-B1", "TH-R02-B2"],
+  'TH-R03':["TH-R03"],
+  'TH-R04':["TH-R04"],
+  'TH-R05':["TH-R05-B1", "TH-R05-B2"],
+  'TH-R06':["TH-R06"],
+  'TH-R07':["TH-R07-B1", "TH-R07-B2", "TH-R07-B3"],
+  'TH-R08':["TH-R08-B1", "TH-R08-B2", "TH-R08-B3", "TH-R08-B4"],
+  'TH-R09':["TH-R09-B1", "TH-R09-B2", "TH-R09-B3", "TH-R09-B4"],
+  'TH-R10':["TH-R10"],
+  'TH-R11':["TH-R11"],
+  'TH-R12':["TH-R12"],
+  'TH-R13':["TH-R13"],
+  'TH-R14':["TH-R14-B1", "TH-R14-B2"],
+  'TH-R15':["TH-R15-B1", "TH-R15-B2", "TH-R15-B3"],
+  'TH-R16':["TH-R16-B1", "TH-R16-B2"],
+  'TH-R17':["TH-R17-B1", "TH-R17-B2", "TH-R17-B3"],
+  'TH-R19':["TH-R19"],
+  'TH-R20':["TH-R20-B1", "TH-R20-B2"],
+  'TH-R22':["TH-R22-B1", "TH-R22-B2", "TH-R22-B3"],
+  'TH-R23':["TH-R23-B1", "TH-R23-B2"],
+  'TH-R24':["TH-R24"],
+  'TH-R25':["TH-R25"],
+  'TH-R26':["TH-R26-B1", "TH-R26-B2"],
+  'TH-R27':["TH-R27"],
+  'TH-R28':["TH-R28"],
+  'TH-R29':["TH-R29"],
+  'TH-R30':["TH-R30"],
+  'TH-R31':["TH-R31"],
+  'TH-R32':["TH-R32-B1", "TH-R32-B2", "TH-R32-B3"],
+  'TH-R33':["TH-R33"]
+};
+
+// Block → [villa sub-unit IDs]
+const BLOCK_SUBS = {
+  'TH-18':["TH-R18-001", "TH-R18-002", "TH-R18-003", "TH-R18-004"],
+  'TH-21':["TH-R21-001", "TH-R21-002", "TH-R21-003", "TH-R21-004", "TH-R21-005", "TH-R21-006"],
+  'TH-R01':["TH-R01-001", "TH-R01-002", "TH-R01-003", "TH-R01-004", "TH-R01-005", "TH-R01-006", "TH-R01-007", "TH-R01-008", "TH-R01-009", "TH-R01-010", "TH-R01-011", "TH-R01-012", "TH-R01-013", "TH-R01-014", "TH-R01-015", "TH-R01-016", "TH-R01-017", "TH-R01-018"],
+  'TH-R02-B1':["TH-R02-001", "TH-R02-002", "TH-R02-003", "TH-R02-004", "TH-R02-005", "TH-R02-006", "TH-R02-007", "TH-R02-008", "TH-R02-009", "TH-R02-010", "TH-R02-011", "TH-R02-012", "TH-R02-013", "TH-R02-014"],
+  'TH-R02-B2':["TH-R02-015", "TH-R02-016", "TH-R02-017", "TH-R02-018", "TH-R02-019", "TH-R02-020", "TH-R02-021", "TH-R02-022", "TH-R02-023", "TH-R02-024", "TH-R02-025", "TH-R02-026"],
+  'TH-R03':["TH-R03-001", "TH-R03-002", "TH-R03-003", "TH-R03-004", "TH-R03-005", "TH-R03-006", "TH-R03-007", "TH-R03-008", "TH-R03-009", "TH-R03-010", "TH-R03-011", "TH-R03-012", "TH-R03-013", "TH-R03-014"],
+  'TH-R04':["TH-R04-001", "TH-R04-002", "TH-R04-003", "TH-R04-004", "TH-R04-005", "TH-R04-006", "TH-R04-007", "TH-R04-008", "TH-R04-009", "TH-R04-010", "TH-R04-011", "TH-R04-012", "TH-R04-013", "TH-R04-014", "TH-R04-015", "TH-R04-016", "TH-R04-017", "TH-R04-018"],
+  'TH-R05-B1':[],
+  'TH-R05-B2':["TH-R05-001", "TH-R05-002", "TH-R05-003", "TH-R05-004", "TH-R05-005", "TH-R05-006", "TH-R05-007", "TH-R05-008", "TH-R05-009", "TH-R05-010", "TH-R05-011", "TH-R05-012", "TH-R05-013", "TH-R05-014"],
+  'TH-R06':["TH-R06-015", "TH-R06-016", "TH-R06-017", "TH-R06-018", "TH-R06-019", "TH-R06-020", "TH-R06-021", "TH-R06-022", "TH-R06-023", "TH-R06-024", "TH-R06-025", "TH-R06-026", "TH-R06-027", "TH-R06-028"],
+  'TH-R07-B1':["TH-R07-010", "TH-R07-011", "TH-R07-012"],
+  'TH-R07-B2':["TH-R07-007", "TH-R07-008", "TH-R07-009"],
+  'TH-R07-B3':["TH-R07-004", "TH-R07-005", "TH-R07-006"],
+  'TH-R08-B1':["TH-R08-007", "TH-R08-008", "TH-R08-009"],
+  'TH-R08-B2':["TH-R08-004", "TH-R08-005", "TH-R08-006"],
+  'TH-R08-B3':["TH-R17-016"],
+  'TH-R08-B4':["TH-R08-001", "TH-R08-002", "TH-R08-003"],
+  'TH-R09-B1':["TH-R09-009"],
+  'TH-R09-B2':["TH-R09-007", "TH-R09-008"],
+  'TH-R09-B3':["TH-R09-004", "TH-R09-005", "TH-R09-006"],
+  'TH-R09-B4':["TH-R09-001", "TH-R09-002", "TH-R09-003"],
+  'TH-R10':["TH-R10-001", "TH-R10-002", "TH-R10-003", "TH-R10-004", "TH-R10-005", "TH-R10-006", "TH-R10-007", "TH-R10-008", "TH-R10-009", "TH-R10-010", "TH-R10-011", "TH-R10-012", "TH-R10-013", "TH-R10-014", "TH-R10-015", "TH-R10-016", "TH-R10-017", "TH-R10-018", "TH-R10-019", "TH-R10-020"],
+  'TH-R11':["TH-R11-001", "TH-R11-002", "TH-R11-003", "TH-R11-004", "TH-R11-005", "TH-R11-006", "TH-R11-007", "TH-R11-008", "TH-R11-009", "TH-R11-010", "TH-R11-011", "TH-R11-012", "TH-R11-013", "TH-R11-014", "TH-R11-015", "TH-R11-016", "TH-R11-017", "TH-R11-018"],
+  'TH-R12':["TH-R12-001", "TH-R12-002", "TH-R12-003", "TH-R12-004", "TH-R12-005", "TH-R12-006", "TH-R12-007", "TH-R12-008", "TH-R12-009", "TH-R12-010"],
+  'TH-R13':["TH-R13-001", "TH-R13-002", "TH-R13-003", "TH-R13-004", "TH-R13-005", "TH-R13-006", "TH-R13-007", "TH-R13-008", "TH-R13-009", "TH-R13-010", "TH-R13-011", "TH-R13-012", "TH-R13-013", "TH-R13-014"],
+  'TH-R14-B1':["TH-R14-001", "TH-R14-002", "TH-R14-003", "TH-R14-004", "TH-R14-005", "TH-R14-006", "TH-R14-007", "TH-R14-008", "TH-R14-009", "TH-R14-010", "TH-R14-011", "TH-R14-012", "TH-R14-013", "TH-R14-014", "TH-R14-015", "TH-R14-016", "TH-R14-017", "TH-R14-018"],
+  'TH-R14-B2':["TH-R05-015", "TH-R05-016", "TH-R05-017", "TH-R05-018", "TH-R05-019", "TH-R05-020", "TH-R05-021", "TH-R05-022", "TH-R05-023", "TH-R05-024", "TH-R05-025", "TH-R05-026", "TH-R05-027", "TH-R05-028"],
+  'TH-R15-B1':["TH-R15-001", "TH-R15-002", "TH-R15-003", "TH-R15-004", "TH-R15-005", "TH-R15-006", "TH-R15-007", "TH-R15-008", "TH-R15-009", "TH-R15-010", "TH-R15-011", "TH-R15-012"],
+  'TH-R15-B2':["TH-R06-001", "TH-R06-002", "TH-R06-003", "TH-R06-004", "TH-R06-005", "TH-R06-006", "TH-R06-007", "TH-R06-008", "TH-R06-009", "TH-R06-010", "TH-R06-011", "TH-R06-012", "TH-R06-013", "TH-R06-014"],
+  'TH-R15-B3':["TH-R15-013", "TH-R15-014", "TH-R15-015", "TH-R15-016", "TH-R15-017", "TH-R15-018", "TH-R15-019", "TH-R15-020", "TH-R15-021", "TH-R15-022", "TH-R15-023", "TH-R15-024", "TH-R15-025", "TH-R15-026"],
+  'TH-R16-B1':["TH-R16-001", "TH-R16-002", "TH-R16-003"],
+  'TH-R16-B2':["TH-R07-001", "TH-R07-002", "TH-R07-003"],
+  'TH-R17-B1':["TH-R08-010", "TH-R08-011", "TH-R08-012"],
+  'TH-R17-B2':["TH-R17-010", "TH-R17-011", "TH-R17-012"],
+  'TH-R17-B3':["TH-R17-007", "TH-R17-008", "TH-R17-009"],
+  'TH-R19':["TH-R12-015", "TH-R19-001", "TH-R19-002", "TH-R19-003", "TH-R19-004", "TH-R19-005", "TH-R19-006", "TH-R19-007", "TH-R19-008", "TH-R19-009", "TH-R19-010", "TH-R19-011", "TH-R19-012", "TH-R19-013", "TH-R19-014", "TH-R19-016", "TH-R19-017", "TH-R19-018"],
+  'TH-R20-B1':["TH-R20-001", "TH-R20-002", "TH-R20-003", "TH-R20-004", "TH-R20-005", "TH-R20-006", "TH-R20-007", "TH-R20-008", "TH-R20-009", "TH-R20-010", "TH-R20-011", "TH-R20-012", "TH-R20-013", "TH-R20-014", "TH-R20-015", "TH-R20-016", "TH-R20-017", "TH-R20-018"],
+  'TH-R20-B2':["TH-R31-001", "TH-R31-002", "TH-R31-003", "TH-R31-004", "TH-R31-005", "TH-R31-006", "TH-R31-007", "TH-R31-008", "TH-R31-009", "TH-R31-010", "TH-R31-011", "TH-R31-012", "TH-R31-013", "TH-R31-014"],
+  'TH-R22-B1':["TH-R17-001", "TH-R17-002", "TH-R17-003"],
+  'TH-R22-B2':["TH-R22-001", "TH-R22-002", "TH-R22-003", "TH-R22-004", "TH-R22-005", "TH-R22-006", "TH-R22-007", "TH-R22-008", "TH-R22-009", "TH-R22-010"],
+  'TH-R22-B3':["TH-R17-004", "TH-R17-005", "TH-R17-006"],
+  'TH-R23-B1':["TH-R23-001", "TH-R23-002", "TH-R23-003", "TH-R23-004", "TH-R23-005", "TH-R23-006", "TH-R23-007", "TH-R23-008", "TH-R23-009", "TH-R23-010", "TH-R23-011", "TH-R23-012"],
+  'TH-R23-B2':["TH-R17-013", "TH-R17-014", "TH-R17-015"],
+  'TH-R24':["TH-R24-001", "TH-R24-002", "TH-R24-003", "TH-R24-004", "TH-R24-005", "TH-R24-006", "TH-R24-007", "TH-R24-008", "TH-R24-009", "TH-R24-010"],
+  'TH-R25':["TH-R25-013", "TH-R25-014", "TH-R25-015", "TH-R25-016", "TH-R25-017", "TH-R25-018", "TH-R25-019", "TH-R25-020", "TH-R25-021", "TH-R25-022", "TH-R25-023", "TH-R25-024", "TH-R25-025", "TH-R25-026"],
+  'TH-R26-B1':["TH-R33-011", "TH-R33-012", "TH-R33-013", "TH-R33-014", "TH-R33-015", "TH-R33-016", "TH-R33-017", "TH-R33-018", "TH-R33-019", "TH-R33-020", "TH-R33-021", "TH-R33-022"],
+  'TH-R26-B2':["TH-R26-001", "TH-R26-002", "TH-R26-003", "TH-R26-004", "TH-R26-005", "TH-R26-006", "TH-R26-007", "TH-R26-008", "TH-R26-009", "TH-R26-010", "TH-R26-011", "TH-R26-012", "TH-R26-013", "TH-R26-014"],
+  'TH-R27':["TH-R27-001", "TH-R27-002", "TH-R27-003", "TH-R27-004", "TH-R27-005", "TH-R27-006"],
+  'TH-R28':["TH-R28-001", "TH-R28-002", "TH-R28-003", "TH-R28-004", "TH-R28-005", "TH-R28-006", "TH-R28-007", "TH-R28-008"],
+  'TH-R29':["TH-R29-001", "TH-R29-002", "TH-R29-003", "TH-R29-004", "TH-R29-005", "TH-R29-006", "TH-R29-007", "TH-R29-008", "TH-R29-009", "TH-R29-010", "TH-R29-011", "TH-R29-012", "TH-R29-013", "TH-R29-014", "TH-R29-015", "TH-R29-016", "TH-R29-017", "TH-R29-018"],
+  'TH-R30':["TH-R30-001", "TH-R30-002", "TH-R30-003", "TH-R30-004", "TH-R30-005", "TH-R30-006", "TH-R30-007", "TH-R30-008", "TH-R30-009", "TH-R30-010", "TH-R30-011", "TH-R30-012", "TH-R30-013", "TH-R30-014", "TH-R30-015", "TH-R30-016", "TH-R30-017", "TH-R30-018"],
+  'TH-R31':["TH-R31-015", "TH-R31-016", "TH-R31-017", "TH-R31-018", "TH-R31-019", "TH-R31-020", "TH-R31-021", "TH-R31-022", "TH-R31-023", "TH-R31-024", "TH-R31-025", "TH-R31-026"],
+  'TH-R32-B1':["TH-R32-001", "TH-R32-002", "TH-R32-003", "TH-R32-004", "TH-R32-005", "TH-R32-006", "TH-R32-007", "TH-R32-008", "TH-R32-009", "TH-R32-010"],
+  'TH-R32-B2':["TH-R25-001", "TH-R25-002", "TH-R25-003", "TH-R25-004", "TH-R25-005", "TH-R25-006", "TH-R25-007", "TH-R25-008", "TH-R25-009", "TH-R25-010", "TH-R25-011", "TH-R25-012"],
+  'TH-R32-B3':["TH-R32-011", "TH-R32-012", "TH-R32-013", "TH-R32-014", "TH-R32-015", "TH-R32-016", "TH-R32-017", "TH-R32-018", "TH-R32-019", "TH-R32-020", "TH-R32-021", "TH-R32-022", "TH-R32-023", "TH-R32-024"],
+  'TH-R33':["TH-R33-001", "TH-R33-002", "TH-R33-003", "TH-R33-004", "TH-R33-005", "TH-R33-006", "TH-R33-007", "TH-R33-008", "TH-R33-009", "TH-R33-010"]
+};
+
+// All block IDs sorted
+const ALL_BLOCKS = Object.keys(BLOCK_POLYS).sort();
+// All parent IDs (unique rows)
+const ALL_PARENTS = Object.keys(PARENT_GROUPS).sort();
+
+const SVG_W=1600, SVG_H=1000, TH=120, TOTAL_H=SVG_H+TH;
+
+// ── Helpers ─────────────────────────────────────────────────────────────
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function centroid(pstr){
+  const pts = pstr.trim().split(' ').map(p=>p.split(',').map(Number));
+  return [ pts.reduce((s,p)=>s+p[0],0)/pts.length, pts.reduce((s,p)=>s+p[1],0)/pts.length ];
+}
+
+function shiftPts(pstr, dy){
+  // coords already scaled with margin by _S(); just shift down into map area below title
+  return pstr.trim().split(' ').map(p=>{
+    const [x,y]=p.split(','); return x+','+(+y+dy).toFixed(1);
+  }).join(' ');
+}
+// _S is already applied at definition time, so shiftPts just adds the title-band offset
+
+function colorFor(st){
+  if(st==='green') return {f:'#b8dc82',s:'#2e6008',sw:2,tc:'#1a3a04'};
+  if(st==='brown') return {f:'#e8a835',s:'#7a4206',sw:2,tc:'#4a2803'};
+  return {f:'rgba(255,255,255,0.02)',s:'#0000cc',sw:1.5,tc:'#0000aa'};
+}
+
+// ── State ────────────────────────────────────────────────────────────────
+let pages, curPage=0, mode='green', selBlock=null;
+
+function loadPages(){
+  try{const s=localStorage.getItem('taormina_v4');if(s)return JSON.parse(s);}catch(e){}
+  return null;
+}
+function save(){ try{localStorage.setItem('taormina_v4',JSON.stringify(pages));}catch(e){} }
+
+pages = loadPages() || [{title:'WATER TANK INSTALLATION', states:{'TH-18':'green','TH-21':'brown'}}];
+
+function setMode(m){
+  mode=m;
+  ['bG','bB','bC'].forEach(id=>document.getElementById(id).classList.remove('on'));
+  document.getElementById(m==='green'?'bG':m==='brown'?'bB':'bC').classList.add('on');
+}
+
+// ── Stats ─────────────────────────────────────────────────────────────────
+function getVillaCount(bid){
+  const vc = window.VILLA_COUNTS||{};
+  if(vc[bid]!==undefined) return vc[bid];
+  return (BLOCK_SUBS[bid]||[]).length || 1;
+}
+
+function calcStats(pi){
+  const states = pages[pi].states||{};
+  let done=0, partial=0, total=0;
+  ALL_BLOCKS.forEach(bid => {
+    if(BLOCK_POLYS[bid]===null||BLOCK_POLYS[bid]===undefined||BLOCK_POLYS[bid]==='') return;
+    const n = getVillaCount(bid);
+    total += n;
+    const st = states[bid]||'none';
+    if(st==='green') done += n;
+    else if(st==='brown') partial += n;
+  });
+  return {done, partial, pending:total-done-partial, total, pct:total?Math.round(done/total*100):0};
+}
+
+function blockEffectiveState(bid, states){
+  return states[bid]||'none';
+}
+
+// ── SVG builder ───────────────────────────────────────────────────────────
+function buildSVG(pi, forPrint){
+  const p = pages[pi], states = p.states||{};
+  const st = calcStats(pi);
+  const DY = (typeof window!=='undefined'&&window.LIVE_TH!==undefined)?window.LIVE_TH:TH;
+
+  let s = `<svg viewBox="0 0 ${SVG_W} ${TOTAL_H}" xmlns="http://www.w3.org/2000/svg" id="svg${pi}">`;
+
+  // White background
+  s += `<rect width="${SVG_W}" height="${TOTAL_H}" fill="#fff"/>`;
+
+  // Outer RED border — thick, well inside SVG edge so it's fully visible in PDF
+  const BD  = (window.LIVE_BD !== undefined) ? window.LIVE_BD : 18;
+  const _BW = (window.LIVE_BW !== undefined) ? window.LIVE_BW : 3.5;
+  s += `<rect x="${BD}" y="${BD}" width="${SVG_W-BD*2}" height="${TOTAL_H-BD*2}" fill="none" stroke="#cc1a1a" stroke-width="${_BW}" rx="4"/>`;
+
+  // Title separator line (inside border)
+  s += `<line x1="${BD+2}" y1="${DY}" x2="${SVG_W-BD-2}" y2="${DY}" stroke="#c0c0b8" stroke-width="1.2"/>`;
+
+  // Title text — centred in title band
+  s += `<text x="${SVG_W/2}" y="${DY*.54}" text-anchor="middle" font-size="52" font-weight="900" fill="#111" font-family="Arial,sans-serif">${esc(p.title)}</text>`;
+
+  // Stats line
+  s += `<text x="${SVG_W/2}" y="${DY*.88}" text-anchor="middle" font-size="21" font-weight="700" fill="#cc1a1a" font-family="Arial,sans-serif">${st.done} / ${st.total} Villas Done (${st.pct}%)</text>`;
+
+  // Legend box (top right of title band, inside the red border)
+  const lx=SVG_W-BD-320, ly=BD+8, lw=302, lh=DY-BD-14;
+  s += `<rect x="${lx}" y="${ly}" width="${lw}" height="${lh}" fill="#f8f8f5" stroke="#ccc" stroke-width="1" rx="3"/>`;
+  s += `<rect x="${lx+10}" y="${ly+10}" width="30" height="18" fill="#b8dc82" stroke="#2e6008" stroke-width="1.5" rx="2"/>`;
+  s += `<text x="${lx+46}" y="${ly+23}" font-size="13" font-weight="700" fill="#1a3a04" font-family="Arial,sans-serif">COMPLETED</text>`;
+  s += `<rect x="${lx+10}" y="${ly+35}" width="30" height="18" fill="#e8a835" stroke="#7a4206" stroke-width="1.5" rx="2"/>`;
+  s += `<text x="${lx+46}" y="${ly+48}" font-size="13" font-weight="700" fill="#4a2803" font-family="Arial,sans-serif">PARTIALLY COMPLETED</text>`;
+  s += `<rect x="${lx+10}" y="${ly+60}" width="30" height="14" fill="rgba(255,255,255,0.02)" stroke="#0000cc" stroke-width="1" rx="2"/>`;
+  s += `<text x="${lx+46}" y="${ly+71}" font-size="12" fill="#666" font-family="Arial,sans-serif">PENDING</text>`;
+
+  // Inner map border (blue) — tight inside the red border, below the title band
+  const MB = BD + 6;
+  s += `<rect x="${MB}" y="${DY+6}" width="${SVG_W-MB*2}" height="${SVG_H+TH-DY-MB-4}" fill="none" stroke="#0000cc" stroke-width="1.2"/>`;
+
+  // Draw all 56 blocks
+  ALL_BLOCKS.forEach(bid => {
+    if(BLOCK_POLYS[bid]===null||BLOCK_POLYS[bid]===undefined||BLOCK_POLYS[bid]==='') return;
+    const st2 = blockEffectiveState(bid, states);
+    const {f, s:sc, sw, tc} = colorFor(st2);
+    const pts = shiftPts(BLOCK_POLYS[bid], DY+8);
+    const [cx,cy] = centroid(pts);
+    const ca = forPrint?'':` class="blk" data-id="${bid}" style="cursor:pointer"`;
+    const isSingle = !/-B\d+$/.test(bid); // single polygon for this TH row
+
+    s += `<polygon points="${pts}" fill="${f}" stroke="${sc}" stroke-width="${sw}"${ca}/>`;
+
+    // Label: block name + villa count
+    const _lmap = window.ED_LABEL_MAP||{};
+    const short = (_lmap[bid]||bid).replace('TH-','');
+    // Villa count — use custom override if set, else default from BLOCK_SUBS
+    const _vc = window.VILLA_COUNTS||{};
+    const n = (_vc[bid]!==undefined) ? _vc[bid] : (BLOCK_SUBS[bid]||[]).length;
+    const villaLabel = n===1 ? '1 villa' : n > 0 ? n+' villas' : '';
+    // Font sizes — name slightly larger, villa count smaller below
+    const fs = short.length > 7 ? 8 : short.length > 5 ? 9.5 : 11;
+    const fsSub = Math.max(6, fs - 2);
+    // Stack: name centred, villas below
+    const nameY = villaLabel ? cy - fsSub*0.6 : cy + fs*0.35;
+    s += `<text x="${cx}" y="${nameY+fs*0.35}" text-anchor="middle" font-size="${fs}" font-weight="700" fill="${tc}" font-family="Arial,sans-serif" pointer-events="none">${short}</text>`;
+    if(villaLabel){
+      s += `<text x="${cx}" y="${nameY+fs*0.35+fsSub+2}" text-anchor="middle" font-size="${fsSub}" font-weight="600" fill="${tc}" font-family="Arial,sans-serif" pointer-events="none" opacity="0.85">${villaLabel}</text>`;
+    }
+    // (tick removed — status shown by colour only)
+  });
+
+  s += `</svg>`;
+  return s;
+}
+
+// ── Render ────────────────────────────────────────────────────────────────
+function renderMap(pi){
+  const w = document.getElementById('mw'+pi);
+  if(!w) return;
+  w.innerHTML = buildSVG(pi, false);
+
+  w.querySelectorAll('.blk').forEach(el=>{
+    el.addEventListener('click', function(e){
+      e.stopPropagation();
+      const bid = this.getAttribute('data-id');
+      if(!pages[pi].states) pages[pi].states={};
+      if(mode==='green') pages[pi].states[bid]='green';
+      else if(mode==='brown') pages[pi].states[bid]='brown';
+      else delete pages[pi].states[bid];
+      selBlock={pi,bid};
+      save();
+      renderMap(pi);
+      showPopup(pi,bid);
+    });
+  });
+
+  // Close popup safely when clicking blank map area
+  w.querySelector('svg')?.addEventListener('click',()=>{
+    const pu = document.getElementById('pu');
+    if(pu) pu.classList.remove('on');
+  });
+  updHeader(pi);
+}
+
+function updHeader(pi){
+  const st = calcStats(pi);
+  const el = document.getElementById('mstat'+pi);
+  if(el) el.textContent = `${st.done}/${st.total} done (${st.pct}%) · ${st.partial} partial · ${st.pending} pending`;
+  const bf = document.getElementById('bf'+pi);
+  if(bf) bf.style.width = st.pct+'%';
+  const pp = document.getElementById('pp'+pi);
+  if(pp) pp.textContent = st.pct+'%';
+}
+
+// ── Popup ─────────────────────────────────────────────────────────────────
+function showPopup(pi, bid){
+  const states = pages[pi].states||{};
+  const st = states[bid]||'none';
+  const subs = BLOCK_SUBS[bid]||[];
+  const pu = document.getElementById('pu');
+  if(!pu) return;
+  const nameEl = pu.querySelector('.pu-name');
+  if(nameEl) nameEl.textContent = bid;
+  const stEl = pu.querySelector('.pu-stval');
+  if(stEl){
+    stEl.textContent = st==='green'?'✓ Done':st==='brown'?'~ Partial':'○ Pending';
+    stEl.style.color = st==='green'?'#2e6008':st==='brown'?'#7a4206':'#888';
+  }
+  const info = pu.querySelector('.pu-info');
+  if(info){
+    if(subs.length > 0){
+      const parent = bid.replace(/-B\d+$/,'');
+      const siblings = PARENT_GROUPS[parent]||[];
+      info.innerHTML = `<b>${subs.length} villa units</b> in this block`+
+        (siblings.length>1?`<br>Part of ${parent} (${siblings.length} blocks)`:'')+
+        `<br><small style="color:#888">${subs.slice(0,3).join(', ')}${subs.length>3?'…':''}</small>`;
+    } else {
+      info.innerHTML = '<i style="color:#888">Single unit block</i>';
+    }
+  }
+  const mw = document.getElementById('mw'+pi);
+  if(mw) mw.appendChild(pu);
+  pu.classList.add('on');
+}
+
+function applyAct(st){
+  if(!selBlock) return;
+  const {pi,bid} = selBlock;
+  if(!pages[pi].states) pages[pi].states={};
+  if(st==='clear') delete pages[pi].states[bid];
+  else pages[pi].states[bid]=st;
+  save();
+  renderMap(pi);       // re-renders the SVG (popup is temporarily detached)
+  showPopup(pi,bid);   // re-attaches and updates popup
+}
+
+function applyToParent(action){
+  if(!selBlock) return;
+  const {pi,bid} = selBlock;
+  const parent = bid.replace(/-B\d+$/,'');
+  const siblings = PARENT_GROUPS[parent]||[bid];
+  if(!pages[pi].states) pages[pi].states={};
+  siblings.forEach(b=>{
+    if(action==='clear') delete pages[pi].states[b];
+    else pages[pi].states[b]=action;
+  });
+  save(); renderMap(pi);
+  const pu = document.getElementById('pu');
+  if(pu) pu.classList.remove('on');
+}
+
+// ── Full page render ──────────────────────────────────────────────────────
+function renderAll(){
+  const nav = document.getElementById('ptabs');
+  const area = document.getElementById('pgarea');
+  nav.innerHTML=''; area.innerHTML='';
+
+  pages.forEach((p,i)=>{
+    const tab = document.createElement('button');
+    tab.className='ptab'+(i===curPage?' on':'');
+    tab.textContent = p.title.length>22 ? p.title.slice(0,22)+'…' : p.title;
+    tab.onclick=()=>{curPage=i;renderAll();};
+    nav.appendChild(tab);
+
+    const pg = document.createElement('div');
+    pg.className='pg'+(i===curPage?' on':'');
+    pg.id='pg'+i;
+    pg.innerHTML=`
+      <div class="mhdr">
+        <div class="mhtitle" onclick="editTitle(${i})" id="mht${i}">${esc(p.title)}</div>
+        <div class="mhrow">
+          <span class="mstat" id="mstat${i}"></span>
+          <div class="pbwrap">
+            <div class="pb"><div class="pbf" id="bf${i}" style="width:0%"></div></div>
+            <span class="pbpct" id="pp${i}">0%</span>
+          </div>
+        </div>
+      </div>
+      <div class="svgwrap" id="mw${i}"></div>
+      <div class="leg">
+        <div class="li"><div class="ld" style="background:#b8dc82;border-color:#2e6008"></div>Done</div>
+        <div class="li"><div class="ld" style="background:#e8a835;border-color:#7a4206"></div>Partial</div>
+        <div class="li"><div class="ld" style="background:#fff;border-color:#0000cc"></div>Pending</div>
+      </div>`;
+    area.appendChild(pg);
+    if(i===curPage) setTimeout(()=>renderMap(i),0);
+  });
+}
+
+// ── Title edit ────────────────────────────────────────────────────────────
+function editTitle(i){
+  const el=document.getElementById('mht'+i);
+  el.innerHTML=`<input value="${esc(pages[i].title)}" onblur="saveTitle(${i},this.value)" onkeydown="if(event.key==='Enter')this.blur();if(event.key==='Escape'){this.value='${esc(pages[i].title)}';this.blur();}" onclick="event.stopPropagation()">`;
+  el.querySelector('input').select();
+}
+function saveTitle(i,v){
+  pages[i].title=v.trim()||pages[i].title;
+  save(); renderAll();
+}
+
+// ── Modal ─────────────────────────────────────────────────────────────────
+function openModal(){
+  document.getElementById('newTitle').value='';
+  document.getElementById('addModal').style.display='flex';
+  setTimeout(()=>document.getElementById('newTitle').focus(),80);
+}
+function closeModal(){ document.getElementById('addModal').style.display='none'; }
+function confirmAdd(){
+  const t=document.getElementById('newTitle').value.trim();
+  if(!t){document.getElementById('newTitle').focus();return;}
+  pages.push({title:t,states:{}});
+  curPage=pages.length-1;
+  closeModal(); save(); renderAll();
+}
+document.getElementById('newTitle').addEventListener('keydown',e=>{if(e.key==='Enter')confirmAdd();});
+
+// ── Print ─────────────────────────────────────────────────────────────────
+function doPrint(){
+  const win = window.open('','_blank');
+  if(!win) { alert('Pop-up blocked — please allow pop-ups for this page.'); return; }
+  const printStyle = [
+    '*{margin:0;padding:0;box-sizing:border-box}',
+    'body{background:#fff}',
+    'svg{width:100%;height:auto;display:block;page-break-after:always}',
+    '@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}'
+  ].join('\n');
+  let h = '<!DOCTYPE html><html><head><meta charset="utf-8">';
+  h += '<title>' + esc(pages[curPage].title) + '</title>';
+  h += '<style>' + printStyle + '</' + 'style>';
+  h += '</' + 'head><body>';
+  pages.forEach(function(_,i){ h += buildSVG(i, true); });
+  h += '</' + 'body></' + 'html>';
+  win.document.write(h);
+  win.document.close();
+  setTimeout(function(){ win.print(); }, 600);
+}
+// ── Popup DOM ─────────────────────────────────────────────────────────────
+document.body.insertAdjacentHTML('beforeend',`
+<div id="pu" class="popup">
+  <div class="pu-name">TH-R01</div>
+  <div class="pu-row"><span>Status</span><span class="pu-stval pu-val">Pending</span></div>
+  <div class="pu-info"></div>
+  <div class="pu-acts">
+    <button class="sm smg" onclick="applyAct('green')">✓ Done</button>
+    <button class="sm smb" onclick="applyAct('brown')">~ Partial</button>
+    <button class="sm smr" onclick="applyAct('clear')">✕ Clear</button>
+    <button class="sm sma" onclick="applyToParent('green')">All Done</button>
+    <button class="sm sma" onclick="applyToParent('clear')">Clear All</button>
+  </div>
+</div>`);
+
+
+// ══════════════════════════════════════════════════════════════
+// LAYOUT EDITOR  — full block/vertex editing
+// ══════════════════════════════════════════════════════════════
+
+let ED_POLYS   = {};   // bid -> pts string
+let ED_LABELS  = {};   // bid -> display label override
+let ED_DELETED = {};   // bid -> true (hidden/deleted)
+let ED_ORIG    = {};   // original pts for reset
+let edSelBlock = null;
+let edSelVtx   = null; // index of selected vertex
+let edDrag     = null; // {type:'block'|'vtx', ...}
+let edBD=18, edBW=3.5, edTitleH=120;
+let edActiveTab = 'layout';
+const ED_SVG_W=1600, ED_SVG_H=1000;
+let edScale=0.42;
+const ED_TOTAL_H=()=>ED_SVG_H+edTitleH;
+
+// ── Init ─────────────────────────────────────────────────────
+function initEditorState(){
+  ALL_BLOCKS.forEach(bid=>{
+    ED_POLYS[bid]  = BLOCK_POLYS[bid] || '';
+    ED_ORIG[bid]   = BLOCK_POLYS[bid] || '';
+    ED_LABELS[bid] = bid;
+  });
+  ED_DELETED = {};
+}
+
+function openEditor(){
+  initEditorState();
+  refreshBlockList();
+  refillBlockSel();
+  document.getElementById('edOverlay').style.display='flex';
+  switchEdTab('layout');
+  setTimeout(()=>{ setupEdCanvas(); edPreview(); },50);
+}
+function closeEditor(){ document.getElementById('edOverlay').style.display='none'; }
+
+// ── Tabs ─────────────────────────────────────────────────────
+function switchEdTab(t){
+  edActiveTab=t;
+  document.querySelectorAll('.ed-tab').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));
+  document.querySelectorAll('.ed-tabpage').forEach(p=>p.classList.toggle('on',p.id==='edTab_'+t));
+}
+
+// ── Block list (Blocks tab) ───────────────────────────────────
+function refreshBlockList(){
+  const el=document.getElementById('edBlockList');
+  if(!el) return;
+  el.innerHTML='';
+  ALL_BLOCKS.forEach(bid=>{
+    if(ED_DELETED[bid]) return;
+    const div=document.createElement('div');
+    div.className='ed-bitem'+(edSelBlock===bid?' sel':'');
+    div.dataset.bid=bid;
+    const label=ED_LABELS[bid]||bid;
+    const nv=(ED_POLYS[bid]||'').trim().split(' ').filter(Boolean).length;
+    div.innerHTML=
+      '<span class="ed-bitem-name">'+label+'</span>'+
+      '<span class="ed-bitem-count">'+nv+' pts</span>'+
+      '<button class="ed-bitem-del" onclick="deleteBlock(this.dataset.bid)" data-bid="'+bid+'" title="Delete block">🗑</button>';
+    div.addEventListener('click',function(e){
+      if(e.target.classList.contains('ed-bitem-del')) return;
+      selectEdBlock(bid);
+    });
+    el.appendChild(div);
+  });
+}
+
+function refillBlockSel(){
+  const sel=document.getElementById('edBlockSel2');
+  if(!sel) return;
+  const cur=sel.value;
+  sel.innerHTML='<option value="">— Select block —</option>';
+  ALL_BLOCKS.forEach(bid=>{
+    if(ED_DELETED[bid]) return;
+    const o=document.createElement('option');
+    o.value=bid; o.textContent=ED_LABELS[bid]||bid;
+    sel.appendChild(o);
+  });
+  if(cur && !ED_DELETED[cur]) sel.value=cur;
+}
+
+// ── Select block ──────────────────────────────────────────────
+function selectEdBlock(bid){
+  if(!bid) return;
+  edSelBlock=bid;
+  // Update status bar
+  const sb=document.getElementById('edStatusBlock');
+  const sc2=document.getElementById('edStatusCount');
+  if(sb) sb.textContent=bid;
+  if(sc2){const cnt=ALL_BLOCKS.filter(b=>!ED_DELETED[b]).length;sc2.textContent=cnt+' active';}
+  // Switch to vertex tab if already there
+  if(edActiveTab==='vertex'){buildVertexEditor(bid);const vs=document.getElementById('edVtxStatus');if(vs)vs.textContent='Editing '+bid;}
+  edSelVtx=null;
+  // Update list highlight
+  document.querySelectorAll('.ed-bitem').forEach(d=>d.classList.toggle('sel',d.dataset.bid===bid));
+  // Fill name field
+  const nf=document.getElementById('edBlockName');
+  if(nf) nf.value=ED_LABELS[bid]||bid;
+  // Fill raw coords
+  const tf=document.getElementById('edBlockPts');
+  if(tf) tf.value=ED_POLYS[bid]||'';
+  // Fill vertex editor
+  buildVertexEditor(bid);
+  // Sync dropdown
+  const sel2=document.getElementById('edBlockSel2');
+  if(sel2) sel2.value=bid;
+  edPreview();
+}
+
+// ── Vertex editor ─────────────────────────────────────────────
+function buildVertexEditor(bid){
+  const wrap=document.getElementById('edVtxList');
+  if(!wrap) return;
+  wrap.innerHTML='';
+  const raw=ED_POLYS[bid]||'';
+  const pts=raw.trim().split(' ').filter(Boolean);
+  pts.forEach((pt,i)=>{
+    const [x,y]=pt.split(',');
+    const row=document.createElement('div');
+    row.className='ed-vtx-row';
+    row.innerHTML=
+      '<label>'+(i+1)+'</label>'+
+      '<input class="ed-vtx-xy" id="vx'+i+'" value="'+parseFloat(x).toFixed(1)+'" oninput="updateVtx('+i+')" title="X">'+
+      '<input class="ed-vtx-xy" id="vy'+i+'" value="'+parseFloat(y).toFixed(1)+'" oninput="updateVtx('+i+')" title="Y">'+
+      '<button class="ed-vtx-del" onclick="deleteVtx('+i+')" title="Remove point">✕</button>';
+    wrap.appendChild(row);
+  });
+}
+
+function updateVtx(i){
+  if(!edSelBlock) return;
+  const pts=(ED_POLYS[edSelBlock]||'').trim().split(' ').filter(Boolean);
+  const xi=document.getElementById('vx'+i);
+  const yi=document.getElementById('vy'+i);
+  if(!xi||!yi) return;
+  pts[i]=xi.value+','+yi.value;
+  ED_POLYS[edSelBlock]=pts.join(' ');
+  syncCoordsToRaw();
+  commitEditorToMap(); edPreview();
+}
+
+function deleteVtx(i){
+  if(!edSelBlock) return;
+  const pts=(ED_POLYS[edSelBlock]||'').trim().split(' ').filter(Boolean);
+  if(pts.length<=3){alert('A polygon must have at least 3 points.');return;}
+  pts.splice(i,1);
+  ED_POLYS[edSelBlock]=pts.join(' ');
+  buildVertexEditor(edSelBlock);
+  syncCoordsToRaw();
+  commitEditorToMap(); edPreview();
+}
+
+function addVertex(){
+  if(!edSelBlock){alert('Select a block first.');return;}
+  const pts=(ED_POLYS[edSelBlock]||'').trim().split(' ').filter(Boolean);
+  // Append midpoint of last edge
+  const last=pts[pts.length-1].split(',').map(Number);
+  const first=pts[0].split(',').map(Number);
+  const mid=[((last[0]+first[0])/2).toFixed(1),((last[1]+first[1])/2).toFixed(1)];
+  pts.push(mid.join(','));
+  ED_POLYS[edSelBlock]=pts.join(' ');
+  buildVertexEditor(edSelBlock);
+  syncCoordsToRaw();
+  commitEditorToMap(); edPreview();
+}
+
+function syncCoordsToRaw(){
+  const tf=document.getElementById('edBlockPts');
+  if(tf&&edSelBlock) tf.value=ED_POLYS[edSelBlock]||'';
+}
+
+// ── Rename block ──────────────────────────────────────────────
+function applyBlockName(){
+  if(!edSelBlock) return;
+  const nf=document.getElementById('edBlockName');
+  const newName=(nf?nf.value.trim():'');
+  if(!newName){alert('Name cannot be empty.');return;}
+  ED_LABELS[edSelBlock]=newName;
+  refreshBlockList();
+  refillBlockSel();
+  commitEditorToMap();
+}
+
+// ── Delete block ──────────────────────────────────────────────
+function deleteBlock(bid){
+  if(!confirm('Delete block "'+bid+'"? It will be removed from the map.')) return;
+  ED_DELETED[bid]=true;
+  if(edSelBlock===bid){ edSelBlock=null; edSelVtx=null; }
+  refreshBlockList(); refillBlockSel();
+  commitEditorToMap(); edPreview();
+}
+
+function deleteSelectedBlock(){
+  if(!edSelBlock){alert('Select a block first.');return;}
+  deleteBlock(edSelBlock);
+}
+
+// ── Add new block ─────────────────────────────────────────────
+function addNewBlock(){
+  const nf=document.getElementById('edNewBlockName');
+  const pf=document.getElementById('edNewBlockPts');
+  const name=(nf?nf.value.trim():'');
+  const pts=(pf?pf.value.trim():'');
+  if(!name){alert('Enter a block name.');return;}
+  if(!pts||pts.split(' ').length<3){alert('Enter at least 3 points (x,y format).');return;}
+  if(BLOCK_POLYS[name]!==undefined){alert('A block with this name already exists.');return;}
+  // Add to runtime structures
+  BLOCK_POLYS[name]='';
+  BLOCK_SUBS[name]=[];
+  ALL_BLOCKS.push(name);
+  ALL_BLOCKS.sort();
+  ED_POLYS[name]=pts;
+  ED_ORIG[name]=pts;
+  ED_LABELS[name]=name;
+  nf.value='';pf.value='';
+  refreshBlockList(); refillBlockSel();
+  selectEdBlock(name);
+  commitEditorToMap(); edPreview();
+}
+
+// ── Apply raw coords ──────────────────────────────────────────
+function applyBlockCoords(){
+  if(!edSelBlock) return;
+  const raw=(document.getElementById('edBlockPts')||{}).value||'';
+  if(!raw.trim()){alert('Please enter coordinates.');return;}
+  ED_POLYS[edSelBlock]=raw.trim();
+  buildVertexEditor(edSelBlock);
+  refreshBlockList();
+  commitEditorToMap(); edPreview();
+}
+
+// ── Canvas setup ─────────────────────────────────────────────
+function setupEdCanvas(){
+  const cv=document.getElementById('edCanvas');
+  cv.width=Math.floor(ED_SVG_W*edScale);
+  cv.height=Math.floor(ED_TOTAL_H()*edScale);
+  cv.onmousemove=evEdMouseMove;
+  cv.onmousedown=evEdMouseDown;
+  cv.onmouseup  =()=>{ if(edDrag){edDrag=null;} };
+  cv.onmouseleave=()=>{ edDrag=null; };
+  cv.onclick=evEdClick;
+}
+
+function canvasPt(e){
+  const cv=document.getElementById('edCanvas');
+  const r=cv.getBoundingClientRect();
+  return {
+    sx:(e.clientX-r.left)/edScale,
+    sy:(e.clientY-r.top)/edScale,
+    mx:(e.clientX-r.left)/edScale,
+    my:(e.clientY-r.top)/edScale - edTitleH - 8
+  };
+}
+
+function evEdMouseMove(e){
+  const {sx,sy,mx,my}=canvasPt(e);
+  const pos=document.getElementById('edCursorPos');
+  if(pos) pos.textContent='x:'+mx.toFixed(0)+' y:'+my.toFixed(0);
+  if(!edDrag) return;
+  if(edDrag.type==='block'){
+    const dx=mx-edDrag.startX, dy=my-edDrag.startY;
+    ED_POLYS[edDrag.bid]=edDrag.origPts.trim().split(' ').map(p=>{
+      const[x,y]=p.split(',').map(Number);
+      return (x+dx).toFixed(1)+','+(y+dy).toFixed(1);
+    }).join(' ');
+    syncCoordsToRaw();
+    if(edSelBlock===edDrag.bid) buildVertexEditor(edDrag.bid);
+    edPreview();
+  } else if(edDrag.type==='vtx'){
+    const pts=(ED_POLYS[edDrag.bid]||'').trim().split(' ').filter(Boolean);
+    pts[edDrag.vi]=mx.toFixed(1)+','+my.toFixed(1);
+    ED_POLYS[edDrag.bid]=pts.join(' ');
+    syncCoordsToRaw();
+    buildVertexEditor(edDrag.bid);
+    edPreview();
+  }
+}
+
+function evEdMouseDown(e){
+  const {mx,my}=canvasPt(e);
+  // Check vertex hit first
+  if(edSelBlock && ED_POLYS[edSelBlock]){
+    const pts=ED_POLYS[edSelBlock].trim().split(' ').filter(Boolean).map(p=>p.split(',').map(Number));
+    for(let i=0;i<pts.length;i++){
+      const[vx,vy]=pts[i];
+      const d=Math.sqrt((vx-mx)**2+(vy-my)**2);
+      if(d<10/edScale){
+        edDrag={type:'vtx',bid:edSelBlock,vi:i};
+        e.preventDefault(); return;
+      }
+    }
+  }
+  // Block drag
+  const bid=hitTestBlock(mx,my);
+  if(bid){
+    edDrag={type:'block',bid,startX:mx,startY:my,origPts:ED_POLYS[bid]};
+    e.preventDefault();
+  }
+}
+
+function evEdClick(e){
+  if(edDrag) return;
+  const {mx,my}=canvasPt(e);
+  const bid=hitTestBlock(mx,my);
+  if(bid) selectEdBlock(bid);
+}
+
+function hitTestBlock(mx,my){
+  let hit=null;
+  ALL_BLOCKS.forEach(bid=>{
+    if(ED_DELETED[bid]||!ED_POLYS[bid]) return;
+    const pts=ED_POLYS[bid].trim().split(' ').filter(Boolean).map(p=>p.split(',').map(Number));
+    if(ptInPoly(mx,my,pts)) hit=bid;
+  });
+  return hit;
+}
+
+function ptInPoly(px,py,pts){
+  let inside=false,j=pts.length-1;
+  for(let i=0;i<pts.length;i++){
+    const[xi,yi]=pts[i],[xj,yj]=pts[j];
+    if(((yi>py)!==(yj>py))&&(px<(xj-xi)*(py-yi)/(yj-yi)+xi)) inside=!inside;
+    j=i;
+  }
+  return inside;
+}
+
+// ── Preview renderer ──────────────────────────────────────────
+function edPreview(){
+  const cv=document.getElementById('edCanvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d');
+  edBD=+(document.getElementById('nBD')||{value:18}).value||18;
+  edBW=+(document.getElementById('nBW')||{value:3.5}).value||3.5;
+  edTitleH=+(document.getElementById('nTH')||{value:120}).value||120;
+  const sc=edScale;
+  // Resize if needed
+  const newH=Math.floor(ED_TOTAL_H()*sc);
+  if(cv.height!==newH) cv.height=newH;
+  const W=cv.width;
+
+  ctx.clearRect(0,0,W,cv.height);
+  ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,cv.height);
+
+  // Outer red border
+  ctx.strokeStyle='#cc1a1a'; ctx.lineWidth=edBW*sc;
+  ctx.strokeRect(edBD*sc,edBD*sc,(ED_SVG_W-edBD*2)*sc,(ED_TOTAL_H()-edBD*2)*sc);
+
+  // Title separator
+  ctx.strokeStyle='#c0c0b8'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(edBD*sc,edTitleH*sc); ctx.lineTo((ED_SVG_W-edBD)*sc,edTitleH*sc); ctx.stroke();
+
+  // Title text
+  ctx.fillStyle='#111'; ctx.font='bold '+(20*sc)+'px Arial'; ctx.textAlign='center';
+  ctx.fillText('WATER TANK INSTALLATION',W/2,edTitleH*sc*0.52);
+
+  // Blue inner border
+  const MB=(edBD+6)*sc;
+  ctx.strokeStyle='#0000cc'; ctx.lineWidth=1;
+  ctx.strokeRect(MB,edTitleH*sc+6*sc,W-MB*2,cv.height-edTitleH*sc-MB-4*sc);
+
+  // A4 dashed frame
+  if((document.getElementById('edShowA4')||{}).checked){
+    ctx.setLineDash([5/sc,3/sc]);
+    ctx.strokeStyle='rgba(243,139,168,0.8)'; ctx.lineWidth=1.5;
+    const pm=12*sc;
+    ctx.strokeRect(pm,pm,W-pm*2,cv.height-pm*2);
+    ctx.setLineDash([]);
+  }
+
+  // Draw blocks
+  ALL_BLOCKS.forEach(bid=>{
+    if(ED_DELETED[bid]||!ED_POLYS[bid]) return;
+    const raw=ED_POLYS[bid];
+    const pts=raw.trim().split(' ').filter(Boolean).map(p=>p.split(',').map(Number));
+    if(pts.length<2) return;
+    const isSel=(bid===edSelBlock);
+
+    ctx.beginPath();
+    pts.forEach(([x,y],i)=>{ i===0?ctx.moveTo(x*sc,(y+edTitleH+8)*sc):ctx.lineTo(x*sc,(y+edTitleH+8)*sc); });
+    ctx.closePath();
+    ctx.fillStyle=isSel?'rgba(203,166,247,0.3)':'rgba(26,58,171,0.07)';
+    ctx.fill();
+    ctx.strokeStyle=isSel?'#cba6f7':'#0000cc';
+    ctx.lineWidth=isSel?2.5*sc:1.2*sc;
+    ctx.stroke();
+
+    // Label
+    const cxArr=pts.map(p=>p[0]),cyArr=pts.map(p=>p[1]);
+    const cx=cxArr.reduce((a,b)=>a+b,0)/cxArr.length;
+    const cy=cyArr.reduce((a,b)=>a+b,0)/cyArr.length;
+    const lbl=(ED_LABELS[bid]||bid).replace('TH-','');
+    const fs=Math.max(6,Math.min(10,(lbl.length>6?6:8)*sc*2.2));
+    ctx.fillStyle=isSel?'#cba6f7':'#1a3aab';
+    ctx.font='bold '+fs+'px Arial'; ctx.textAlign='center';
+    ctx.fillText(lbl,cx*sc,(cy+edTitleH+8)*sc+fs*0.35);
+
+    // Vertex dots for selected block
+    if(isSel){
+      pts.forEach(([x,y],i)=>{
+        const r2=edSelVtx===i?6*sc:4*sc;
+        ctx.beginPath(); ctx.arc(x*sc,(y+edTitleH+8)*sc,r2,0,Math.PI*2);
+        ctx.fillStyle=edSelVtx===i?'#f38ba8':'#cba6f7'; ctx.fill();
+        ctx.strokeStyle='#1e1e2e'; ctx.lineWidth=1; ctx.stroke();
+      });
+    }
+  });
+}
+
+// ── Global transform ──────────────────────────────────────────
+function syncNum(rId,nId){ const e=document.getElementById(nId); if(e) e.value=document.getElementById(rId).value; }
+function syncRange(nId,rId){ const e=document.getElementById(rId); if(e) e.value=document.getElementById(nId).value; }
+
+function applyGlobalTransform(){
+  const sx=+(document.getElementById('nScX')||{value:1}).value||1;
+  const sy=+(document.getElementById('nScY')||{value:1}).value||1;
+  const ox=+(document.getElementById('nOX')||{value:0}).value||0;
+  const oy=+(document.getElementById('nOY')||{value:0}).value||0;
+  ALL_BLOCKS.forEach(bid=>{
+    if(ED_DELETED[bid]||!ED_POLYS[bid]) return;
+    ED_POLYS[bid]=ED_POLYS[bid].trim().split(' ').filter(Boolean).map(p=>{
+      const[x,y]=p.split(',').map(Number);
+      return (x*sx+ox).toFixed(1)+','+(y*sy+oy).toFixed(1);
+    }).join(' ');
+  });
+  if(edSelBlock){ syncCoordsToRaw(); buildVertexEditor(edSelBlock); }
+  commitEditorToMap(); edPreview();
+}
+
+function resetGlobalTransform(){
+  ['eScX','eScY'].forEach(id=>{ const e=document.getElementById(id); if(e) e.value=1; });
+  ['nScX','nScY'].forEach(id=>{ const e=document.getElementById(id); if(e) e.value=1; });
+  ['eOX','eOY'].forEach(id=>{ const e=document.getElementById(id); if(e) e.value=0; });
+  ['nOX','nOY'].forEach(id=>{ const e=document.getElementById(id); if(e) e.value=0; });
+  edPreview();
+}
+
+function applyBorderSettings(){ commitEditorToMap(); renderAll(); }
+
+function nudge(dx,dy){
+  if(!edSelBlock) return;
+  const step=+(document.getElementById('nudgeStep')||{value:5}).value||5;
+  ED_POLYS[edSelBlock]=(ED_POLYS[edSelBlock]||'').trim().split(' ').filter(Boolean).map(p=>{
+    const[x,y]=p.split(',').map(Number);
+    return (x+dx*step).toFixed(1)+','+(y+dy*step).toFixed(1);
+  }).join(' ');
+  syncCoordsToRaw(); buildVertexEditor(edSelBlock);
+  commitEditorToMap(); edPreview();
+}
+
+function resetBlock(){
+  if(!edSelBlock) return;
+  ED_POLYS[edSelBlock]=ED_ORIG[edSelBlock]||'';
+  ED_LABELS[edSelBlock]=edSelBlock;
+  syncCoordsToRaw(); buildVertexEditor(edSelBlock);
+  const nf=document.getElementById('edBlockName');
+  if(nf) nf.value=edSelBlock;
+  refreshBlockList(); refillBlockSel();
+  commitEditorToMap(); edPreview();
+}
+
+function resetAllBlocks(){
+  if(!confirm('Reset ALL blocks to original DXF coordinates and clear all custom names/deletions?')) return;
+  ALL_BLOCKS.forEach(bid=>{ ED_POLYS[bid]=ED_ORIG[bid]||''; ED_LABELS[bid]=bid; });
+  ED_DELETED={};
+  edSelBlock=null; edSelVtx=null;
+  ['nBD','eBD'].forEach(id=>{ const e=document.getElementById(id); if(e) e.value=18; });
+  ['nBW','eBW'].forEach(id=>{ const e=document.getElementById(id); if(e) e.value=3.5; });
+  ['nTH','eTH'].forEach(id=>{ const e=document.getElementById(id); if(e) e.value=120; });
+  refreshBlockList(); refillBlockSel();
+  commitEditorToMap(); edPreview();
+}
+
+// ── Commit to live map ────────────────────────────────────────
+function commitEditorToMap(){
+  ALL_BLOCKS.forEach(bid=>{
+    if(ED_DELETED[bid]){
+      // Mark deleted — buildSVG will skip these
+      BLOCK_POLYS[bid]=null;
+    } else if(ED_POLYS[bid]!==undefined){
+      BLOCK_POLYS[bid]=ED_POLYS[bid];
+    }
+    // Apply label overrides
+    if(ED_LABELS[bid] && ED_LABELS[bid]!==bid) {
+      window.ED_LABEL_MAP = window.ED_LABEL_MAP||{};
+      window.ED_LABEL_MAP[bid]=ED_LABELS[bid];
+    }
+  });
+  window.LIVE_BD=edBD; window.LIVE_BW=edBW; window.LIVE_TH=edTitleH;
+  for(let i=0;i<pages.length;i++){ const w=document.getElementById('mw'+i); if(w) renderMap(i); }
+}
+
+
+// ══════════════════════════════════════════════════════════════════════
+// VILLA COUNT EDITOR
+// ══════════════════════════════════════════════════════════════════════
+window.VILLA_COUNTS = {};  // bid -> custom count (overrides BLOCK_SUBS length)
+
+function getDefaultVillaCount(bid){
+  return (BLOCK_SUBS[bid]||[]).length || 1;
+}
+
+function openVillaEditor(){
+  buildVeGrid();
+  updateVeFooter();
+  document.getElementById('veSearch').value='';
+  filterVeCards();
+  document.getElementById('veOverlay').style.display='flex';
+}
+
+function closeVillaEditor(){
+  document.getElementById('veOverlay').style.display='none';
+}
+
+function buildVeGrid(){
+  const grid=document.getElementById('veGrid');
+  if(!grid) return;
+  grid.innerHTML='';
+  const vc=window.VILLA_COUNTS||{};
+  ALL_BLOCKS.forEach(bid=>{
+    if(BLOCK_POLYS[bid]===null||BLOCK_POLYS[bid]===undefined||BLOCK_POLYS[bid]==='') return;
+    const def=getDefaultVillaCount(bid);
+    const cur=vc[bid]!==undefined?vc[bid]:def;
+    const card=document.createElement('div');
+    card.className='ve-card';
+    card.dataset.bid=bid;
+    const _lmap=window.ED_LABEL_MAP||{};
+    const displayName=_lmap[bid]||bid;
+    card.innerHTML=
+      '<div class="ve-card-name">'+displayName+'</div>'+
+      '<div class="ve-card-row">'+
+        '<label>Villa units</label>'+
+        '<input class="ve-card-input" id="vei_'+bid.replace(/[^a-z0-9]/gi,'_')+'" type="number" min="0" max="999" value="'+cur+'" oninput="updateVeFooter()">'+
+      '</div>'+
+      '<div class="ve-card-orig">Default: '+def+' (from DXF)</div>';
+    grid.appendChild(card);
+  });
+}
+
+function filterVeCards(){
+  const q=(document.getElementById('veSearch').value||'').toLowerCase();
+  document.querySelectorAll('#veGrid .ve-card').forEach(c=>{
+    const name=(c.dataset.bid||'').toLowerCase();
+    c.style.display=(!q||name.includes(q))?'':'none';
+  });
+}
+
+function updateVeFooter(){
+  const cards=document.querySelectorAll('#veGrid .ve-card');
+  let total=0, count=0;
+  cards.forEach(c=>{
+    const bid=c.dataset.bid;
+    const inp=c.querySelector('input');
+    if(inp){const v=parseInt(inp.value)||0;total+=v;count++;}
+  });
+  const el=document.getElementById('veFooterStat');
+  if(el) el.innerHTML='Total: <b>'+total+'</b> villas across <b>'+count+'</b> blocks';
+}
+
+function applyVillaCounts(){
+  const vc={};
+  document.querySelectorAll('#veGrid .ve-card').forEach(c=>{
+    const bid=c.dataset.bid;
+    const inp=c.querySelector('input');
+    if(bid&&inp){
+      const v=parseInt(inp.value);
+      const def=getDefaultVillaCount(bid);
+      if(!isNaN(v)) vc[bid]=v;
+    }
+  });
+  window.VILLA_COUNTS=vc;
+  // Re-render all maps
+  for(let i=0;i<pages.length;i++){const w=document.getElementById('mw'+i);if(w)renderMap(i);}
+  closeVillaEditor();
+}
+
+function resetVillaCounts(){
+  if(!confirm('Reset all villa counts back to DXF defaults?')) return;
+  window.VILLA_COUNTS={};
+  buildVeGrid();
+  updateVeFooter();
+  for(let i=0;i<pages.length;i++){const w=document.getElementById('mw'+i);if(w)renderMap(i);}
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────────
+
+// ── Popup DOM ─────────────────────────────────────────────────────────────
+document.body.insertAdjacentHTML('beforeend',`
+<div id="pu" class="popup">
+  <div class="pu-name">TH-R01</div>
+  <div class="pu-row"><span>Status</span><span class="pu-stval pu-val">Pending</span></div>
+  <div class="pu-info"></div>
+  <div class="pu-acts">
+    <button class="sm smg" onclick="applyAct('green')">✓ Done</button>
+    <button class="sm smb" onclick="applyAct('brown')">~ Partial</button>
+    <button class="sm smr" onclick="applyAct('clear')">✕ Clear</button>
+    <button class="sm sma" onclick="applyToParent('green')">All Done</button>
+    <button class="sm sma" onclick="applyToParent('clear')">Clear All</button>
+  </div>
+</div>`);
+
+// ── Boot ──────────────────────────────────────────────────────────────────
+renderAll();
+
+
+</script>
+
+
+<!-- ══ Layout Editor Panel ══════════════════════════════════════════ -->
+<div class="ed-overlay" id="edOverlay" style="display:none" onclick="if(event.target===this)closeEditor()">
+ <div class="ed-panel">
+  <div class="ed-hdr">
+    <h2>⚙ Layout Editor</h2>
+    <div style="display:flex;gap:10px;align-items:center">
+      <span style="font-size:10px;color:#6c7086">Changes apply to all map pages</span>
+      <button class="ed-close" onclick="closeEditor()">✕</button>
+    </div>
+  </div>
+  <div class="ed-body">
+   <!-- Left controls -->
+   <div class="ed-left">
+
+    <div class="ed-section">
+      <h3>Global Transform</h3>
+      <div class="ed-info">Scale and shift ALL polygons together. Use this to fit the layout inside the border.</div>
+      <div class="ed-row"><label>Scale X</label><input type="range" id="eScX" min="0.5" max="1.3" step="0.005" value="1.0" oninput="syncNum('eScX','nScX');edPreview()"><input type="number" id="nScX" min="0.5" max="1.3" step="0.005" value="1.0" oninput="syncRange('nScX','eScX');edPreview()"></div>
+      <div class="ed-row"><label>Scale Y</label><input type="range" id="eScY" min="0.5" max="1.3" step="0.005" value="1.0" oninput="syncNum('eScY','nScY');edPreview()"><input type="number" id="nScY" min="0.5" max="1.3" step="0.005" value="1.0" oninput="syncRange('nScY','eScY');edPreview()"></div>
+      <div class="ed-row"><label>Offset X</label><input type="range" id="eOX" min="-200" max="200" step="1" value="0" oninput="syncNum('eOX','nOX');edPreview()"><input type="number" id="nOX" min="-200" max="200" step="1" value="0" oninput="syncRange('nOX','eOX');edPreview()"></div>
+      <div class="ed-row"><label>Offset Y</label><input type="range" id="eOY" min="-200" max="200" step="1" value="0" oninput="syncNum('eOY','nOY');edPreview()"><input type="number" id="nOY" min="-200" max="200" step="1" value="0" oninput="syncRange('nOY','eOY');edPreview()"></div>
+      <button class="ed-btn ed-apply" onclick="applyGlobalTransform()">✓ Apply Global Transform</button>
+      <button class="ed-btn ed-reset" onclick="resetGlobalTransform()">↺ Reset Transform</button>
+    </div>
+
+    <div class="ed-section">
+      <h3>Border & Page</h3>
+      <div class="ed-info">Control the red outer border inset and blue inner border so they never go off-page.</div>
+      <div class="ed-row"><label>Red border inset</label><input type="range" id="eBD" min="8" max="60" step="1" value="18" oninput="syncNum('eBD','nBD');edPreview()"><input type="number" id="nBD" min="8" max="60" step="1" value="18" oninput="syncRange('nBD','eBD');edPreview()"></div>
+      <div class="ed-row"><label>Border thickness</label><input type="range" id="eBW" min="1" max="8" step="0.5" value="3.5" oninput="syncNum('eBW','nBW');edPreview()"><input type="number" id="nBW" min="1" max="8" step="0.5" value="3.5" oninput="syncRange('nBW','eBW');edPreview()"></div>
+      <div class="ed-row"><label>Title band height</label><input type="range" id="eTH" min="60" max="200" step="2" value="120" oninput="syncNum('eTH','nTH');edPreview()"><input type="number" id="nTH" min="60" max="200" step="2" value="120" oninput="syncRange('nTH','eTH');edPreview()"></div>
+      <button class="ed-btn ed-apply" onclick="applyBorderSettings()">✓ Apply Border Settings</button>
+    </div>
+
+    <div class="ed-section">
+      <h3>Edit Individual Block</h3>
+      <div class="ed-info">Select a block, then edit its raw point coordinates. Format: x1,y1 x2,y2 x3,y3 …</div>
+      <select id="edBlockSel" class="ed-select" onchange="loadBlockCoords()">
+        <option value="">— Select block —</option>
+      </select>
+      <textarea id="edBlockPts" class="ed-textarea" rows="4" placeholder="x1,y1 x2,y2 x3,y3 ..."></textarea>
+      <div class="ed-hint">Click a block on the canvas to select it. Drag blocks to reposition.</div>
+      <button class="ed-btn ed-apply" onclick="applyBlockCoords()">✓ Apply Block Points</button>
+      <button class="ed-btn ed-reset" onclick="resetBlock()">↺ Reset This Block</button>
+    </div>
+
+    <div class="ed-section">
+      <h3>Quick Nudge Selected</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:6px">
+        <div></div>
+        <button class="ed-btn ed-reset" style="margin:0;padding:5px" onclick="nudge(0,-5)">▲ 5</button>
+        <div></div>
+        <button class="ed-btn ed-reset" style="margin:0;padding:5px" onclick="nudge(-5,0)">◀ 5</button>
+        <button class="ed-btn ed-reset" style="margin:0;padding:5px;font-size:10px" onclick="nudge(0,0)">●</button>
+        <button class="ed-btn ed-reset" style="margin:0;padding:5px" onclick="nudge(5,0)">5 ▶</button>
+        <div></div>
+        <button class="ed-btn ed-reset" style="margin:0;padding:5px" onclick="nudge(0,5)">▼ 5</button>
+        <div></div>
+      </div>
+      <div class="ed-row"><label>Nudge step</label><input type="number" id="nudgeStep" value="5" min="1" max="50" style="width:60px;background:#313244;border:1px solid #45475a;border-radius:4px;color:#cdd6f4;font-size:12px;padding:3px 6px;font-family:inherit;outline:none"></div>
+    </div>
+
+    <div class="ed-section">
+      <h3>Danger Zone</h3>
+      <button class="ed-btn ed-danger" onclick="resetAllBlocks()">↺ Reset ALL Blocks to Original</button>
+    </div>
+
+   </div>
+   <!-- Right: live canvas -->
+   <div class="ed-right">
+    <div class="ed-canvas-hdr">
+      <span>Live Preview — <b style="color:#cba6f7">SVG 1600×1120</b></span>
+      <span id="edCursorPos" style="margin-left:auto;color:#6c7086;font-family:monospace"></span>
+      <label style="display:flex;align-items:center;gap:5px;cursor:pointer">
+        <input type="checkbox" id="edShowA4" checked onchange="edPreview()">
+        <span>Show A4 frame</span>
+      </label>
+    </div>
+    <div class="ed-canvas-wrap">
+      <canvas id="edCanvas"></canvas>
+    </div>
+    <div class="ed-a4-note" id="edA4Note">A4 landscape at 96dpi ≈ 1123×794px. Red dashed frame shows what fits on one page.</div>
+   </div>
+  </div>
+ </div>
+</div>
+
+
+<!-- ══ Villa Count Editor ═══════════════════════════════════════════════ -->
+<div class="ve-overlay" id="veOverlay" style="display:none" onclick="if(event.target===this)closeVillaEditor()">
+ <div class="ve-modal" onclick="event.stopPropagation()">
+  <div class="ve-hdr">
+    <div>
+      <h2>✎ Edit Villa Counts</h2>
+      <p>Set the number of villas in each block. Used for all progress calculations.</p>
+    </div>
+    <button class="ve-close" onclick="closeVillaEditor()">✕</button>
+  </div>
+  <div class="ve-body">
+    <input class="ve-search" id="veSearch" placeholder="Search block name…" oninput="filterVeCards()">
+    <div class="ve-grid" id="veGrid"></div>
+  </div>
+  <div class="ve-footer">
+    <div class="ve-footer-stat" id="veFooterStat">Total: <b>—</b> villas across <b>—</b> blocks</div>
+    <button class="ve-fbtn ve-fbtn-reset" onclick="resetVillaCounts()">↺ Reset All</button>
+    <button class="ve-fbtn ve-fbtn-apply" onclick="applyVillaCounts()">✓ Apply &amp; Close</button>
+  </div>
+ </div>
+</div>
+
+</body>
+</html>
