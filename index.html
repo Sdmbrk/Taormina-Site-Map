@@ -161,11 +161,13 @@ body{font-family:Arial,sans-serif;background:#eaeae6;min-height:100vh;display:fl
 .ve-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
 .ve-card{border:1.5px solid #e0e0dc;border-radius:8px;padding:9px 11px;background:#fafaf8;display:flex;flex-direction:column;gap:4px;transition:.15s}
 .ve-card:hover{border-color:#0e7490;background:#f0fafb}
-.ve-card-name{font-size:11px;font-weight:800;color:#1a1a1a;font-family:'Courier New',monospace}
+.ve-card-name{font-size:10px;font-weight:800;color:#888;font-family:'Courier New',monospace;letter-spacing:.3px}
 .ve-card-row{display:flex;align-items:center;gap:6px}
-.ve-card-row label{font-size:10px;color:#888;flex:1}
-.ve-card-input{width:70px;padding:4px 7px;border:1.5px solid #d0d0cc;border-radius:5px;font-size:13px;font-weight:700;font-family:inherit;outline:none;text-align:right;background:#fff;color:#1a1a1a}
+.ve-card-row label{font-size:10px;color:#888;flex:1;white-space:nowrap}
+.ve-card-input{width:60px;padding:4px 6px;border:1.5px solid #d0d0cc;border-radius:5px;font-size:13px;font-weight:700;font-family:inherit;outline:none;text-align:right;background:#fff;color:#1a1a1a}
 .ve-card-input:focus{border-color:#0e7490;background:#f0fafb}
+.ve-card-name-input{width:100%;padding:5px 8px;border:1.5px solid #d0d0cc;border-radius:5px;font-size:12px;font-weight:700;font-family:inherit;outline:none;background:#fff;color:#1a1a1a;margin-bottom:2px}
+.ve-card-name-input:focus{border-color:#7b3fb5;background:#faf5ff}
 .ve-card-orig{font-size:9px;color:#aaa;margin-top:1px}
 .ve-footer{padding:12px 20px;border-top:1px solid #e0e0dc;display:flex;align-items:center;gap:10px;flex-shrink:0;background:#f8f8f6}
 .ve-footer-stat{font-size:12px;color:#666;flex:1}
@@ -174,21 +176,112 @@ body{font-family:Arial,sans-serif;background:#eaeae6;min-height:100vh;display:fl
 .ve-fbtn-apply{background:#0e7490;color:#fff}.ve-fbtn-apply:hover{background:#0c6380}
 .ve-fbtn-reset{background:#e0e0dc;color:#555}.ve-fbtn-reset:hover{background:#d0d0cc}
 .ve-fbtn-close{background:#fff;color:#888;border:1.5px solid #ddd}.ve-fbtn-close:hover{background:#f0f0ee}
+
+/* ── Map Manager ───────────────────────────────────────────────────────── */
+.mm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600;display:flex;align-items:center;justify-content:center}
+.mm-modal{background:#fff;border-radius:14px;width:min(640px,96vw);max-height:86vh;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,.25);overflow:hidden}
+.mm-hdr{padding:16px 22px;background:#fffbf0;border-bottom:1px solid #e0d8c0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.mm-hdr h2{font-size:16px;font-weight:900;color:#1a1a1a;margin:0}
+.mm-hdr p{font-size:11px;color:#888;margin:2px 0 0}
+.mm-close{background:none;border:none;font-size:20px;cursor:pointer;color:#888;padding:2px 6px;border-radius:4px}
+.mm-close:hover{background:#fee2e2;color:#b91c1c}
+.mm-body{overflow-y:auto;padding:16px 22px;flex:1}
+.mm-footer{padding:12px 22px;border-top:1px solid #e8e8e4;display:flex;gap:10px;align-items:center;background:#fafaf8;flex-shrink:0}
+
+/* ── Sidebar ──────────────────────────────────────────────────────────────── */
+.maps-sidebar{width:230px;flex-shrink:0;background:#fff;border:1.5px solid #e0e0dc;border-radius:10px;padding:14px 12px;box-shadow:0 2px 10px rgba(0,0,0,.08);align-self:flex-start;margin-top:0;max-height:82vh;overflow-y:auto}
+/* Section header */
+.sb-section-hdr{font-size:9px;font-weight:900;color:#aaa;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;padding-bottom:5px;border-bottom:1.5px solid #f0f0ec}
+/* Project card */
+.sb-proj{border:1.5px solid #e8e8e4;border-radius:8px;padding:9px 10px;margin-bottom:6px;cursor:pointer;transition:all .15s}
+.sb-proj:hover{border-color:#3a6ab0;background:#f5f8ff}
+.sb-proj-active{border-color:#3a6ab0;background:#f0f5ff}
+.sb-proj-top{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:5px}
+.sb-proj-name{font-size:12px;font-weight:700;color:#1a1a1a;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-proj-meta{font-size:10px;color:#aaa;white-space:nowrap;flex-shrink:0}
+.sb-proj-actions{display:flex;gap:5px;margin-top:7px;padding-top:6px;border-top:1px solid #e8e8e4}
+.sb-act-btn{flex:1;padding:3px 6px;border-radius:4px;border:1px solid #d0d0cc;background:#fff;font-size:10px;font-weight:700;cursor:pointer;color:#555;font-family:inherit;transition:.12s}
+.sb-act-btn:hover{background:#f0f0ee}
+.sb-act-del{border-color:#fca5a5;color:#dc2626}.sb-act-del:hover{background:#fef2f2}
+/* Map card */
+.sb-map{padding:8px 10px;border-radius:7px;margin-bottom:4px;cursor:pointer;border:1.5px solid transparent;transition:all .12s}
+.sb-map:hover{background:#f5f8ff;border-color:#c7d8f5}
+.sb-map-active{background:#eef3ff;border-color:#3a6ab0}
+.sb-map-row1{display:flex;align-items:center;gap:5px;margin-bottom:4px}
+.sb-map-dot{font-size:10px;flex-shrink:0}
+.sb-map-name{font-size:12px;color:#222;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-map-pct{font-size:11px;font-weight:800;flex-shrink:0}
+.sb-map-row2{display:flex;align-items:center;gap:6px}
+.sb-map-count{font-size:10px;color:#aaa;white-space:nowrap;flex-shrink:0}
+/* Shared */
+.sb-bar-wrap{display:flex;align-items:center;gap:6px}
+.sb-bar{height:5px;background:#eee;border-radius:3px;overflow:hidden;flex:1;min-width:0}
+.sb-bar-fill{height:100%;border-radius:3px;transition:width .3s}
+.sb-pct{font-size:10px;font-weight:800;flex-shrink:0;min-width:28px;text-align:right}
+.sb-add-btn{width:100%;margin-top:6px;padding:6px;border-radius:6px;border:1.5px dashed #bbb;color:#888;background:#fff;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s}
+.sb-add-btn:hover{border-color:#3a6ab0;color:#3a6ab0;background:#f5f8ff}
+/* Project name editable */
+#barProjectName{cursor:pointer;border-radius:4px;padding:2px 6px;transition:.15s;display:inline-block}
+#barProjectName:hover{background:#f0f0f0;outline:1px dashed #bbb}
+.pn-edit-btn{border:none;background:none;cursor:pointer;color:#3a6ab0;font-size:11px;padding:0 4px;font-family:inherit;font-weight:700}
+.pn-edit-btn:hover{text-decoration:underline}
+
+/* ── Add Block Dialog ─────────────────────────────────────────────────── */
+.abd-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:700;display:flex;align-items:center;justify-content:center}
+.abd-modal{background:#1e1e2e;color:#cdd6f4;border-radius:12px;padding:24px 28px;width:340px;box-shadow:0 8px 40px rgba(0,0,0,.5);border:1px solid #313244}
+.abd-modal h3{font-size:15px;font-weight:800;color:#cba6f7;margin:0 0 6px}
+.abd-modal p{font-size:11px;color:#6c7086;margin:0 0 18px}
+.abd-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.abd-row label{font-size:12px;color:#a6adc8;width:80px;flex-shrink:0}
+.abd-inp{flex:1;background:#313244;border:1px solid #45475a;border-radius:5px;color:#cdd6f4;font-size:13px;padding:6px 9px;font-family:inherit;outline:none}
+.abd-inp:focus{border-color:#cba6f7}
+.abd-unit{font-size:11px;color:#585b70}
+.abd-btns{display:flex;gap:8px;margin-top:18px;justify-content:flex-end}
+.abd-btn{padding:8px 20px;border-radius:7px;border:none;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s}
+.abd-ok{background:#a6e3a1;color:#1e1e2e}.abd-ok:hover{background:#89dcb0}
+.abd-cancel{background:#45475a;color:#cdd6f4}.abd-cancel:hover{background:#585b70}
+
+/* ── Format Header Modal ───────────────────────────────────────────────── */
+.fh-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:650;display:flex;align-items:center;justify-content:center}
+.fh-modal{background:#fff;border-radius:14px;width:min(520px,96vw);max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.22);display:flex;flex-direction:column}
+.fh-hdr{padding:16px 22px 12px;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.fh-hdr h2{font-size:16px;font-weight:900;margin:0;color:#111}
+.fh-close{border:none;background:none;font-size:20px;cursor:pointer;color:#888;padding:2px 6px;border-radius:4px}
+.fh-close:hover{background:#fee2e2;color:#b91c1c}
+.fh-body{padding:18px 22px;display:flex;flex-direction:column;gap:16px}
+.fh-section{background:#f8f8f6;border-radius:8px;padding:12px 14px}
+.fh-section-title{font-size:10px;font-weight:800;color:#aaa;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px}
+.fh-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.fh-row:last-child{margin-bottom:0}
+.fh-row label{font-size:12px;color:#555;width:110px;flex-shrink:0;font-weight:600}
+.fh-row input[type=color]{width:42px;height:30px;border:1.5px solid #ddd;border-radius:5px;cursor:pointer;padding:2px}
+.fh-row input[type=range]{flex:1;accent-color:#3a6ab0}
+.fh-row select{flex:1;padding:5px 8px;border:1.5px solid #ddd;border-radius:5px;font-size:12px;font-family:inherit;outline:none;background:#fff}
+.fh-row select:focus{border-color:#3a6ab0}
+.fh-val{font-size:11px;color:#888;min-width:40px;text-align:right;font-weight:700}
+.fh-hint{font-size:11px;color:#888;flex:1}
+.fh-preview{background:#fff;border:2px solid #e0e0dc;border-radius:8px;padding:16px;text-align:center;margin-top:2px}
+.fh-footer{padding:12px 22px;border-top:1px solid #eee;display:flex;gap:10px;justify-content:flex-end;flex-shrink:0;background:#fafaf8}
+.fh-btn{padding:8px 20px;border-radius:7px;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s}
+.fh-ok{background:#1a4c8c;color:#fff}.fh-ok:hover{background:#153d70}
+.fh-reset{background:#e8e8e4;color:#555}.fh-reset:hover{background:#d8d8d4}
+
+.mhdr-top{display:flex;align-items:center;justify-content:center;gap:10px;position:relative;width:100%}
+.mhfmt-btn{position:absolute;right:0;border:1.5px solid #9333ea;border-radius:6px;padding:4px 11px;font-size:11px;font-weight:700;color:#9333ea;background:#fff;cursor:pointer;font-family:inherit;transition:.15s;white-space:nowrap}
+.mhfmt-btn:hover{background:#f5f0ff;border-color:#7c3aed}
 </style>
 </head>
 <body>
 
 <div class="bar">
-  <span class="bar-logo">🏗 Taormina Village</span>
+  <span id="barProjectName" class="bar-logo" onclick="editProjectName()" title="Click to rename project">🏗 Taormina Village</span>
+  <button class="pn-edit-btn" onclick="editProjectName()" title="Rename project">✎</button>
   <div class="sep"></div>
   <span class="lbl">Mode:</span>
   <button class="btn g on" id="bG" onclick="setMode('green')">✓ Done</button>
   <button class="btn bn" id="bB" onclick="setMode('brown')">~ Partial</button>
   <button class="btn cl" id="bC" onclick="setMode('clear')">✕ Clear</button>
   <div class="sep"></div>
-  <button class="btn add-btn" onclick="openModal()">＋ Add Map</button>
-  <div class="sep"></div>
-  <div class="ptabs" id="ptabs"></div>
   <div class="sep"></div>
   <button class="btn prt-btn" onclick="doPrint()">⎙ Print / PDF</button>
   <div class="sep"></div>
@@ -229,63 +322,61 @@ const _S = (pts) => pts.trim().split(' ').map(p => {
 }).join(' ');
 
 const BLOCK_POLYS = {
-  'TH-18':   _S('450.4,176.8 534.6,202.7 513.0,252.0 430.5,226.4 450.5,176.8'),
-  'TH-21':   _S('429.5,228.9 543.4,264.2 520.9,317.9 406.8,282.8 429.5,228.9'),
-  'TH-R01':  _S('685.2,140.0 663.3,192.3 955.4,282.1 977.3,229.7 685.3,139.9'),
-  'TH-R02-B1':_S('998.2,236.1 1230.3,307.5 1208.3,359.9 976.2,288.5 998.2,236.1'),
-  'TH-R02-B2':_S('1235.9,309.2 1438.1,371.3 1418.9,416.8 1408.5,421.4 1213.9,361.6 1235.9,309.2'),
-  'TH-R03':  _S('1487.7,439.2 1570.0,590.0 1552.2,648.2 1537.7,645.4 1429.7,464.6 1487.7,439.2'),
-  'TH-R04':  _S('1558.0,685.1 1497.0,930.0 1462.1,931.7 1530.4,672.6 1558.0,685.1'),
-  'TH-R05-B1':_S('980.4,880.0 970.4,935.0 1280.0,975.0 1290.0,920.0 980.4,880.0'),
-  'TH-R05-B2':_S('1227.5,912.4 1452.0,942.0 1458.0,948.0 1449.0,992.0 1217.4,962.0 1227.5,912.4'),
-  'TH-R06':  _S('455.2,866.4 699.0,898.9 709.0,843.8 465.3,811.2 455.3,866.4'),
-  'TH-R07-B1':_S('75.0,757.5 169.0,770.1 159.0,825.1 65.0,812.6 75.0,757.5'),
+  'TH-18':_S('450.4,176.8 534.6,202.7 513.0,252.0 430.5,226.4'),
+  'TH-21':_S('429.5,228.9 543.4,264.2 520.9,317.9 406.8,282.8'),
+  'TH-R01':_S('685.2,140.0 663.3,192.3 955.4,282.1 977.3,229.7'),
+  'TH-R02-B1':_S('998.2,236.1 1230.3,307.5 1208.3,359.9 976.2,288.5'),
+  'TH-R02-B2':_S('1235.9,309.2 1438.1,371.3 1418.9,416.8 1213.9,361.6'),
+  'TH-R03':_S('1487.7,439.2 1552.2,648.2 1537.7,645.4 1429.7,464.6'),
+  'TH-R04':_S('1558.0,685.1 1497.0,930.0 1462.1,931.7 1530.4,672.6'),
+  'TH-R05-B1':_S('980.4,880.0 1205.3,927.8 1189.8,981.7 964.8,933.8'),
+  'TH-R05-B2':_S('1227.5,912.4 1458.0,948.0 1449.0,992.0 1217.4,962.0'),
+  'TH-R06':_S('455.2,866.4 699.0,898.9 709.0,843.8 465.3,811.2'),
+  'TH-R07-B1':_S('75.0,757.5 169.0,770.1 159.0,825.1 65.0,812.6'),
   'TH-R07-B2':_S('159.0,825.1 253.0,837.7 263.0,782.6 169.0,770.1'),
   'TH-R07-B3':_S('263.0,782.6 357.0,795.2 347.0,850.3 253.0,837.7'),
-  'TH-R08-B1':_S('52.0,573.2 115.0,586.7 138.0,507.7 75.0,494.3 52.0,573.2'),
-  'TH-R08-B2':_S('29.0,652.2 92.0,665.8 115.0,586.8 52.0,573.4 29.0,652.2'),
-  'TH-R08-B3':_S('136.0,689.3 149.0,646.1 212.0,659.9 200.0,702.6 136.0,689.3'),
-  'TH-R08-B4':_S('20.0,731.3 70.0,744.6 92.0,665.8 29.0,652.2 20.0,731.3'),
-  'TH-R09-B1':_S('172.3,135.5 235.6,148.9 223.3,191.6 160.0,178.2 172.4,135.5'),
-  'TH-R09-B2':_S('142.7,238.3 205.9,251.7 223.2,191.6 160.0,178.2 142.7,238.3'),
-  'TH-R09-B3':_S('119.9,317.4 183.1,330.7 205.9,251.7 142.7,238.4 119.9,317.4'),
-  'TH-R09-B4':_S('97.1,396.5 160.3,409.8 183.1,330.7 119.9,317.4 97.1,396.5'),
-  'TH-R10':  _S('229.0,20.0 207.2,72.0 529.2,151.1 551.1,98.9 229.0,20.0'),
-  'TH-R11':  _S('1001.7,349.2 1293.8,439.0 1271.8,491.4 979.7,401.6 1001.7,349.2'),
-  'TH-R12':  _S('1392.3,633.2 1450.2,607.8 1366.9,468.3 1308.9,493.7 1392.3,633.2'),
-  'TH-R13':  _S('1467.0,667.7 1412.0,862.0 1348.0,849.0 1403.0,655.5 1467.0,667.7'),
-  'TH-R14-B1':_S('1025.6,836.9 1332.2,877.9 1342.3,822.8 1035.6,781.8 1025.6,836.9'),
-  'TH-R14-B2':_S('979.6,879.8 969.6,932.0 1209.0,962.0 1219.0,909.0 979.6,879.8'),
-  'TH-R15-B1':_S('556.6,717.7 768.9,746.0 758.8,801.1 546.5,772.7 556.6,717.7'),
-  'TH-R15-B2':_S('713.4,844.4 956.3,876.8 946.5,929.0 703.3,897.0 713.4,844.3'),
-  'TH-R15-B3':_S('772.8,746.6 1016.5,779.2 1006.5,834.2 762.7,801.7 772.8,746.6'),
-  'TH-R16-B1':_S('376.6,696.0 366.6,751.1 460.6,763.7 470.6,708.6 376.6,696.0'),
-  'TH-R16-B2':_S('357.0,795.2 451.0,807.7 441.0,860.0 347.0,848.0 357.0,795.2'),
-  'TH-R17-B1':_S('96.0,415.0 159.0,428.4 136.0,507.6 73.0,494.3 96.0,415.1'),
-  'TH-R17-B2':_S('193.0,488.6 170.0,567.9 233.0,580.9 256.0,501.8 193.0,488.6'),
-  'TH-R17-B3':_S('216.0,409.0 193.0,488.6 256.0,501.8 279.0,422.2 216.0,409.0'),
-  'TH-R19':  _S('624.9,233.3 917.0,323.1 895.0,375.6 602.9,285.8 624.9,233.3'),
-  'TH-R20-B1':_S('602.9,285.8 580.8,338.2 872.9,428.0 895.0,375.6 602.9,285.8'),
-  'TH-R20-B2':_S('635.0,458.7 865.9,529.6 887.9,477.1 657.0,406.3 635.0,458.7'),
-  'TH-R22-B1':_S('256.5,251.2 319.7,264.5 297.7,342.9 233.9,329.5 256.5,251.2'),
-  'TH-R22-B2':_S('328.0,267.3 391.2,280.6 347.4,432.7 284.2,419.4 328.0,267.3'),
-  'TH-R22-B3':_S('233.9,329.5 211.6,409.0 274.3,422.2 297.7,342.9 233.9,329.5'),
-  'TH-R23-B1':_S('280.7,432.6 342.4,445.6 291.0,620.0 228.6,607.0 280.7,432.6'),
-  'TH-R23-B2':_S('228.6,580.9 205.8,657.0 142.7,644.0 165.3,567.9 228.6,580.9'),
-  'TH-R24':  _S('481.0,650.0 470.9,703.0 290.1,679.0 300.1,625.9 481.0,650.0'),
-  'TH-R25':  _S('782.8,687.5 1026.8,720.0 1016.7,775.1 772.9,742.5 782.8,687.5'),
-  'TH-R26-B1':_S('1031.4,623.8 1243.7,652.1 1233.6,707.2 1021.2,678.2 1031.4,623.8'),
-  'TH-R26-B2':_S('1045.8,722.9 1289.6,755.5 1279.5,808.0 1035.8,776.0 1045.8,722.9'),
-  'TH-R27':  _S('1344.4,671.1 1352.4,667.6 1409.2,678.6 1382.9,775.0 1319.4,763.0 1344.4,671.2'),
-  'TH-R28':  _S('1334.3,658.5 1392.3,633.2 1323.4,517.9 1273.4,539.8 1269.3,549.7 1334.3,658.5'),
-  'TH-R29':  _S('979.7,401.6 957.7,454.1 1249.8,543.9 1271.8,491.4 979.7,401.6'),
-  'TH-R30':  _S('902.1,481.6 1194.2,571.3 1172.3,623.8 881.2,534.3 903.2,481.9'),
-  'TH-R31':  _S('653.9,405.1 631.8,457.5 429.8,395.4 451.6,342.9 653.9,405.1'),
-  'TH-R32-B1':_S('404.4,539.9 585.2,564.1 575.2,619.1 394.4,594.9 404.4,539.9'),
-  'TH-R32-B2':_S('566.5,658.8 778.6,687.1 768.7,740.0 556.5,712.0 566.5,658.8'),
-  'TH-R32-B3':_S('579.7,619.9 821.8,652.3 831.8,597.3 589.7,564.9 579.7,619.9'),
-  'TH-R33':  _S('845.7,599.1 1025.1,623.0 1015.0,675.0 835.9,651.0 845.7,599.1')
-};
+  'TH-R08-B1':_S('75.0,494.3 136.6,507.4 114.7,583.3 53.0,570.2'),
+  'TH-R08-B2':_S('53.0,570.2 114.6,583.3 92.7,659.2 31.0,646.1'),
+  'TH-R08-B3':_S('31.0,646.1 92.6,659.2 70.7,735.1 9.0,722.0'),
+  'TH-R08-B4':_S('9.0,722.0 70.6,735.1 48.7,811.0 -13.0,797.9'),
+  'TH-R09-B1':_S('172.3,135.5 235.6,148.9 223.3,191.6 160.0,178.2'),
+  'TH-R09-B2':_S('142.7,238.3 205.9,251.7 223.2,191.6 160.0,178.2'),
+  'TH-R09-B3':_S('119.9,317.4 183.1,330.7 205.9,251.7 142.7,238.4'),
+  'TH-R09-B4':_S('97.1,396.5 160.3,409.8 183.1,330.7 119.9,317.4'),
+  'TH-R10':_S('229.0,20.0 207.2,72.0 529.2,151.1 551.1,98.9'),
+  'TH-R11':_S('1001.7,349.2 1293.8,439.0 1271.8,491.4 979.7,401.6'),
+  'TH-R12':_S('1392.3,633.2 1450.2,607.8 1366.9,468.3 1308.9,493.7'),
+  'TH-R13':_S('1467.0,667.7 1412.0,862.0 1348.0,849.0 1403.0,655.5'),
+  'TH-R14-B1':_S('1025.6,836.9 1332.2,877.9 1342.3,822.8 1035.6,781.8'),
+  'TH-R15-B1':_S('556.6,717.7 768.9,746.0 758.8,801.1 546.5,772.7'),
+  'TH-R15-B2':_S('713.4,844.4 956.3,876.8 946.5,929.0 703.3,897.0'),
+  'TH-R15-B3':_S('772.8,746.6 1016.5,779.2 1006.5,834.2 762.7,801.7'),
+  'TH-R16-B1':_S('376.6,696.0 366.6,751.1 460.6,763.7 470.6,708.6'),
+  'TH-R16-B2':_S('357.0,795.2 451.0,807.7 441.0,860.0 347.0,848.0'),
+  'TH-R17-B1':_S('193.8,485.9 256.4,499.2 234.2,576.1 171.6,562.8'),
+  'TH-R17-B2':_S('171.6,562.8 234.2,576.1 212.0,653.0 149.4,639.7'),
+  'TH-R17-B3':_S('216.0,409.0 278.6,422.3 256.4,499.2 193.8,485.9'),
+  'TH-R19':_S('624.9,233.3 917.0,323.1 895.0,375.6 602.9,285.8'),
+  'TH-R20-B1':_S('602.9,285.8 580.8,338.2 872.9,428.0 895.0,375.6'),
+  'TH-R20-B2':_S('635.0,458.7 865.9,529.6 887.9,477.1 657.0,406.3'),
+  'TH-R22-B1':_S('256.5,251.2 319.7,264.5 297.7,342.9 233.9,329.5'),
+  'TH-R22-B2':_S('328.0,267.3 391.2,280.6 347.4,432.7 284.2,419.4'),
+  'TH-R22-B3':_S('233.9,329.5 211.6,409.0 274.3,422.2 297.7,342.9'),
+  'TH-R23-B1':_S('280.7,432.6 342.4,445.6 291.0,620.0 228.6,607.0'),
+  'TH-R23-B2':_S('165.3,567.9 227.9,581.2 205.7,658.1 143.1,644.8'),
+  'TH-R24':_S('481.0,650.0 470.9,703.0 290.1,679.0 300.1,625.9'),
+  'TH-R25':_S('782.8,687.5 1026.8,720.0 1016.7,775.1 772.9,742.5'),
+  'TH-R26-B1':_S('1031.4,623.8 1243.7,652.1 1233.6,707.2 1021.2,678.2'),
+  'TH-R26-B2':_S('1045.8,722.9 1289.6,755.5 1279.5,808.0 1035.8,776.0'),
+  'TH-R27':_S('1299.0,663.0 1387.0,681.7 1359.2,777.8 1271.2,759.1'),
+  'TH-R28':_S('1334.3,658.5 1392.3,633.2 1323.4,517.9 1273.4,539.8'),
+  'TH-R29':_S('979.7,401.6 957.7,454.1 1249.8,543.9 1271.8,491.4'),
+  'TH-R30':_S('902.1,481.6 1194.2,571.3 1172.3,623.8 881.2,534.3'),
+  'TH-R31':_S('653.9,405.1 631.8,457.5 429.8,395.4 451.6,342.9'),
+  'TH-R32-B1':_S('404.4,539.9 585.2,564.1 575.2,619.1 394.4,594.9'),
+  'TH-R32-B2':_S('566.5,658.8 778.6,687.1 768.7,740.0 556.5,712.0'),
+  'TH-R32-B3':_S('579.7,619.9 821.8,652.3 831.8,597.3 589.7,564.9'),
+  'TH-R33':  _S('845.7,599.1 1025.1,623.0 1015.0,675.0 835.9,651.0'),};
 
 // Parent TH row → [block names]  (for group-level operations)
 const PARENT_GROUPS = {
@@ -304,7 +395,7 @@ const PARENT_GROUPS = {
   'TH-R11':["TH-R11"],
   'TH-R12':["TH-R12"],
   'TH-R13':["TH-R13"],
-  'TH-R14':["TH-R14-B1", "TH-R14-B2"],
+  'TH-R14':["TH-R14-B1"],
   'TH-R15':["TH-R15-B1", "TH-R15-B2", "TH-R15-B3"],
   'TH-R16':["TH-R16-B1", "TH-R16-B2"],
   'TH-R17':["TH-R17-B1", "TH-R17-B2", "TH-R17-B3"],
@@ -333,7 +424,7 @@ const BLOCK_SUBS = {
   'TH-R02-B2':["TH-R02-015", "TH-R02-016", "TH-R02-017", "TH-R02-018", "TH-R02-019", "TH-R02-020", "TH-R02-021", "TH-R02-022", "TH-R02-023", "TH-R02-024", "TH-R02-025", "TH-R02-026"],
   'TH-R03':["TH-R03-001", "TH-R03-002", "TH-R03-003", "TH-R03-004", "TH-R03-005", "TH-R03-006", "TH-R03-007", "TH-R03-008", "TH-R03-009", "TH-R03-010", "TH-R03-011", "TH-R03-012", "TH-R03-013", "TH-R03-014"],
   'TH-R04':["TH-R04-001", "TH-R04-002", "TH-R04-003", "TH-R04-004", "TH-R04-005", "TH-R04-006", "TH-R04-007", "TH-R04-008", "TH-R04-009", "TH-R04-010", "TH-R04-011", "TH-R04-012", "TH-R04-013", "TH-R04-014", "TH-R04-015", "TH-R04-016", "TH-R04-017", "TH-R04-018"],
-  'TH-R05-B1':[],
+  'TH-R05-B1':["TH-R05-015","TH-R05-016","TH-R05-017","TH-R05-018","TH-R05-019","TH-R05-020","TH-R05-021","TH-R05-022","TH-R05-023","TH-R05-024","TH-R05-025","TH-R05-026","TH-R05-027","TH-R05-028"],
   'TH-R05-B2':["TH-R05-001", "TH-R05-002", "TH-R05-003", "TH-R05-004", "TH-R05-005", "TH-R05-006", "TH-R05-007", "TH-R05-008", "TH-R05-009", "TH-R05-010", "TH-R05-011", "TH-R05-012", "TH-R05-013", "TH-R05-014"],
   'TH-R06':["TH-R06-015", "TH-R06-016", "TH-R06-017", "TH-R06-018", "TH-R06-019", "TH-R06-020", "TH-R06-021", "TH-R06-022", "TH-R06-023", "TH-R06-024", "TH-R06-025", "TH-R06-026", "TH-R06-027", "TH-R06-028"],
   'TH-R07-B1':["TH-R07-010", "TH-R07-011", "TH-R07-012"],
@@ -352,7 +443,6 @@ const BLOCK_SUBS = {
   'TH-R12':["TH-R12-001", "TH-R12-002", "TH-R12-003", "TH-R12-004", "TH-R12-005", "TH-R12-006", "TH-R12-007", "TH-R12-008", "TH-R12-009", "TH-R12-010"],
   'TH-R13':["TH-R13-001", "TH-R13-002", "TH-R13-003", "TH-R13-004", "TH-R13-005", "TH-R13-006", "TH-R13-007", "TH-R13-008", "TH-R13-009", "TH-R13-010", "TH-R13-011", "TH-R13-012", "TH-R13-013", "TH-R13-014"],
   'TH-R14-B1':["TH-R14-001", "TH-R14-002", "TH-R14-003", "TH-R14-004", "TH-R14-005", "TH-R14-006", "TH-R14-007", "TH-R14-008", "TH-R14-009", "TH-R14-010", "TH-R14-011", "TH-R14-012", "TH-R14-013", "TH-R14-014", "TH-R14-015", "TH-R14-016", "TH-R14-017", "TH-R14-018"],
-  'TH-R14-B2':["TH-R05-015", "TH-R05-016", "TH-R05-017", "TH-R05-018", "TH-R05-019", "TH-R05-020", "TH-R05-021", "TH-R05-022", "TH-R05-023", "TH-R05-024", "TH-R05-025", "TH-R05-026", "TH-R05-027", "TH-R05-028"],
   'TH-R15-B1':["TH-R15-001", "TH-R15-002", "TH-R15-003", "TH-R15-004", "TH-R15-005", "TH-R15-006", "TH-R15-007", "TH-R15-008", "TH-R15-009", "TH-R15-010", "TH-R15-011", "TH-R15-012"],
   'TH-R15-B2':["TH-R06-001", "TH-R06-002", "TH-R06-003", "TH-R06-004", "TH-R06-005", "TH-R06-006", "TH-R06-007", "TH-R06-008", "TH-R06-009", "TH-R06-010", "TH-R06-011", "TH-R06-012", "TH-R06-013", "TH-R06-014"],
   'TH-R15-B3':["TH-R15-013", "TH-R15-014", "TH-R15-015", "TH-R15-016", "TH-R15-017", "TH-R15-018", "TH-R15-019", "TH-R15-020", "TH-R15-021", "TH-R15-022", "TH-R15-023", "TH-R15-024", "TH-R15-025", "TH-R15-026"],
@@ -414,15 +504,74 @@ function colorFor(st){
 }
 
 // ── State ────────────────────────────────────────────────────────────────
-let pages, curPage=0, mode='green', selBlock=null;
+// ── Multi-project state ──────────────────────────────────────────────────
+let projects = [];          // [{name, pages:[{title,states}]}]
+let curProj  = 0;           // active project index
+let curPage  = 0;           // active page inside curProj
+let mode = 'green', selBlock = null;
+// Convenience accessors (legacy refs still work)
+function getPages(){ return projects[curProj]?.pages || []; }
+function getProjectName(){ return projects[curProj]?.name || 'Project'; }
+function getFmt(){
+  const defaults={
+    titleSize:52, titleColor:'#111111', titleWeight:'900', titleFont:'Arial',
+    statsSize:21, statsColor:'#cc1a1a',
+    projSize:18,  projColor:'#1a4c8c',
+    borderColor:'#cc1a1a', borderWidth:3.5
+  };
+  return Object.assign({},defaults,projects[curProj]?.fmt||{});
+}
+function setFmt(key,val){
+  if(!projects[curProj]) return;
+  if(!projects[curProj].fmt) projects[curProj].fmt={};
+  projects[curProj].fmt[key]=val;
+  save(); renderAll();
+}
+// Legacy alias used throughout code
+Object.defineProperty(window,'pages',{get:getPages,set:v=>{if(projects[curProj])projects[curProj].pages=v;}});
+Object.defineProperty(window,'PROJECT_NAME',{get:getProjectName,set:v=>{if(projects[curProj])projects[curProj].name=v;}});
 
-function loadPages(){
-  try{const s=localStorage.getItem('taormina_v4');if(s)return JSON.parse(s);}catch(e){}
+function loadProjects_old(){
+  try{
+    const s=localStorage.getItem('taormina_v4');
+    if(s){
+      const d=JSON.parse(s);
+      if(d.projectName) PROJECT_NAME=d.projectName;
+      return d.pages||d;  // support both old (array) and new (object) format
+    }
+  }catch(e){}
   return null;
 }
-function save(){ try{localStorage.setItem('taormina_v4',JSON.stringify(pages));}catch(e){} }
+function save(){
+  try{
+    localStorage.setItem('taormina_v5',JSON.stringify(projects));
+  }catch(e){}
+}
+function saveProjectName(name){
+  PROJECT_NAME=name.trim()||PROJECT_NAME;
+  document.title=PROJECT_NAME+' – Site Map';
+  updateProjectNameUI();
+  save();
+}
+function updateProjectNameUI(){
+  const el=document.getElementById('barProjectName');
+  if(el) el.textContent='🏗 '+PROJECT_NAME;
+}
 
-pages = loadPages() || [{title:'WATER TANK INSTALLATION', states:{'TH-18':'green','TH-21':'brown'}}];
+function loadProjects(){
+  try{
+    const s5=localStorage.getItem('taormina_v5');
+    if(s5){ const d=JSON.parse(s5); if(Array.isArray(d)&&d.length) return d; }
+    const s4=localStorage.getItem('taormina_v4');
+    if(s4){ const d=JSON.parse(s4); const pgs=Array.isArray(d)?d:(d.pages||[]); return [{name:d.projectName||'Taormina Village',pages:pgs.length?pgs:[{title:'Map 1',states:{}}]}]; }
+  }catch(e){}
+  return null;
+}
+
+projects = loadProjects() || [{
+  name:'Taormina Village',
+  pages:[{title:'WATER TANK INSTALLATION', states:{'TH-18':'green','TH-21':'brown'}}]
+}];
 
 function setMode(m){
   mode=m;
@@ -438,7 +587,7 @@ function getVillaCount(bid){
 }
 
 function calcStats(pi){
-  const states = pages[pi].states||{};
+  const states = (getPages()[pi]||{}).states||{};
   let done=0, partial=0, total=0;
   ALL_BLOCKS.forEach(bid => {
     if(BLOCK_POLYS[bid]===null||BLOCK_POLYS[bid]===undefined||BLOCK_POLYS[bid]==='') return;
@@ -457,7 +606,8 @@ function blockEffectiveState(bid, states){
 
 // ── SVG builder ───────────────────────────────────────────────────────────
 function buildSVG(pi, forPrint){
-  const p = pages[pi], states = p.states||{};
+  const p = getPages()[pi]; if(!p) return '';
+  const states = p.states||{};
   const st = calcStats(pi);
   const DY = (typeof window!=='undefined'&&window.LIVE_TH!==undefined)?window.LIVE_TH:TH;
 
@@ -468,17 +618,21 @@ function buildSVG(pi, forPrint){
 
   // Outer RED border — thick, well inside SVG edge so it's fully visible in PDF
   const BD  = (window.LIVE_BD !== undefined) ? window.LIVE_BD : 18;
-  const _BW = (window.LIVE_BW !== undefined) ? window.LIVE_BW : 3.5;
-  s += `<rect x="${BD}" y="${BD}" width="${SVG_W-BD*2}" height="${TOTAL_H-BD*2}" fill="none" stroke="#cc1a1a" stroke-width="${_BW}" rx="4"/>`;
+  const _BW = (window.LIVE_BW !== undefined) ? window.LIVE_BW : (getFmt().borderWidth||3.5);
+  const _BC = getFmt().borderColor||'#cc1a1a';
+  s += `<rect x="${BD}" y="${BD}" width="${SVG_W-BD*2}" height="${TOTAL_H-BD*2}" fill="none" stroke="${_BC}" stroke-width="${_BW}" rx="4"/>`;
 
   // Title separator line (inside border)
   s += `<line x1="${BD+2}" y1="${DY}" x2="${SVG_W-BD-2}" y2="${DY}" stroke="#c0c0b8" stroke-width="1.2"/>`;
 
-  // Title text — centred in title band
-  s += `<text x="${SVG_W/2}" y="${DY*.54}" text-anchor="middle" font-size="52" font-weight="900" fill="#111" font-family="Arial,sans-serif">${esc(p.title)}</text>`;
-
+  // Header formatting from project settings
+  const fmt=getFmt();
+  // Title text
+  s += `<text x="${SVG_W/2}" y="${DY*.44}" text-anchor="middle" font-size="${fmt.titleSize}" font-weight="${fmt.titleWeight}" fill="${fmt.titleColor}" font-family="${fmt.titleFont},Arial,sans-serif">${esc(p.title)}</text>`;
   // Stats line
-  s += `<text x="${SVG_W/2}" y="${DY*.88}" text-anchor="middle" font-size="21" font-weight="700" fill="#cc1a1a" font-family="Arial,sans-serif">${st.done} / ${st.total} Villas Done (${st.pct}%)</text>`;
+  s += `<text x="${SVG_W/2}" y="${DY*.72}" text-anchor="middle" font-size="${fmt.statsSize}" font-weight="700" fill="${fmt.statsColor}" font-family="Arial,sans-serif">${st.done} / ${st.total} Villas Done (${st.pct}%)</text>`;
+  // Project name
+  s += `<text x="${SVG_W/2}" y="${DY*.92}" text-anchor="middle" font-size="${fmt.projSize}" font-weight="600" fill="${fmt.projColor}" font-family="Arial,sans-serif" opacity="0.9">${esc(getProjectName())}</text>`;
 
   // Legend box (top right of title band, inside the red border)
   const lx=SVG_W-BD-320, ly=BD+8, lw=302, lh=DY-BD-14;
@@ -525,6 +679,7 @@ function buildSVG(pi, forPrint){
     // (tick removed — status shown by colour only)
   });
 
+  // (project name shown in title band above)
   s += `</svg>`;
   return s;
 }
@@ -533,6 +688,7 @@ function buildSVG(pi, forPrint){
 function renderMap(pi){
   const w = document.getElementById('mw'+pi);
   if(!w) return;
+  if(!getPages()[pi]) return;
   w.innerHTML = buildSVG(pi, false);
 
   w.querySelectorAll('.blk').forEach(el=>{
@@ -559,6 +715,7 @@ function renderMap(pi){
 }
 
 function updHeader(pi){
+  if(!getPages()[pi]) return;
   const st = calcStats(pi);
   const el = document.getElementById('mstat'+pi);
   if(el) el.textContent = `${st.done}/${st.total} done (${st.pct}%) · ${st.partial} partial · ${st.pending} pending`;
@@ -570,7 +727,7 @@ function updHeader(pi){
 
 // ── Popup ─────────────────────────────────────────────────────────────────
 function showPopup(pi, bid){
-  const states = pages[pi].states||{};
+  const states = (getPages()[pi]||{}).states||{};
   const st = states[bid]||'none';
   const subs = BLOCK_SUBS[bid]||[];
   const pu = document.getElementById('pu');
@@ -602,9 +759,9 @@ function showPopup(pi, bid){
 function applyAct(st){
   if(!selBlock) return;
   const {pi,bid} = selBlock;
-  if(!pages[pi].states) pages[pi].states={};
-  if(st==='clear') delete pages[pi].states[bid];
-  else pages[pi].states[bid]=st;
+  if(!getPages()[pi].states) getPages()[pi].states={};
+  if(st==='clear') delete getPages()[pi].states[bid];
+  else getPages()[pi].states[bid]=st;
   save();
   renderMap(pi);       // re-renders the SVG (popup is temporarily detached)
   showPopup(pi,bid);   // re-attaches and updates popup
@@ -615,10 +772,10 @@ function applyToParent(action){
   const {pi,bid} = selBlock;
   const parent = bid.replace(/-B\d+$/,'');
   const siblings = PARENT_GROUPS[parent]||[bid];
-  if(!pages[pi].states) pages[pi].states={};
+  if(!getPages()[pi].states) getPages()[pi].states={};
   siblings.forEach(b=>{
-    if(action==='clear') delete pages[pi].states[b];
-    else pages[pi].states[b]=action;
+    if(action==='clear') delete getPages()[pi].states[b];
+    else getPages()[pi].states[b]=action;
   });
   save(); renderMap(pi);
   const pu = document.getElementById('pu');
@@ -627,23 +784,20 @@ function applyToParent(action){
 
 // ── Full page render ──────────────────────────────────────────────────────
 function renderAll(){
-  const nav = document.getElementById('ptabs');
   const area = document.getElementById('pgarea');
-  nav.innerHTML=''; area.innerHTML='';
+  area.innerHTML='';
+  const pgs=getPages();
 
-  pages.forEach((p,i)=>{
-    const tab = document.createElement('button');
-    tab.className='ptab'+(i===curPage?' on':'');
-    tab.textContent = p.title.length>22 ? p.title.slice(0,22)+'…' : p.title;
-    tab.onclick=()=>{curPage=i;renderAll();};
-    nav.appendChild(tab);
-
+  pgs.forEach((p,i)=>{
     const pg = document.createElement('div');
     pg.className='pg'+(i===curPage?' on':'');
     pg.id='pg'+i;
     pg.innerHTML=`
       <div class="mhdr">
-        <div class="mhtitle" onclick="editTitle(${i})" id="mht${i}">${esc(p.title)}</div>
+        <div class="mhdr-top">
+          <div class="mhtitle" onclick="editTitle(${i})" id="mht${i}">${esc(p.title)}</div>
+          <button class="mhfmt-btn" onclick="openFmtModal()" title="Format header text, colours and border">&#9881; Format</button>
+        </div>
         <div class="mhrow">
           <span class="mstat" id="mstat${i}"></span>
           <div class="pbwrap">
@@ -652,25 +806,101 @@ function renderAll(){
           </div>
         </div>
       </div>
-      <div class="svgwrap" id="mw${i}"></div>
+      <div style="display:flex;gap:12px;align-items:flex-start;max-width:1120px;margin:0 auto">
+        <div class="svgwrap" style="flex:1;min-width:0" id="mw${i}"></div>
+        <div class="maps-sidebar" id="msb${i}"></div>
+      </div>
       <div class="leg">
         <div class="li"><div class="ld" style="background:#b8dc82;border-color:#2e6008"></div>Done</div>
         <div class="li"><div class="ld" style="background:#e8a835;border-color:#7a4206"></div>Partial</div>
         <div class="li"><div class="ld" style="background:#fff;border-color:#0000cc"></div>Pending</div>
       </div>`;
     area.appendChild(pg);
-    if(i===curPage) setTimeout(()=>renderMap(i),0);
+    if(i===curPage) setTimeout(()=>{ renderMap(i); buildSidebar(i); },0);
   });
+  updateProjectNameUI();
+  document.title = getProjectName()+' – Site Map';
+}
+
+// ── Sidebar ───────────────────────────────────────────────────────────────
+function buildSidebar(activePi){
+  const sb=document.getElementById('msb'+activePi);
+  if(!sb) return;
+  let html='';
+
+  // ── PROJECTS section ──────────────────────────────────────────────────
+  html+='<div class="sb-section-hdr">Projects</div>';
+  projects.forEach((proj,pi)=>{
+    const isActive=(pi===curProj);
+    const totalMaps=proj.pages.length;
+    // Compute overall progress across all maps in this project
+    const savedCurProj=curProj, savedCurPage=curPage;
+    curProj=pi;
+    let pDone=0,pTotal=0;
+    proj.pages.forEach((_,mi)=>{ const s=calcStats(mi); pDone+=s.done; pTotal+=s.total; });
+    const pPct=pTotal?Math.round(pDone/pTotal*100):0;
+    curProj=savedCurProj; curPage=savedCurPage;
+    const barC=pPct===100?'#3d8010':pPct>50?'#d97706':'#cc1a1a';
+    html+=`<div class="sb-proj${isActive?' sb-proj-active':''}" onclick="switchProject(${pi})">
+      <div class="sb-proj-top">
+        <span class="sb-proj-name">${isActive?'<span style="color:#1a4c8c">▶</span> ':''} ${esc(proj.name)}</span>
+        <span class="sb-proj-meta">${totalMaps} map${totalMaps>1?'s':''}</span>
+      </div>
+      <div class="sb-bar-wrap">
+        <div class="sb-bar"><div class="sb-bar-fill" style="width:${pPct}%;background:${barC}"></div></div>
+        <span class="sb-pct" style="color:${barC}">${pPct}%</span>
+      </div>
+      ${isActive?`<div class="sb-proj-actions">
+        <button onclick="event.stopPropagation();renameProject(${pi})" class="sb-act-btn">✎ Rename</button>
+        <button onclick="event.stopPropagation();deleteProject(${pi})" class="sb-act-btn sb-act-del">🗑 Delete</button>
+      </div>`:''}
+    </div>`;
+  });
+  html+=`<button class="sb-add-btn" onclick="addProject()">＋ Add Project</button>`;
+
+  // ── MAPS section — only for active project ────────────────────────────
+  html+='<div class="sb-section-hdr" style="margin-top:14px">Maps — '+esc(getProjectName())+'</div>';
+  const curPages=getPages();
+  curPages.forEach((p,i)=>{
+    const st2=calcStats(i);
+    const pct=st2.pct;
+    const isMap=(i===activePi);
+    const barC=pct===100?'#3d8010':pct>50?'#d97706':'#cc1a1a';
+    const statusDot=pct===100?'🟢':pct>0?'🟡':'⚪';
+    html+=`<div class="sb-map${isMap?' sb-map-active':''}" onclick="curPage=${i};renderAll()">
+      <div class="sb-map-row1">
+        <span class="sb-map-dot">${statusDot}</span>
+        <span class="sb-map-name" title="${esc(p.title)}">${isMap?'<b>':''}${esc(p.title.length>20?p.title.slice(0,20)+'…':p.title)}${isMap?'</b>':''}</span>
+        <span class="sb-map-pct" style="color:${barC}">${pct}%</span>
+      </div>
+      <div class="sb-map-row2">
+        <div class="sb-bar" style="flex:1"><div class="sb-bar-fill" style="width:${pct}%;background:${barC}"></div></div>
+        <span class="sb-map-count">${st2.done}/${st2.total}</span>
+      </div>
+    </div>`;
+  });
+  html+=`<button class="sb-add-btn" onclick="openModal()">＋ Add Map</button>`;
+
+  sb.innerHTML=html;
 }
 
 // ── Title edit ────────────────────────────────────────────────────────────
 function editTitle(i){
+  const pgs=getPages();
   const el=document.getElementById('mht'+i);
-  el.innerHTML=`<input value="${esc(pages[i].title)}" onblur="saveTitle(${i},this.value)" onkeydown="if(event.key==='Enter')this.blur();if(event.key==='Escape'){this.value='${esc(pages[i].title)}';this.blur();}" onclick="event.stopPropagation()">`;
-  el.querySelector('input').select();
+  const inp=document.createElement('input');
+  inp.value=pgs[i].title;
+  inp.onblur=()=>saveTitle(i,inp.value);
+  inp.onkeydown=(e)=>{
+    if(e.key==='Enter') inp.blur();
+    if(e.key==='Escape'){inp.value=pgs[i].title;inp.blur();}
+  };
+  inp.onclick=(e)=>e.stopPropagation();
+  el.innerHTML=''; el.appendChild(inp); inp.select();
 }
 function saveTitle(i,v){
-  pages[i].title=v.trim()||pages[i].title;
+  const pgs=getPages();
+  pgs[i].title=v.trim()||pgs[i].title;
   save(); renderAll();
 }
 
@@ -684,8 +914,8 @@ function closeModal(){ document.getElementById('addModal').style.display='none';
 function confirmAdd(){
   const t=document.getElementById('newTitle').value.trim();
   if(!t){document.getElementById('newTitle').focus();return;}
-  pages.push({title:t,states:{}});
-  curPage=pages.length-1;
+  getPages().push({title:t,states:{}});
+  curPage=getPages().length-1;
   closeModal(); save(); renderAll();
 }
 document.getElementById('newTitle').addEventListener('keydown',e=>{if(e.key==='Enter')confirmAdd();});
@@ -704,7 +934,7 @@ function doPrint(){
   h += '<title>' + esc(pages[curPage].title) + '</title>';
   h += '<style>' + printStyle + '</' + 'style>';
   h += '</' + 'head><body>';
-  pages.forEach(function(_,i){ h += buildSVG(i, true); });
+  getPages().forEach(function(_,i){ h += buildSVG(i, true); });
   h += '</' + 'body></' + 'html>';
   win.document.write(h);
   win.document.close();
@@ -742,15 +972,32 @@ let edActiveTab = 'layout';
 const ED_SVG_W=1600, ED_SVG_H=1000;
 let edScale=0.42;
 const ED_TOTAL_H=()=>ED_SVG_H+edTitleH;
+let edSnapEnabled = true;       // magnetic snap on/off
+const SNAP_RADIUS = 18;         // snap distance in raw SVG units
+let edRotateMode  = false;      // rotate mode active
+let edCloneMode   = false;      // clone-on-drag mode
+let edMagnetSnap  = null;       // {x,y} last snapped position for highlight
+let edRotateDrag  = null;       // {bid, cx, cy, startAngle} rotate handle drag state
+const ROT_HANDLE_R = 12;        // rotation handle radius in SVG units
+let edDrawMode   = false;       // draw-rect mode active
+let edDrawStart  = null;        // {mx,my} canvas start point of draw
+let edDrawCurrent= null;        // {mx,my} current mouse while drawing
+let edBgImages   = {};          // 'projIdx_pageIdx' -> dataURL background image
+let edBgOpacity  = 0.35;        // 0-1, how visible base map is in editor
+let edBgImage    = null;        // current rendered Image obj for canvas
 
 // ── Init ─────────────────────────────────────────────────────
 function initEditorState(){
+  // Only initialise blocks not already tracked (preserve in-session changes)
+  const isFirstOpen = Object.keys(ED_POLYS).length === 0;
   ALL_BLOCKS.forEach(bid=>{
-    ED_POLYS[bid]  = BLOCK_POLYS[bid] || '';
-    ED_ORIG[bid]   = BLOCK_POLYS[bid] || '';
-    ED_LABELS[bid] = bid;
+    // ED_ORIG is set once per session (original DXF state)
+    if(ED_ORIG[bid]===undefined) ED_ORIG[bid] = BLOCK_POLYS[bid] || '';
+    // ED_POLYS: use current BLOCK_POLYS unless already edited this session
+    if(ED_POLYS[bid]===undefined) ED_POLYS[bid] = BLOCK_POLYS[bid] || '';
+    if(!ED_LABELS[bid]) ED_LABELS[bid] = bid;
   });
-  ED_DELETED = {};
+  // Don't reset ED_DELETED — preserve deletes across editor open/close
 }
 
 function openEditor(){
@@ -759,9 +1006,32 @@ function openEditor(){
   refillBlockSel();
   document.getElementById('edOverlay').style.display='flex';
   switchEdTab('layout');
-  setTimeout(()=>{ setupEdCanvas(); edPreview(); },50);
+  setTimeout(()=>{
+    setupEdCanvas();
+    const pi3=typeof curPage!=='undefined'?curPage:0;
+    loadBgImage(edBgImages[curProj+'_'+pi3]||null);
+    edPreview();
+  },50);
 }
 function closeEditor(){ document.getElementById('edOverlay').style.display='none'; }
+
+function saveEditor(){
+  commitEditorToMap();
+  renderAll();
+  save();
+  closeEditor();
+  const btn=document.getElementById('edSaveBtn');
+  if(btn){ const orig=btn.innerHTML; btn.innerHTML='✓ Saved!'; btn.style.background='#89dcb0';
+    setTimeout(()=>{ btn.innerHTML=orig; btn.style.background='#a6e3a1'; },1400); }
+}
+
+function discardEditor(){
+  if(!confirm('Discard all unsaved changes and close?')) return;
+  ALL_BLOCKS.forEach(bid=>{ if(ED_ORIG[bid]!==undefined) ED_POLYS[bid]=ED_ORIG[bid]; });
+  ED_DELETED={};
+  renderAll();
+  closeEditor();
+}
 
 // ── Tabs ─────────────────────────────────────────────────────
 function switchEdTab(t){
@@ -784,14 +1054,35 @@ function refreshBlockList(){
     const nv=(ED_POLYS[bid]||'').trim().split(' ').filter(Boolean).length;
     div.innerHTML=
       '<span class="ed-bitem-name">'+label+'</span>'+
-      '<span class="ed-bitem-count">'+nv+' pts</span>'+
-      '<button class="ed-bitem-del" onclick="deleteBlock(this.dataset.bid)" data-bid="'+bid+'" title="Delete block">🗑</button>';
-    div.addEventListener('click',function(e){
-      if(e.target.classList.contains('ed-bitem-del')) return;
+      '<span class="ed-bitem-count" style="color:'+(nv===4?'#a6e3a1':'#f38ba8')+'">'+nv+'pt</span>'+
+      '<button class="ed-bitem-ren" data-bid="'+bid+'" title="Rename">&#9998;</button>'+
+      '<button class="ed-bitem-del" data-bid="'+bid+'" title="Delete block">&#128465;</button>';
+    // Use named references so clicks on child nodes (emoji) still work
+    const renBtn = div.querySelector('.ed-bitem-ren');
+    const delBtn = div.querySelector('.ed-bitem-del');
+    renBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      edQuickRename(this.dataset.bid);
+    });
+    delBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      deleteBlock(this.dataset.bid);
+    });
+    div.addEventListener('click', function(e){
       selectEdBlock(bid);
     });
     el.appendChild(div);
   });
+}
+
+function edQuickRename(bid){
+  const cur=ED_LABELS[bid]||bid;
+  const n=prompt('Rename "'+cur+'" to:',cur);
+  if(!n||!n.trim()||n.trim()===cur) return;
+  edSelBlock=bid;
+  const nf=document.getElementById('edBlockName');
+  if(nf) nf.value=n.trim();
+  applyBlockName();
 }
 
 function refillBlockSel(){
@@ -843,6 +1134,13 @@ function buildVertexEditor(bid){
   wrap.innerHTML='';
   const raw=ED_POLYS[bid]||'';
   const pts=raw.trim().split(' ').filter(Boolean);
+  // Show count and warning
+  const vs=document.getElementById('edVtxStatus');
+  if(vs){
+    const col=pts.length===4?'#a6e3a1':pts.length<4?'#89b4fa':'#f38ba8';
+    vs.innerHTML='<b style="color:'+col+'">'+pts.length+' points</b> — '+
+      (pts.length===4?'✓ Valid rectangle':'⚠ Must be exactly 4 points');
+  }
   pts.forEach((pt,i)=>{
     const [x,y]=pt.split(',');
     const row=document.createElement('div');
@@ -871,7 +1169,8 @@ function updateVtx(i){
 function deleteVtx(i){
   if(!edSelBlock) return;
   const pts=(ED_POLYS[edSelBlock]||'').trim().split(' ').filter(Boolean);
-  if(pts.length<=3){alert('A polygon must have at least 3 points.');return;}
+  if(pts.length<=3){alert('Minimum 3 points required. Cannot delete.');return;}
+  if(pts.length>4){/* allow deletion to get back to 4 */}
   pts.splice(i,1);
   ED_POLYS[edSelBlock]=pts.join(' ');
   buildVertexEditor(edSelBlock);
@@ -882,6 +1181,7 @@ function deleteVtx(i){
 function addVertex(){
   if(!edSelBlock){alert('Select a block first.');return;}
   const pts=(ED_POLYS[edSelBlock]||'').trim().split(' ').filter(Boolean);
+  if(pts.length>=4){alert('Maximum 4 points allowed per block.\nDelete a vertex first to add a new one.');return;}
   // Append midpoint of last edge
   const last=pts[pts.length-1].split(',').map(Number);
   const first=pts[0].split(',').map(Number);
@@ -904,23 +1204,60 @@ function applyBlockName(){
   const nf=document.getElementById('edBlockName');
   const newName=(nf?nf.value.trim():'');
   if(!newName){alert('Name cannot be empty.');return;}
-  ED_LABELS[edSelBlock]=newName;
-  refreshBlockList();
-  refillBlockSel();
-  commitEditorToMap();
+  const oldId=edSelBlock;
+  if(newName===oldId){ ED_LABELS[oldId]=newName; refreshBlockList(); refillBlockSel(); commitEditorToMap(); return; }
+  // Full rename: update ALL data structures
+  if(BLOCK_POLYS[newName]!==undefined&&newName!==oldId){alert('Block "'+newName+'" already exists.');return;}
+  // Rename in BLOCK_POLYS
+  BLOCK_POLYS[newName]=BLOCK_POLYS[oldId]; delete BLOCK_POLYS[oldId];
+  // Rename in BLOCK_SUBS
+  BLOCK_SUBS[newName]=BLOCK_SUBS[oldId]||[]; delete BLOCK_SUBS[oldId];
+  // Rename in PARENT_GROUPS (update both key and references)
+  Object.keys(PARENT_GROUPS).forEach(pg=>{
+    const arr=PARENT_GROUPS[pg];
+    const idx=arr.indexOf(oldId);
+    if(idx!==-1) arr[idx]=newName;
+  });
+  if(PARENT_GROUPS[oldId]){ PARENT_GROUPS[newName]=PARENT_GROUPS[oldId]; delete PARENT_GROUPS[oldId]; }
+  // Update ALL_BLOCKS array
+  const ai=ALL_BLOCKS.indexOf(oldId);
+  if(ai!==-1) ALL_BLOCKS[ai]=newName;
+  ALL_BLOCKS.sort();
+  // Update ED state
+  ED_POLYS[newName]=ED_POLYS[oldId]||''; delete ED_POLYS[oldId];
+  ED_ORIG[newName]=ED_ORIG[oldId]||''; delete ED_ORIG[oldId];
+  ED_LABELS[newName]=newName; delete ED_LABELS[oldId];
+  if(ED_DELETED[oldId]){ ED_DELETED[newName]=true; delete ED_DELETED[oldId]; }
+  edSelBlock=newName;
+  if(nf) nf.value=newName;
+  refreshBlockList(); refillBlockSel();
+  commitEditorToMap(); edPreview();
+  // Update states in pages
+  pages.forEach(p=>{ if(p.states&&p.states[oldId]!==undefined){ p.states[newName]=p.states[oldId]; delete p.states[oldId]; } });
+  save();
 }
 
 // ── Delete block ──────────────────────────────────────────────
 function deleteBlock(bid){
-  if(!confirm('Delete block "'+bid+'"? It will be removed from the map.')) return;
-  ED_DELETED[bid]=true;
+  if(!bid){ alert('No block specified.'); return; }
+  // Remove from ALL data structures immediately
+  ED_DELETED[bid] = true;
+  BLOCK_POLYS[bid] = null;   // immediately hide from live map
   if(edSelBlock===bid){ edSelBlock=null; edSelVtx=null; }
-  refreshBlockList(); refillBlockSel();
-  commitEditorToMap(); edPreview();
+  // Clear vertex editor if it was showing this block
+  const vl=document.getElementById('edVtxList');
+  if(vl&&edSelBlock===null) vl.innerHTML='';
+  const vs=document.getElementById('edVtxStatus');
+  if(vs&&edSelBlock===null) vs.textContent='Block deleted.';
+  refreshBlockList();
+  refillBlockSel();
+  // Re-render map immediately
+  for(let i=0;i<pages.length;i++){const w=document.getElementById('mw'+i);if(w)renderMap(i);}
+  edPreview();
 }
 
 function deleteSelectedBlock(){
-  if(!edSelBlock){alert('Select a block first.');return;}
+  if(!edSelBlock){ alert('Select a block first by clicking it on the canvas or in the Blocks list.'); return; }
   deleteBlock(edSelBlock);
 }
 
@@ -931,7 +1268,8 @@ function addNewBlock(){
   const name=(nf?nf.value.trim():'');
   const pts=(pf?pf.value.trim():'');
   if(!name){alert('Enter a block name.');return;}
-  if(!pts||pts.split(' ').length<3){alert('Enter at least 3 points (x,y format).');return;}
+  if(!pts||pts.trim().split(/\s+/).filter(Boolean).length<3){alert('Enter at least 3 points.');return;}
+  if(pts.trim().split(/\s+/).filter(Boolean).length>4){alert('Only 4 points allowed. Enter exactly 4 corner points.');return;}
   if(BLOCK_POLYS[name]!==undefined){alert('A block with this name already exists.');return;}
   // Add to runtime structures
   BLOCK_POLYS[name]='';
@@ -952,10 +1290,103 @@ function applyBlockCoords(){
   if(!edSelBlock) return;
   const raw=(document.getElementById('edBlockPts')||{}).value||'';
   if(!raw.trim()){alert('Please enter coordinates.');return;}
+  const pts=raw.trim().split(/\s+/).filter(Boolean);
+  if(pts.length>4){alert('Only 4 points allowed per block.\nYou entered '+pts.length+' points.\nPlease use exactly 4 corner points.');return;}
+  if(pts.length<3){alert('A block needs at least 3 points.');return;}
   ED_POLYS[edSelBlock]=raw.trim();
   buildVertexEditor(edSelBlock);
   refreshBlockList();
   commitEditorToMap(); edPreview();
+}
+
+// ── Draw Mode ────────────────────────────────────────────────
+function toggleDrawMode(on){
+  edDrawMode = (on !== undefined) ? on : !edDrawMode;
+  edDrawStart = null; edDrawCurrent = null;
+  const cv = document.getElementById('edCanvas');
+  if(cv) cv.style.cursor = edDrawMode ? 'crosshair' : 'default';
+  const btn = document.getElementById('edDrawBtn');
+  if(btn){
+    btn.style.background = edDrawMode ? '#f38ba8' : 'transparent';
+    btn.style.color       = edDrawMode ? '#1e1e2e' : '#a6adc8';
+    btn.textContent       = edDrawMode ? '✏ Drawing…' : '✏ Draw Rect';
+  }
+  // Show/hide the draw panel
+  const dp = document.getElementById('edDrawPanel');
+  if(dp) dp.style.display = edDrawMode ? 'flex' : 'none';
+  edPreview();
+}
+
+function commitDrawRect(){
+  if(!edDrawStart || !edDrawCurrent) return;
+  const x1=edDrawStart.mx, y1=edDrawStart.my;
+  const x2=edDrawCurrent.mx, y2=edDrawCurrent.my;
+  const rawW=Math.abs(x2-x1), rawH=Math.abs(y2-y1);
+  if(rawW<5 || rawH<5){ edDrawStart=null; edDrawCurrent=null; edPreview(); return; }
+  // Show size dialog
+  showAddBlockDialog(Math.min(x1,x2), Math.min(y1,y2), rawW, rawH);
+  edDrawStart=null; edDrawCurrent=null; edPreview();
+}
+
+function showAddBlockDialog(originX, originY, drawnW, drawnH){
+  // Show modal asking for name + confirming/adjusting width & height
+  const overlay=document.getElementById('addBlockDlg');
+  if(!overlay) return;
+  document.getElementById('abdName').value='';
+  document.getElementById('abdW').value=Math.round(drawnW);
+  document.getElementById('abdH').value=Math.round(drawnH);
+  overlay.dataset.ox=originX;
+  overlay.dataset.oy=originY;
+  overlay.style.display='flex';
+  document.getElementById('abdName').focus();
+}
+
+function confirmAddBlock(){
+  const overlay=document.getElementById('addBlockDlg');
+  const nameInp=document.getElementById('abdName');
+  const wInp=document.getElementById('abdW');
+  const hInp=document.getElementById('abdH');
+  let name=(nameInp?nameInp.value.trim():'');
+  const W=parseFloat(wInp?wInp.value:0)||50;
+  const H=parseFloat(hInp?hInp.value:0)||30;
+  const ox=parseFloat(overlay.dataset.ox)||100;
+  const oy=parseFloat(overlay.dataset.oy)||100;
+  // Auto-name if blank
+  if(!name){ let n=1; while(BLOCK_POLYS['TH-NEW-'+n]!==undefined) n++; name='TH-NEW-'+n; }
+  if(BLOCK_POLYS[name]!==undefined){ let n=1; while(BLOCK_POLYS[name+'_'+n]!==undefined) n++; name=name+'_'+n; }
+  // 4 corners: axis-aligned rect at drawn position, user-specified size
+  const pts=ox.toFixed(1)+','+oy.toFixed(1)+' '+
+            (ox+W).toFixed(1)+','+oy.toFixed(1)+' '+
+            (ox+W).toFixed(1)+','+(oy+H).toFixed(1)+' '+
+            ox.toFixed(1)+','+(oy+H).toFixed(1);
+  BLOCK_POLYS[name]=''; BLOCK_SUBS[name]=[]; ALL_BLOCKS.push(name); ALL_BLOCKS.sort();
+  ED_POLYS[name]=pts; ED_ORIG[name]=pts; ED_LABELS[name]=name;
+  refreshBlockList(); refillBlockSel(); selectEdBlock(name);
+  commitEditorToMap(); edPreview();
+  overlay.style.display='none';
+}
+
+function cancelAddBlock(){
+  document.getElementById('addBlockDlg').style.display='none';
+  edPreview();
+}
+
+function openAddBlockManual(){
+  showAddBlockDialog(200, 200, 100, 60);
+}
+
+// ── Background Image ──────────────────────────────────────────
+function loadBgImage(dataUrl){
+  if(!dataUrl){ edBgImage=null; edPreview(); return; }
+  const img=new Image();
+  img.onload=()=>{ edBgImage=img; edPreview(); };
+  img.src=dataUrl;
+}
+
+function setBgForCurrentPage(dataUrl){
+  const pi=typeof curPage!=='undefined'?curPage:0;
+  if(dataUrl){ edBgImages[pi]=dataUrl; } else { delete edBgImages[pi]; }
+  loadBgImage(dataUrl||null);
 }
 
 // ── Canvas setup ─────────────────────────────────────────────
@@ -965,9 +1396,17 @@ function setupEdCanvas(){
   cv.height=Math.floor(ED_TOTAL_H()*edScale);
   cv.onmousemove=evEdMouseMove;
   cv.onmousedown=evEdMouseDown;
-  cv.onmouseup  =()=>{ if(edDrag){edDrag=null;} };
-  cv.onmouseleave=()=>{ edDrag=null; };
+  cv.onmouseup  =(e)=>{
+    if(edDrawMode && edDrawStart){ commitDrawRect(); return; }
+    if(edRotateDrag){ edRotateDrag=null; buildVertexEditor(edSelBlock); commitEditorToMap(); return; }
+    if(edDrag){ edDrag=null; commitEditorToMap(); }
+  };
+  cv.onmouseleave=()=>{ edDrag=null; edRotateDrag=null; };
   cv.onclick=evEdClick;
+  // Load bg for current page if available
+  const pi2=typeof curPage!=='undefined'?curPage:0;
+  const bgKey=curProj+'_'+pi2;
+  loadBgImage(edBgImages[bgKey]||null);
 }
 
 function canvasPt(e){
@@ -981,14 +1420,123 @@ function canvasPt(e){
   };
 }
 
+// ── Magnetic snap: find nearest corner of ANY other block ─────────────────
+function findSnapPt(mx, my, excludeBid){
+  if(!edSnapEnabled) return null;
+  let best=null, bestD=SNAP_RADIUS;
+  ALL_BLOCKS.forEach(bid=>{
+    if(bid===excludeBid||ED_DELETED[bid]||!ED_POLYS[bid]) return;
+    const pts=ED_POLYS[bid].trim().split(' ').filter(Boolean).map(p=>p.split(',').map(Number));
+    pts.forEach(([px,py])=>{
+      const d=Math.sqrt((px-mx)**2+(py-my)**2);
+      if(d<bestD){ bestD=d; best={x:px,y:py}; }
+    });
+  });
+  return best;
+}
+
+// ── Rotate block around its centroid ──────────────────────────────────────
+function rotateBlock(bid, angleDeg){
+  const raw=(ED_POLYS[bid]||'').trim().split(' ').filter(Boolean).map(p=>p.split(',').map(Number));
+  if(raw.length<3) return;
+  const cx=raw.reduce((s,p)=>s+p[0],0)/raw.length;
+  const cy=raw.reduce((s,p)=>s+p[1],0)/raw.length;
+  const rad=angleDeg*Math.PI/180;
+  const cos=Math.cos(rad), sin=Math.sin(rad);
+  ED_POLYS[bid]=raw.map(([x,y])=>{
+    const dx=x-cx, dy=y-cy;
+    return (cx+dx*cos-dy*sin).toFixed(1)+','+(cy+dx*sin+dy*cos).toFixed(1);
+  }).join(' ');
+  syncCoordsToRaw(); buildVertexEditor(bid);
+  commitEditorToMap(); edPreview();
+}
+
+// ── Clone block ───────────────────────────────────────────────────────────
+function cloneBlock(bid){
+  if(!bid){alert('Select a block first.');return;}
+  let newId=bid+'_copy';
+  let n=1;
+  while(BLOCK_POLYS[newId]!==undefined) newId=bid+'_copy'+(++n);
+  // Offset clone by 30px
+  const raw=(ED_POLYS[bid]||'').trim().split(' ').filter(Boolean);
+  const newPts=raw.map(p=>{
+    const[x,y]=p.split(',').map(Number);
+    return (x+30).toFixed(1)+','+(y+30).toFixed(1);
+  }).join(' ');
+  BLOCK_POLYS[newId]=''; BLOCK_SUBS[newId]=[]; ALL_BLOCKS.push(newId); ALL_BLOCKS.sort();
+  ED_POLYS[newId]=newPts; ED_ORIG[newId]=newPts; ED_LABELS[newId]=newId;
+  refreshBlockList(); refillBlockSel();
+  selectEdBlock(newId);
+  commitEditorToMap(); edPreview();
+}
+
 function evEdMouseMove(e){
-  const {sx,sy,mx,my}=canvasPt(e);
+  const {mx,my}=canvasPt(e);
   const pos=document.getElementById('edCursorPos');
-  if(pos) pos.textContent='x:'+mx.toFixed(0)+' y:'+my.toFixed(0);
+
+  // Rotate drag
+  if(edRotateDrag){
+    const {bid,cx,cy,startAngle,origPts}=edRotateDrag;
+    const curAngle=Math.atan2(my-cy,mx-cx);
+    const delta=(curAngle-startAngle)*180/Math.PI;
+    const raw=origPts.trim().split(' ').filter(Boolean).map(p=>p.split(',').map(Number));
+    const rad=delta*Math.PI/180;
+    const cos=Math.cos(rad),sin=Math.sin(rad);
+    ED_POLYS[bid]=raw.map(([x,y])=>{
+      const dx=x-cx,dy=y-cy;
+      return (cx+dx*cos-dy*sin).toFixed(1)+','+(cy+dx*sin+dy*cos).toFixed(1);
+    }).join(' ');
+    if(pos) pos.textContent='Rotating: '+delta.toFixed(1)+'°';
+    syncCoordsToRaw(); edPreview(); return;
+  }
+
+  // Draw mode: update live rect
+  if(edDrawMode){
+    edDrawCurrent={mx,my};
+    if(edDrawStart && pos){
+      const w=Math.abs(mx-edDrawStart.mx).toFixed(0);
+      const h=Math.abs(my-edDrawStart.my).toFixed(0);
+      pos.textContent='W:'+w+' H:'+h+' px';
+    } else if(pos){
+      pos.textContent='x:'+mx.toFixed(0)+' y:'+my.toFixed(0)+' — click+drag to draw';
+    }
+    edPreview(); return;
+  }
+
+  // Show snap indicator in cursor label
+  let snapPt=null;
+  if(edSnapEnabled && edDrag && edDrag.type==='block'){
+    // compute dragged centroid
+    const raw=edDrag.origPts.trim().split(' ').filter(Boolean).map(p=>p.split(',').map(Number));
+    const dx=mx-edDrag.startX, dy=my-edDrag.startY;
+    // Check if any corner of dragged block snaps to any other block corner
+    let bestSnap=null, bestD=SNAP_RADIUS;
+    raw.forEach(([px,py])=>{
+      const tx=px+dx, ty=py+dy;
+      const s=findSnapPt(tx,ty,edDrag.bid);
+      if(s){ const d=Math.sqrt((tx-s.x)**2+(ty-s.y)**2); if(d<bestD){bestD=d;bestSnap={corner:[px,py],snap:s};} }
+    });
+    if(bestSnap){
+      const [cpx,cpy]=bestSnap.corner;
+      const sdx=bestSnap.snap.x-(cpx+dx), sdy=bestSnap.snap.y-(cpy+dy);
+      snapPt={dx:dx+sdx, dy:dy+sdy, snap:bestSnap.snap};
+    }
+  }
+
+  edMagnetSnap = snapPt ? snapPt.snap : null;
+  const effectiveDx = snapPt ? snapPt.dx : (edDrag&&edDrag.type==='block'?mx-edDrag.startX:0);
+  const effectiveDy = snapPt ? snapPt.dy : (edDrag&&edDrag.type==='block'?my-edDrag.startY:0);
+
+  if(pos){
+    let txt='x:'+mx.toFixed(0)+' y:'+my.toFixed(0);
+    if(edMagnetSnap) txt+=' 🧲';
+    pos.textContent=txt;
+  }
+
   if(!edDrag) return;
   if(edDrag.type==='block'){
-    const dx=mx-edDrag.startX, dy=my-edDrag.startY;
-    ED_POLYS[edDrag.bid]=edDrag.origPts.trim().split(' ').map(p=>{
+    const dx=effectiveDx, dy=effectiveDy;
+    ED_POLYS[edDrag.bid]=edDrag.origPts.trim().split(' ').filter(Boolean).map(p=>{
       const[x,y]=p.split(',').map(Number);
       return (x+dx).toFixed(1)+','+(y+dy).toFixed(1);
     }).join(' ');
@@ -996,42 +1544,89 @@ function evEdMouseMove(e){
     if(edSelBlock===edDrag.bid) buildVertexEditor(edDrag.bid);
     edPreview();
   } else if(edDrag.type==='vtx'){
+    // Snap single vertex to nearest corner
+    let vx=mx, vy=my;
+    if(edSnapEnabled){
+      const s=findSnapPt(mx,my,edDrag.bid);
+      if(s){vx=s.x;vy=s.y;edMagnetSnap=s;}
+    }
     const pts=(ED_POLYS[edDrag.bid]||'').trim().split(' ').filter(Boolean);
-    pts[edDrag.vi]=mx.toFixed(1)+','+my.toFixed(1);
+    pts[edDrag.vi]=vx.toFixed(1)+','+vy.toFixed(1);
     ED_POLYS[edDrag.bid]=pts.join(' ');
-    syncCoordsToRaw();
-    buildVertexEditor(edDrag.bid);
-    edPreview();
+    syncCoordsToRaw(); buildVertexEditor(edDrag.bid); edPreview();
   }
+}
+
+function getRotHandlePt(bid){
+  // Rotation handle: midpoint of top edge + offset upward
+  const raw=(ED_POLYS[bid]||'').trim().split(' ').filter(Boolean).map(p=>p.split(',').map(Number));
+  if(raw.length<3) return null;
+  const cx=raw.reduce((s,p)=>s+p[0],0)/raw.length;
+  const cy=raw.reduce((s,p)=>s+p[1],0)/raw.length;
+  // Find topmost point (min y)
+  const topPt=raw.reduce((a,b)=>b[1]<a[1]?b:a);
+  // Handle position: above centroid in the direction of topmost point
+  const dx=topPt[0]-cx, dy=topPt[1]-cy;
+  const dist=Math.sqrt(dx*dx+dy*dy)||1;
+  const offset=30; // px beyond topmost point
+  return {x:cx+(dx/dist)*(dist+offset), y:cy+(dy/dist)*(dist+offset), cx, cy};
 }
 
 function evEdMouseDown(e){
   const {mx,my}=canvasPt(e);
-  // Check vertex hit first
-  if(edSelBlock && ED_POLYS[edSelBlock]){
+  edMagnetSnap=null;
+
+  // Draw mode: start rectangle
+  if(edDrawMode){ edDrawStart={mx,my}; edDrawCurrent={mx,my}; e.preventDefault(); return; }
+
+  // 1. Check rotation handle on selected block first
+  if(edSelBlock && ED_POLYS[edSelBlock] && !ED_DELETED[edSelBlock]){
+    const rh=getRotHandlePt(edSelBlock);
+    if(rh){
+      const d=Math.sqrt((rh.x-mx)**2+(rh.y-my)**2);
+      if(d<ROT_HANDLE_R*1.8/edScale){
+        const startAngle=Math.atan2(my-rh.cy, mx-rh.cx);
+        edRotateDrag={bid:edSelBlock, cx:rh.cx, cy:rh.cy, startAngle, origPts:ED_POLYS[edSelBlock]};
+        e.preventDefault(); return;
+      }
+    }
+    // 2. Check vertex handle on selected block
     const pts=ED_POLYS[edSelBlock].trim().split(' ').filter(Boolean).map(p=>p.split(',').map(Number));
     for(let i=0;i<pts.length;i++){
       const[vx,vy]=pts[i];
-      const d=Math.sqrt((vx-mx)**2+(vy-my)**2);
-      if(d<10/edScale){
+      if(Math.sqrt((vx-mx)**2+(vy-my)**2)<10/edScale){
         edDrag={type:'vtx',bid:edSelBlock,vi:i};
         e.preventDefault(); return;
       }
     }
   }
-  // Block drag
+
+  // 3. Hit-test ANY block for drag (select it immediately on mousedown)
   const bid=hitTestBlock(mx,my);
   if(bid){
-    edDrag={type:'block',bid,startX:mx,startY:my,origPts:ED_POLYS[bid]};
+    if(bid!==edSelBlock) selectEdBlock(bid);  // select on mousedown
+    if(edCloneMode){
+      let newId=bid+'_copy'; let n=1;
+      while(BLOCK_POLYS[newId]!==undefined) newId=bid+'_copy'+(++n);
+      const clonePts=(ED_POLYS[bid]||'');
+      BLOCK_POLYS[newId]=''; BLOCK_SUBS[newId]=[]; ALL_BLOCKS.push(newId); ALL_BLOCKS.sort();
+      ED_POLYS[newId]=clonePts; ED_ORIG[newId]=clonePts; ED_LABELS[newId]=newId;
+      selectEdBlock(newId); refreshBlockList(); refillBlockSel();
+      edDrag={type:'block',bid:newId,startX:mx,startY:my,origPts:clonePts};
+    } else {
+      edDrag={type:'block',bid,startX:mx,startY:my,origPts:ED_POLYS[bid]};
+    }
     e.preventDefault();
+    return;
   }
+
+  // 4. Click on empty space — deselect
+  edSelBlock=null; edRotateDrag=null;
+  edPreview();
 }
 
 function evEdClick(e){
-  if(edDrag) return;
-  const {mx,my}=canvasPt(e);
-  const bid=hitTestBlock(mx,my);
-  if(bid) selectEdBlock(bid);
+  // Selection handled in mousedown; click on empty = deselect (handled in mousedown too)
 }
 
 function hitTestBlock(mx,my){
@@ -1071,6 +1666,14 @@ function edPreview(){
   ctx.clearRect(0,0,W,cv.height);
   ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,cv.height);
 
+  // Background image (uploaded sitemap)
+  if(edBgImage){
+    ctx.save();
+    ctx.globalAlpha=edBgOpacity;
+    ctx.drawImage(edBgImage, 0, edTitleH*sc, W, cv.height-edTitleH*sc);
+    ctx.restore();
+  }
+
   // Outer red border
   ctx.strokeStyle='#cc1a1a'; ctx.lineWidth=edBW*sc;
   ctx.strokeRect(edBD*sc,edBD*sc,(ED_SVG_W-edBD*2)*sc,(ED_TOTAL_H()-edBD*2)*sc);
@@ -1087,6 +1690,34 @@ function edPreview(){
   const MB=(edBD+6)*sc;
   ctx.strokeStyle='#0000cc'; ctx.lineWidth=1;
   ctx.strokeRect(MB,edTitleH*sc+6*sc,W-MB*2,cv.height-edTitleH*sc-MB-4*sc);
+
+  // Magnetic snap highlight — draw glowing circle at snap point
+  if(edMagnetSnap){
+    const sx2=edMagnetSnap.x*sc, sy2=(edMagnetSnap.y+edTitleH+8)*sc;
+    ctx.beginPath(); ctx.arc(sx2,sy2,7*sc,0,Math.PI*2);
+    ctx.fillStyle='rgba(166,227,161,0.5)'; ctx.fill();
+    ctx.strokeStyle='#a6e3a1'; ctx.lineWidth=2; ctx.stroke();
+    // Cross-hair
+    ctx.strokeStyle='#a6e3a1'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(sx2-9*sc,sy2); ctx.lineTo(sx2+9*sc,sy2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(sx2,sy2-9*sc); ctx.lineTo(sx2,sy2+9*sc); ctx.stroke();
+  }
+
+  // Live draw rectangle preview
+  if(edDrawMode && edDrawStart && edDrawCurrent){
+    const dx1=Math.min(edDrawStart.mx,edDrawCurrent.mx)*sc;
+    const dy1=(Math.min(edDrawStart.my,edDrawCurrent.my)+edTitleH+8)*sc;
+    const dw=Math.abs(edDrawCurrent.mx-edDrawStart.mx)*sc;
+    const dh=Math.abs(edDrawCurrent.my-edDrawStart.my)*sc;
+    ctx.strokeStyle='#f38ba8'; ctx.lineWidth=2;
+    ctx.setLineDash([4,3]); ctx.strokeRect(dx1,dy1,dw,dh); ctx.setLineDash([]);
+    ctx.fillStyle='rgba(243,139,168,0.08)'; ctx.fillRect(dx1,dy1,dw,dh);
+    // Dimensions label
+    const wPx=Math.abs(edDrawCurrent.mx-edDrawStart.mx).toFixed(0);
+    const hPx=Math.abs(edDrawCurrent.my-edDrawStart.my).toFixed(0);
+    ctx.fillStyle='#f38ba8'; ctx.font='bold '+(11*sc)+'px Arial'; ctx.textAlign='center';
+    ctx.fillText(wPx+' x '+hPx, dx1+dw/2, dy1+dh/2);
+  }
 
   // A4 dashed frame
   if((document.getElementById('edShowA4')||{}).checked){
@@ -1124,14 +1755,32 @@ function edPreview(){
     ctx.font='bold '+fs+'px Arial'; ctx.textAlign='center';
     ctx.fillText(lbl,cx*sc,(cy+edTitleH+8)*sc+fs*0.35);
 
-    // Vertex dots for selected block
+    // Vertex dots + rotation handle for selected block
     if(isSel){
       pts.forEach(([x,y],i)=>{
-        const r2=edSelVtx===i?6*sc:4*sc;
+        const r2=4*sc;
         ctx.beginPath(); ctx.arc(x*sc,(y+edTitleH+8)*sc,r2,0,Math.PI*2);
-        ctx.fillStyle=edSelVtx===i?'#f38ba8':'#cba6f7'; ctx.fill();
+        ctx.fillStyle='#cba6f7'; ctx.fill();
         ctx.strokeStyle='#1e1e2e'; ctx.lineWidth=1; ctx.stroke();
       });
+      // Rotation handle
+      const rh=getRotHandlePt(bid);
+      if(rh){
+        const rhx=rh.x*sc, rhy=(rh.y+edTitleH+8)*sc;
+        const rhcx=rh.cx*sc, rhcy=(rh.cy+edTitleH+8)*sc;
+        // Dashed line from centroid to handle
+        ctx.setLineDash([3*sc,2*sc]);
+        ctx.strokeStyle='rgba(203,166,247,0.5)'; ctx.lineWidth=1;
+        ctx.beginPath(); ctx.moveTo(rhcx,rhcy); ctx.lineTo(rhx,rhy); ctx.stroke();
+        ctx.setLineDash([]);
+        // Handle circle
+        ctx.beginPath(); ctx.arc(rhx,rhy,ROT_HANDLE_R*sc,0,Math.PI*2);
+        ctx.fillStyle=edRotateDrag?'#f38ba8':'#a6e3a1'; ctx.fill();
+        ctx.strokeStyle='#1e1e2e'; ctx.lineWidth=1.5; ctx.stroke();
+        // Rotate icon text
+        ctx.fillStyle='#1e1e2e'; ctx.font='bold '+(10*sc)+'px Arial'; ctx.textAlign='center';
+        ctx.fillText('↻', rhx, rhy+3.5*sc);
+      }
     }
   });
 }
@@ -1204,9 +1853,8 @@ function resetAllBlocks(){
 function commitEditorToMap(){
   ALL_BLOCKS.forEach(bid=>{
     if(ED_DELETED[bid]){
-      // Mark deleted — buildSVG will skip these
-      BLOCK_POLYS[bid]=null;
-    } else if(ED_POLYS[bid]!==undefined){
+      BLOCK_POLYS[bid]=null;  // deleted — buildSVG skips null
+    } else if(ED_POLYS[bid]!==undefined && ED_POLYS[bid]!==''){
       BLOCK_POLYS[bid]=ED_POLYS[bid];
     }
     // Apply label overrides
@@ -1250,18 +1898,20 @@ function buildVeGrid(){
     if(BLOCK_POLYS[bid]===null||BLOCK_POLYS[bid]===undefined||BLOCK_POLYS[bid]==='') return;
     const def=getDefaultVillaCount(bid);
     const cur=vc[bid]!==undefined?vc[bid]:def;
+    const _lmap=window.ED_LABEL_MAP||{};
+    const displayName=_lmap[bid]||bid;
+    const safeId=bid.replace(/[^a-z0-9]/gi,'_');
     const card=document.createElement('div');
     card.className='ve-card';
     card.dataset.bid=bid;
-    const _lmap=window.ED_LABEL_MAP||{};
-    const displayName=_lmap[bid]||bid;
     card.innerHTML=
-      '<div class="ve-card-name">'+displayName+'</div>'+
+      '<div class="ve-card-name">'+bid+'</div>'+
+      '<input class="ve-card-name-input" id="ven_'+safeId+'" type="text" value="'+displayName+'" placeholder="Display name" title="Block display name (shown on map)">'+
       '<div class="ve-card-row">'+
-        '<label>Villa units</label>'+
-        '<input class="ve-card-input" id="vei_'+bid.replace(/[^a-z0-9]/gi,'_')+'" type="number" min="0" max="999" value="'+cur+'" oninput="updateVeFooter()">'+
+        '<label>Villas</label>'+
+        '<input class="ve-card-input" id="vei_'+safeId+'" type="number" min="0" max="999" value="'+cur+'" oninput="updateVeFooter()">'+
       '</div>'+
-      '<div class="ve-card-orig">Default: '+def+' (from DXF)</div>';
+      '<div class="ve-card-orig">ID: '+bid+' &bull; Default: '+def+'</div>';
     grid.appendChild(card);
   });
 }
@@ -1269,8 +1919,10 @@ function buildVeGrid(){
 function filterVeCards(){
   const q=(document.getElementById('veSearch').value||'').toLowerCase();
   document.querySelectorAll('#veGrid .ve-card').forEach(c=>{
-    const name=(c.dataset.bid||'').toLowerCase();
-    c.style.display=(!q||name.includes(q))?'':'none';
+    const bid=(c.dataset.bid||'').toLowerCase();
+    const nameInp=c.querySelector('.ve-card-name-input');
+    const label=(nameInp?nameInp.value:'').toLowerCase();
+    c.style.display=(!q||bid.includes(q)||label.includes(q))?'':'none';
   });
 }
 
@@ -1278,9 +1930,8 @@ function updateVeFooter(){
   const cards=document.querySelectorAll('#veGrid .ve-card');
   let total=0, count=0;
   cards.forEach(c=>{
-    const bid=c.dataset.bid;
-    const inp=c.querySelector('input');
-    if(inp){const v=parseInt(inp.value)||0;total+=v;count++;}
+    const numInp=c.querySelector('.ve-card-input');
+    if(numInp){const v=parseInt(numInp.value)||0;total+=v;count++;}
   });
   const el=document.getElementById('veFooterStat');
   if(el) el.innerHTML='Total: <b>'+total+'</b> villas across <b>'+count+'</b> blocks';
@@ -1288,13 +1939,28 @@ function updateVeFooter(){
 
 function applyVillaCounts(){
   const vc={};
+  window.ED_LABEL_MAP = window.ED_LABEL_MAP||{};
   document.querySelectorAll('#veGrid .ve-card').forEach(c=>{
     const bid=c.dataset.bid;
-    const inp=c.querySelector('input');
-    if(bid&&inp){
-      const v=parseInt(inp.value);
-      const def=getDefaultVillaCount(bid);
+    if(!bid) return;
+    // Save villa count
+    const numInp=c.querySelector('.ve-card-input');
+    if(numInp){
+      const v=parseInt(numInp.value);
       if(!isNaN(v)) vc[bid]=v;
+    }
+    // Save display name
+    const nameInp=c.querySelector('.ve-card-name-input');
+    if(nameInp){
+      const n=nameInp.value.trim();
+      if(n && n!==bid){
+        window.ED_LABEL_MAP[bid]=n;
+        // Also sync to layout editor labels if editor is open
+        if(typeof ED_LABELS!=='undefined') ED_LABELS[bid]=n;
+      } else if(n===bid){
+        delete window.ED_LABEL_MAP[bid];
+        if(typeof ED_LABELS!=='undefined') ED_LABELS[bid]=bid;
+      }
     }
   });
   window.VILLA_COUNTS=vc;
@@ -1304,11 +1970,204 @@ function applyVillaCounts(){
 }
 
 function resetVillaCounts(){
-  if(!confirm('Reset all villa counts back to DXF defaults?')) return;
+  if(!confirm('Reset all villa counts and names back to DXF defaults?')) return;
   window.VILLA_COUNTS={};
+  window.ED_LABEL_MAP={};
+  if(typeof ED_LABELS!=='undefined') ALL_BLOCKS.forEach(b=>{ ED_LABELS[b]=b; });
   buildVeGrid();
   updateVeFooter();
   for(let i=0;i<pages.length;i++){const w=document.getElementById('mw'+i);if(w)renderMap(i);}
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// SITEMAP UPLOAD / MAP MANAGER
+// ══════════════════════════════════════════════════════════════════════════
+function openMapManager(){
+  buildMapManagerUI();
+  document.getElementById('mapMgrOverlay').style.display='flex';
+}
+function closeMapManager(){ document.getElementById('mapMgrOverlay').style.display='none'; }
+
+function buildMapManagerUI(){
+  const list=document.getElementById('mmPageList');
+  if(!list) return;
+  list.innerHTML='';
+  const pgs=getPages();
+  pgs.forEach((p,i)=>{
+    const key=curProj+'_'+i;
+    const hasBg=!!edBgImages[key];
+    const row=document.createElement('div');
+    row.style.cssText='border:1.5px solid #e8e8e4;border-radius:8px;padding:10px 12px;margin-bottom:8px;background:#fafaf8';
+    row.innerHTML=
+      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'+
+        '<b style="font-size:13px;flex:1">'+p.title+'</b>'+
+        '<button onclick="renamePagePrompt('+i+')" style="padding:4px 10px;border-radius:5px;border:1.5px solid #888;color:#555;background:#fff;font-size:11px;cursor:pointer">✎ Rename</button>'+
+        (pgs.length>1?'<button onclick="deleteMapPage('+i+')" style="padding:4px 8px;border-radius:5px;border:1.5px solid #dc2626;color:#dc2626;background:#fff;font-size:11px;cursor:pointer">🗑</button>':'')+
+      '</div>'+
+      '<div style="display:flex;align-items:center;gap:8px">'+
+        '<span style="font-size:11px;color:'+(hasBg?'#0e7490':'#aaa');
+    row.innerHTML+=(hasBg?'">🖼 Base map uploaded':'">No base map');
+    row.innerHTML+='</span>'+
+      '<button onclick="mmUploadBg('+i+')" style="margin-left:auto;padding:4px 12px;border-radius:5px;border:1.5px solid #0e7490;color:#0e7490;background:#fff;font-size:11px;font-weight:700;cursor:pointer">'+(hasBg?'Replace':'Upload')+'</button>'+
+      (hasBg?'<button onclick="mmClearBg('+i+')" style="padding:4px 8px;border-radius:5px;border:1.5px solid #dc2626;color:#dc2626;background:#fff;font-size:11px;cursor:pointer">✕ Remove</button>':'')+
+      '</div>'+
+      (hasBg?'<div style="margin-top:6px;display:flex;align-items:center;gap:8px"><span style="font-size:10px;color:#888">Opacity in editor:</span>'+
+        '<input type="range" min="10" max="80" value="35" style="flex:1;accent-color:#0e7490" oninput="edBgOpacity=this.value/100;edPreview()" title="Adjust how visible the base map is in the editor"></div>':'');
+    list.appendChild(row);
+  });
+}
+
+function mmUploadBg(pi){
+  const inp=document.createElement('input');
+  inp.type='file'; inp.accept='image/*';
+  inp.onchange=function(){
+    const file=inp.files[0]; if(!file) return;
+    const reader=new FileReader();
+    reader.onload=function(ev){
+      const key=curProj+'_'+pi;
+      edBgImages[key]=ev.target.result;
+      buildMapManagerUI();
+      if(typeof curPage!=='undefined' && pi===curPage) loadBgImage(ev.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
+  inp.click();
+}
+
+function mmClearBg(pi){
+  const key=curProj+'_'+pi;
+  delete edBgImages[key];
+  if(typeof curPage!=='undefined' && pi===curPage){ edBgImage=null; edPreview(); }
+  buildMapManagerUI();
+}
+
+function renamePagePrompt(pi){
+  const n=prompt('Rename map page:',pages[pi].title);
+  if(n&&n.trim()){ pages[pi].title=n.trim(); save(); renderAll(); buildMapManagerUI(); }
+}
+
+function addNewMapPage(){
+  const t=prompt('New map page title:','MEP Progress');
+  if(!t||!t.trim()) return;
+  getPages().push({title:t.trim(),states:{}});
+  curPage=getPages().length-1;
+  save(); renderAll(); buildMapManagerUI();
+}
+
+function deleteMapPage(pi){
+  const pgs=getPages();
+  if(pgs.length===1){alert('Cannot delete the only map in this project.');return;}
+  if(!confirm('Delete map "'+pgs[pi].title+'"?')) return;
+  pgs.splice(pi,1);
+  delete edBgImages[pi];
+  curPage=Math.min(curPage,pgs.length-1);
+  save(); renderAll(); closeMapManager();
+}
+
+
+// ── Project Management ───────────────────────────────────────────────────
+function switchProject(idx){
+  curProj=idx; curPage=0;
+  document.title=getProjectName()+' – Site Map';
+  renderAll();
+}
+
+function addProject(){
+  const name=prompt('New project name:','My Project');
+  if(!name||!name.trim()) return;
+  // NEW project: completely blank — no BLOCK_POLYS, fresh canvas
+  projects.push({
+    name: name.trim(),
+    pages: [{title:'Map 1', states:{}}],
+    fmt: {                          // header format settings
+      titleSize:52, titleColor:'#111111', titleWeight:'900', titleFont:'Arial',
+      statsColor:'#cc1a1a', projColor:'#1a4c8c',
+      borderColor:'#cc1a1a', borderWidth:3.5
+    },
+    ownBlocks: {}                   // project-specific blocks (future use)
+  });
+  curProj=projects.length-1; curPage=0;
+  // Clear editor state so new project starts fresh
+  ED_POLYS={}; ED_ORIG={}; ED_LABELS={}; ED_DELETED={};
+  save(); renderAll();
+  alert('New project "'+name.trim()+'" created!\n\nThis project starts blank. Use the Layout Editor to draw your blocks,\nor upload a base map image (Map Manager) to trace over.');
+}
+
+function renameProject(idx){
+  const cur=projects[idx].name;
+  const n=prompt('Rename project:',cur);
+  if(!n||!n.trim()||n.trim()===cur) return;
+  projects[idx].name=n.trim();
+  save(); renderAll(); updateProjectNameUI();
+}
+
+function deleteProject(idx){
+  if(projects.length===1){alert('Cannot delete the only project.');return;}
+  if(!confirm('Delete project "'+projects[idx].name+'"? All maps and progress data will be lost.')) return;
+  projects.splice(idx,1);
+  curProj=Math.min(curProj,projects.length-1); curPage=0;
+  save(); renderAll();
+}
+
+function editProjectName(){
+  const cur=getProjectName();
+  const el=document.getElementById('barProjectName');
+  if(!el) return;
+  el.innerHTML='<input id="pnInput" value="'+cur.replace(/"/g,'&quot;')+'" style="font-size:14px;font-weight:900;border:none;border-bottom:2px solid #3a6ab0;outline:none;background:transparent;color:#1a1a1a;font-family:inherit;width:200px" maxlength="60">';
+  const inp=document.getElementById('pnInput');
+  inp.select();
+  inp.addEventListener('blur',()=>{ saveProjectName(inp.value||cur); });
+  inp.addEventListener('keydown',(e)=>{
+    if(e.key==='Enter') inp.blur();
+    if(e.key==='Escape'){ updateProjectNameUI(); }
+  });
+}
+
+
+// ── Format Header ────────────────────────────────────────────────────────
+function openFmtModal(){
+  const f=getFmt();
+  _fhSet('fhTitleSize',    f.titleSize);
+  _fhSet('fhTitleWeight',  f.titleWeight);
+  _fhSet('fhTitleFont',    f.titleFont);
+  _fhSet('fhTitleColor',   f.titleColor);
+  _fhSet('fhStatsSize',    f.statsSize);
+  _fhSet('fhStatsColor',   f.statsColor);
+  _fhSet('fhProjSize',     f.projSize);
+  _fhSet('fhProjColor',    f.projColor);
+  _fhSet('fhBorderColor',  f.borderColor);
+  _fhSet('fhBorderWidth',  f.borderWidth);
+  _fhValEl('fhTitleSizeVal',   f.titleSize+'px');
+  _fhValEl('fhStatsSizeVal',   f.statsSize+'px');
+  _fhValEl('fhProjSizeVal',    f.projSize+'px');
+  _fhValEl('fhBorderWidthVal', f.borderWidth+'px');
+  updateFmtPreview();
+  document.getElementById('fhOverlay').style.display='flex';
+}
+function closeFmtModal(){ document.getElementById('fhOverlay').style.display='none'; }
+function _fhSet(id,val){ const e=document.getElementById(id); if(e) e.value=val; }
+function _fhValEl(id,val){ const e=document.getElementById(id); if(e) e.textContent=val; }
+function fhChange(key, val, dispId, dispSuffix){
+  setFmt(key, isNaN(+val)?val:+val);
+  if(dispId) _fhValEl(dispId, val+(dispSuffix||''));
+  updateFmtPreview();
+}
+function updateFmtPreview(){
+  const f=getFmt();
+  const prev=document.getElementById('fhPreviewBox');
+  if(!prev) return;
+  const scale=0.55; // preview scale factor
+  prev.innerHTML=
+    '<div style="border:'+f.borderWidth+'px solid '+f.borderColor+';border-radius:4px;padding:14px 20px 10px;background:#fff">'+
+      '<div style="font-size:'+(f.titleSize*scale)+'px;font-weight:'+f.titleWeight+';color:'+f.titleColor+';font-family:'+f.titleFont+',Arial;margin-bottom:4px">WATER TANK INSTALLATION</div>'+
+      '<div style="font-size:'+(f.statsSize*scale)+'px;font-weight:700;color:'+f.statsColor+';margin-bottom:3px">7 / 530 Villas Done (1%)</div>'+
+      '<div style="font-size:'+(f.projSize*scale)+'px;font-weight:600;color:'+f.projColor+'">'+getProjectName()+'</div>'+
+    '</div>';
+}
+function resetFmt(){
+  if(!projects[curProj]) return;
+  delete projects[curProj].fmt;
+  save(); openFmtModal(); renderAll();
 }
 
 // ── Boot ──────────────────────────────────────────────────────────────────
@@ -1328,6 +2187,95 @@ document.body.insertAdjacentHTML('beforeend',`
   </div>
 </div>`);
 
+// ══════════════════════════════════════════════════════════════════════════
+// SITEMAP UPLOAD / MAP MANAGER
+// ══════════════════════════════════════════════════════════════════════════
+function openMapManager(){
+  buildMapManagerUI();
+  document.getElementById('mapMgrOverlay').style.display='flex';
+}
+function closeMapManager(){ document.getElementById('mapMgrOverlay').style.display='none'; }
+
+function buildMapManagerUI(){
+  const list=document.getElementById('mmPageList');
+  if(!list) return;
+  list.innerHTML='';
+  const pgs=getPages();
+  pgs.forEach((p,i)=>{
+    const key=curProj+'_'+i;
+    const hasBg=!!edBgImages[key];
+    const row=document.createElement('div');
+    row.style.cssText='border:1.5px solid #e8e8e4;border-radius:8px;padding:10px 12px;margin-bottom:8px;background:#fafaf8';
+    row.innerHTML=
+      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'+
+        '<b style="font-size:13px;flex:1">'+p.title+'</b>'+
+        '<button onclick="renamePagePrompt('+i+')" style="padding:4px 10px;border-radius:5px;border:1.5px solid #888;color:#555;background:#fff;font-size:11px;cursor:pointer">✎ Rename</button>'+
+        (pgs.length>1?'<button onclick="deleteMapPage('+i+')" style="padding:4px 8px;border-radius:5px;border:1.5px solid #dc2626;color:#dc2626;background:#fff;font-size:11px;cursor:pointer">🗑</button>':'')+
+      '</div>'+
+      '<div style="display:flex;align-items:center;gap:8px">'+
+        '<span style="font-size:11px;color:'+(hasBg?'#0e7490':'#aaa');
+    row.innerHTML+=(hasBg?'">🖼 Base map uploaded':'">No base map');
+    row.innerHTML+='</span>'+
+      '<button onclick="mmUploadBg('+i+')" style="margin-left:auto;padding:4px 12px;border-radius:5px;border:1.5px solid #0e7490;color:#0e7490;background:#fff;font-size:11px;font-weight:700;cursor:pointer">'+(hasBg?'Replace':'Upload')+'</button>'+
+      (hasBg?'<button onclick="mmClearBg('+i+')" style="padding:4px 8px;border-radius:5px;border:1.5px solid #dc2626;color:#dc2626;background:#fff;font-size:11px;cursor:pointer">✕ Remove</button>':'')+
+      '</div>'+
+      (hasBg?'<div style="margin-top:6px;display:flex;align-items:center;gap:8px"><span style="font-size:10px;color:#888">Opacity in editor:</span>'+
+        '<input type="range" min="10" max="80" value="35" style="flex:1;accent-color:#0e7490" oninput="edBgOpacity=this.value/100;edPreview()" title="Adjust how visible the base map is in the editor"></div>':'');
+    list.appendChild(row);
+  });
+}
+
+function mmUploadBg(pi){
+  const inp=document.createElement('input');
+  inp.type='file'; inp.accept='image/*';
+  inp.onchange=function(){
+    const file=inp.files[0]; if(!file) return;
+    const reader=new FileReader();
+    reader.onload=function(ev){
+      const key=curProj+'_'+pi;
+      edBgImages[key]=ev.target.result;
+      buildMapManagerUI();
+      if(typeof curPage!=='undefined' && pi===curPage) loadBgImage(ev.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
+  inp.click();
+}
+
+function mmClearBg(pi){
+  const key=curProj+'_'+pi;
+  delete edBgImages[key];
+  if(typeof curPage!=='undefined' && pi===curPage){ edBgImage=null; edPreview(); }
+  buildMapManagerUI();
+}
+
+function renamePagePrompt(pi){
+  const n=prompt('Rename map page:',pages[pi].title);
+  if(n&&n.trim()){ pages[pi].title=n.trim(); save(); renderAll(); buildMapManagerUI(); }
+}
+
+function addNewMapPage(){
+  const t=prompt('New map page title:','MEP Progress');
+  if(!t||!t.trim()) return;
+  getPages().push({title:t.trim(),states:{}});
+  curPage=getPages().length-1;
+  save(); renderAll(); buildMapManagerUI();
+}
+
+function deleteMapPage(pi){
+  const pgs=getPages();
+  if(pgs.length===1){alert('Cannot delete the only map in this project.');return;}
+  if(!confirm('Delete map "'+pgs[pi].title+'"?')) return;
+  pgs.splice(pi,1);
+  delete edBgImages[pi];
+  curPage=Math.min(curPage,pgs.length-1);
+  save(); renderAll(); closeMapManager();
+}
+
+
+
+
+
 // ── Boot ──────────────────────────────────────────────────────────────────
 renderAll();
 
@@ -1336,111 +2284,383 @@ renderAll();
 
 
 <!-- ══ Layout Editor Panel ══════════════════════════════════════════ -->
+
+<!-- ══ Layout Editor Panel ═════════════════════════════════════════════════ -->
 <div class="ed-overlay" id="edOverlay" style="display:none" onclick="if(event.target===this)closeEditor()">
- <div class="ed-panel">
+ <div class="ed-panel" onclick="event.stopPropagation()">
+
+  <!-- Header -->
   <div class="ed-hdr">
-    <h2>⚙ Layout Editor</h2>
-    <div style="display:flex;gap:10px;align-items:center">
-      <span style="font-size:10px;color:#6c7086">Changes apply to all map pages</span>
-      <button class="ed-close" onclick="closeEditor()">✕</button>
+    <h2>&#9881; Layout Editor</h2>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <span style="font-size:10px;color:#6c7086">Click to select &middot; Drag block to move &middot; Drag &bull; to move vertex</span>
+      <button id="edSaveBtn" onclick="saveEditor()" style="padding:6px 16px;border-radius:6px;border:none;background:#a6e3a1;color:#1e1e2e;font-weight:800;font-size:12px;cursor:pointer;font-family:inherit">&#128190; Save &amp; Close</button>
+      <button onclick="discardEditor()" style="padding:6px 12px;border-radius:6px;border:1.5px solid #45475a;background:transparent;color:#a6adc8;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit">&#8634; Discard</button>
+      <button class="ed-close" onclick="closeEditor()">&#10005;</button>
     </div>
   </div>
+
+  <!-- Tabs -->
+  <div class="ed-tabs">
+    <button class="ed-tab on" data-tab="layout" onclick="switchEdTab('layout')">Layout</button>
+    <button class="ed-tab" data-tab="blocks" onclick="switchEdTab('blocks')">Blocks</button>
+    <button class="ed-tab" data-tab="vertex" onclick="switchEdTab('vertex')">Vertices</button>
+    <button class="ed-tab" data-tab="add" onclick="switchEdTab('add')">+ Add Block</button>
+  </div>
+
   <div class="ed-body">
-   <!-- Left controls -->
+
+   <!-- Left panel -->
    <div class="ed-left">
 
-    <div class="ed-section">
-      <h3>Global Transform</h3>
-      <div class="ed-info">Scale and shift ALL polygons together. Use this to fit the layout inside the border.</div>
-      <div class="ed-row"><label>Scale X</label><input type="range" id="eScX" min="0.5" max="1.3" step="0.005" value="1.0" oninput="syncNum('eScX','nScX');edPreview()"><input type="number" id="nScX" min="0.5" max="1.3" step="0.005" value="1.0" oninput="syncRange('nScX','eScX');edPreview()"></div>
-      <div class="ed-row"><label>Scale Y</label><input type="range" id="eScY" min="0.5" max="1.3" step="0.005" value="1.0" oninput="syncNum('eScY','nScY');edPreview()"><input type="number" id="nScY" min="0.5" max="1.3" step="0.005" value="1.0" oninput="syncRange('nScY','eScY');edPreview()"></div>
-      <div class="ed-row"><label>Offset X</label><input type="range" id="eOX" min="-200" max="200" step="1" value="0" oninput="syncNum('eOX','nOX');edPreview()"><input type="number" id="nOX" min="-200" max="200" step="1" value="0" oninput="syncRange('nOX','eOX');edPreview()"></div>
-      <div class="ed-row"><label>Offset Y</label><input type="range" id="eOY" min="-200" max="200" step="1" value="0" oninput="syncNum('eOY','nOY');edPreview()"><input type="number" id="nOY" min="-200" max="200" step="1" value="0" oninput="syncRange('nOY','eOY');edPreview()"></div>
-      <button class="ed-btn ed-apply" onclick="applyGlobalTransform()">✓ Apply Global Transform</button>
-      <button class="ed-btn ed-reset" onclick="resetGlobalTransform()">↺ Reset Transform</button>
-    </div>
+    <!-- TAB: Layout -->
+    <div class="ed-tabpage on" id="edTab_layout">
 
-    <div class="ed-section">
-      <h3>Border & Page</h3>
-      <div class="ed-info">Control the red outer border inset and blue inner border so they never go off-page.</div>
-      <div class="ed-row"><label>Red border inset</label><input type="range" id="eBD" min="8" max="60" step="1" value="18" oninput="syncNum('eBD','nBD');edPreview()"><input type="number" id="nBD" min="8" max="60" step="1" value="18" oninput="syncRange('nBD','eBD');edPreview()"></div>
-      <div class="ed-row"><label>Border thickness</label><input type="range" id="eBW" min="1" max="8" step="0.5" value="3.5" oninput="syncNum('eBW','nBW');edPreview()"><input type="number" id="nBW" min="1" max="8" step="0.5" value="3.5" oninput="syncRange('nBW','eBW');edPreview()"></div>
-      <div class="ed-row"><label>Title band height</label><input type="range" id="eTH" min="60" max="200" step="2" value="120" oninput="syncNum('eTH','nTH');edPreview()"><input type="number" id="nTH" min="60" max="200" step="2" value="120" oninput="syncRange('nTH','eTH');edPreview()"></div>
-      <button class="ed-btn ed-apply" onclick="applyBorderSettings()">✓ Apply Border Settings</button>
-    </div>
-
-    <div class="ed-section">
-      <h3>Edit Individual Block</h3>
-      <div class="ed-info">Select a block, then edit its raw point coordinates. Format: x1,y1 x2,y2 x3,y3 …</div>
-      <select id="edBlockSel" class="ed-select" onchange="loadBlockCoords()">
-        <option value="">— Select block —</option>
-      </select>
-      <textarea id="edBlockPts" class="ed-textarea" rows="4" placeholder="x1,y1 x2,y2 x3,y3 ..."></textarea>
-      <div class="ed-hint">Click a block on the canvas to select it. Drag blocks to reposition.</div>
-      <button class="ed-btn ed-apply" onclick="applyBlockCoords()">✓ Apply Block Points</button>
-      <button class="ed-btn ed-reset" onclick="resetBlock()">↺ Reset This Block</button>
-    </div>
-
-    <div class="ed-section">
-      <h3>Quick Nudge Selected</h3>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:6px">
-        <div></div>
-        <button class="ed-btn ed-reset" style="margin:0;padding:5px" onclick="nudge(0,-5)">▲ 5</button>
-        <div></div>
-        <button class="ed-btn ed-reset" style="margin:0;padding:5px" onclick="nudge(-5,0)">◀ 5</button>
-        <button class="ed-btn ed-reset" style="margin:0;padding:5px;font-size:10px" onclick="nudge(0,0)">●</button>
-        <button class="ed-btn ed-reset" style="margin:0;padding:5px" onclick="nudge(5,0)">5 ▶</button>
-        <div></div>
-        <button class="ed-btn ed-reset" style="margin:0;padding:5px" onclick="nudge(0,5)">▼ 5</button>
-        <div></div>
+      <div class="ed-section">
+        <h3>Border &amp; Page</h3>
+        <div class="ed-info">Increase inset until the red border stays fully inside the printed page.</div>
+        <div class="ed-row"><label>Red border inset</label><input type="range" id="eBD" min="8" max="80" step="1" value="18" oninput="syncNum('eBD','nBD');edPreview()"><input type="number" id="nBD" class="ed-num" min="8" max="80" step="1" value="18" oninput="syncRange('nBD','eBD');edPreview()"></div>
+        <div class="ed-row"><label>Border thickness</label><input type="range" id="eBW" min="1" max="8" step="0.5" value="3.5" oninput="syncNum('eBW','nBW');edPreview()"><input type="number" id="nBW" class="ed-num" min="1" max="8" step="0.5" value="3.5" oninput="syncRange('nBW','eBW');edPreview()"></div>
+        <div class="ed-row"><label>Title height</label><input type="range" id="eTH" min="60" max="200" step="2" value="120" oninput="syncNum('eTH','nTH');edPreview()"><input type="number" id="nTH" class="ed-num" min="60" max="200" step="2" value="120" oninput="syncRange('nTH','eTH');edPreview()"></div>
+        <button class="ed-btn eb-apply" onclick="applyBorderSettings()">&#10003; Apply to Map</button>
       </div>
-      <div class="ed-row"><label>Nudge step</label><input type="number" id="nudgeStep" value="5" min="1" max="50" style="width:60px;background:#313244;border:1px solid #45475a;border-radius:4px;color:#cdd6f4;font-size:12px;padding:3px 6px;font-family:inherit;outline:none"></div>
+
+      <div class="ed-divider"></div>
+
+      <div class="ed-section">
+        <h3>Global Transform</h3>
+        <div class="ed-info">Scale and shift all blocks to fit inside the border.</div>
+        <div class="ed-row"><label>Scale X</label><input type="range" id="eScX" min="0.4" max="1.4" step="0.005" value="1" oninput="syncNum('eScX','nScX')"><input type="number" id="nScX" class="ed-num" min="0.4" max="1.4" step="0.005" value="1" oninput="syncRange('nScX','eScX')"></div>
+        <div class="ed-row"><label>Scale Y</label><input type="range" id="eScY" min="0.4" max="1.4" step="0.005" value="1" oninput="syncNum('eScY','nScY')"><input type="number" id="nScY" class="ed-num" min="0.4" max="1.4" step="0.005" value="1" oninput="syncRange('nScY','eScY')"></div>
+        <div class="ed-row"><label>Offset X</label><input type="range" id="eOX" min="-300" max="300" step="1" value="0" oninput="syncNum('eOX','nOX')"><input type="number" id="nOX" class="ed-num" min="-300" max="300" step="1" value="0" oninput="syncRange('nOX','eOX')"></div>
+        <div class="ed-row"><label>Offset Y</label><input type="range" id="eOY" min="-300" max="300" step="1" value="0" oninput="syncNum('eOY','nOY')"><input type="number" id="nOY" class="ed-num" min="-300" max="300" step="1" value="0" oninput="syncRange('nOY','eOY')"></div>
+        <div class="ed-btn-row">
+          <button class="ed-btn eb-apply" onclick="applyGlobalTransform()">&#10003; Apply</button>
+          <button class="ed-btn eb-reset" onclick="resetGlobalTransform()">&#8634; Reset</button>
+        </div>
+      </div>
+
+      <div class="ed-divider"></div>
+
+      <div class="ed-section">
+        <h3>Nudge Selected Block</h3>
+        <div class="nudge-grid">
+          <div></div>
+          <button class="ed-btn eb-reset" onclick="nudge(0,-1)">&#9650;</button>
+          <div></div>
+          <button class="ed-btn eb-reset" onclick="nudge(-1,0)">&#9664;</button>
+          <button class="ed-btn eb-reset" style="opacity:.3" onclick="void 0">&#183;</button>
+          <button class="ed-btn eb-reset" onclick="nudge(1,0)">&#9654;</button>
+          <div></div>
+          <button class="ed-btn eb-reset" onclick="nudge(0,1)">&#9660;</button>
+          <div></div>
+        </div>
+        <div class="ed-row" style="margin-top:6px"><label>Step (px)</label><input type="number" id="nudgeStep" class="ed-num" value="5" min="1" max="100"></div>
+      </div>
+
+      <div class="ed-divider"></div>
+      <button class="ed-btn eb-danger" onclick="resetAllBlocks()">&#8634; Reset Everything to Original</button>
     </div>
 
-    <div class="ed-section">
-      <h3>Danger Zone</h3>
-      <button class="ed-btn ed-danger" onclick="resetAllBlocks()">↺ Reset ALL Blocks to Original</button>
+    <!-- TAB: Blocks -->
+    <div class="ed-tabpage" id="edTab_blocks">
+      <div class="ed-section">
+        <h3>All Blocks</h3>
+        <div class="ed-info">Click block to select &middot; &#10003; to rename &middot; &#128465; to delete</div>
+        <div class="ed-blocklist" id="edBlockList"></div>
+      </div>
+      <div class="ed-divider"></div>
+      <div class="ed-section">
+        <h3>Edit Selected</h3>
+        <select id="edBlockSel2" class="ed-select" onchange="selectEdBlock(this.value)">
+          <option value="">-- Select block --</option>
+        </select>
+        <div class="ed-row"><label>Name / ID</label><input type="text" id="edBlockName" class="ed-input" placeholder="e.g. TH-R01" style="flex:1"></div>
+        <button class="ed-btn eb-apply" onclick="applyBlockName()">&#10003; Rename Block</button>
+        <div class="ed-divider"></div>
+        <label style="font-size:10px;color:#7c7f93;font-weight:700;text-transform:uppercase;letter-spacing:1px">Raw Coordinates (4 pts)</label>
+        <textarea id="edBlockPts" class="ed-textarea" rows="4" placeholder="x1,y1 x2,y2 x3,y3 x4,y4"></textarea>
+        <div class="ed-hint">Format: x,y pairs separated by spaces. Click canvas to load a block.</div>
+        <div class="ed-btn-row">
+          <button class="ed-btn eb-apply" onclick="applyBlockCoords()">&#10003; Apply</button>
+          <button class="ed-btn eb-reset" onclick="resetBlock()">&#8634; Reset</button>
+          <button class="ed-btn eb-danger" onclick="deleteSelectedBlock()">&#128465; Delete</button>
+        </div>
+        <div class="ed-divider"></div>
+        <h3>Clone &amp; Rotate</h3>
+        <div class="ed-info">Clone creates a copy of the selected block. Rotate spins it around its centre.</div>
+        <button class="ed-btn eb-info" onclick="cloneBlock(edSelBlock)" style="margin-bottom:4px">&#10021; Clone Selected Block</button>
+        <div class="ed-btn-row">
+          <button class="ed-btn eb-reset" onclick="rotateBlock(edSelBlock,-15)" title="Rotate -15°">&#8634; -15°</button>
+          <button class="ed-btn eb-reset" onclick="rotateBlock(edSelBlock,-5)"  title="Rotate -5°">&#8634; -5°</button>
+          <button class="ed-btn eb-reset" onclick="rotateBlock(edSelBlock,5)"   title="Rotate +5°">5° &#8635;</button>
+          <button class="ed-btn eb-reset" onclick="rotateBlock(edSelBlock,15)"  title="Rotate +15°">15° &#8635;</button>
+        </div>
+        <div class="ed-btn-row" style="margin-top:4px">
+          <button class="ed-btn eb-reset" onclick="rotateBlock(edSelBlock,-1)"  title="Fine -1°">&#8634; -1°</button>
+          <button class="ed-btn eb-reset" onclick="rotateBlock(edSelBlock,-0.5)" title="Fine -0.5°">-0.5°</button>
+          <button class="ed-btn eb-reset" onclick="rotateBlock(edSelBlock,0.5)"  title="Fine +0.5°">+0.5°</button>
+          <button class="ed-btn eb-reset" onclick="rotateBlock(edSelBlock,1)"   title="Fine +1°">1° &#8635;</button>
+        </div>
+        <div class="ed-divider"></div>
+        <h3>Magnetic Snap</h3>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:#a6adc8">
+          <input type="checkbox" id="edSnapToggle" checked onchange="edSnapEnabled=this.checked;edPreview()">
+          Snap corners to other block corners
+        </label>
+        <div class="ed-info" style="margin-top:4px">When enabled, dragging a block snaps its corners to the nearest corner of any other block within 18px. Green &#9889; appears when snapping. Also works when dragging individual vertices.</div>
+      </div>
     </div>
 
-   </div>
+    <!-- TAB: Vertices -->
+    <div class="ed-tabpage" id="edTab_vertex">
+      <div class="ed-section">
+        <h3>Vertex Editor</h3>
+        <div class="ed-info">Select a block (click canvas). Edit each corner X/Y, or drag the purple dots on the canvas. Max 4 points.</div>
+        <div id="edVtxList" class="ed-vtx-list"></div>
+        <button class="ed-btn eb-info" style="margin-top:6px" onclick="addVertex()">+ Add Point (max 4)</button>
+      </div>
+      <div class="ed-divider"></div>
+      <div id="edVtxStatus" class="ed-info" style="color:#7c7f93">No block selected.</div>
+    </div>
+
+    <!-- TAB: Add Block -->
+    <div class="ed-tabpage" id="edTab_add">
+      <div class="ed-section">
+
+        <h3>Method 1 — Draw on Canvas</h3>
+        <div class="ed-info">Turn on draw mode, then <b>click and drag</b> on the canvas to draw the rectangle. A size dialog will appear on release.</div>
+        <button id="edDrawBtn" onclick="toggleDrawMode()" style="width:100%;padding:10px;border-radius:7px;border:2px solid #f38ba8;background:transparent;color:#f38ba8;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit;transition:.15s;letter-spacing:.3px">&#9999; Draw Rect Mode — OFF</button>
+        <div id="edDrawPanel" style="display:none;flex-direction:column;gap:6px;background:#11111b;border-radius:6px;padding:8px">
+          <div style="font-size:11px;color:#a6e3a1;font-weight:700">&#9998; ON — click &amp; drag canvas to draw</div>
+          <button class="ed-btn eb-reset" onclick="toggleDrawMode(false)">&#9723; Exit Draw Mode</button>
+        </div>
+
+        <div class="ed-divider"></div>
+
+        <h3>Method 2 — Enter Size Directly</h3>
+        <div class="ed-info">Type a name and size. The block appears at the centre of the canvas, ready to drag and rotate.</div>
+        <button class="ed-btn eb-apply" onclick="openAddBlockManual()" style="font-size:12px;padding:9px">&#10010; Enter Width &amp; Height…</button>
+
+        <div class="ed-divider"></div>
+
+        <h3>After Adding</h3>
+        <div class="ed-info">
+          <b style="color:#a6e3a1">Move:</b> Drag the block anywhere on canvas<br>
+          <b style="color:#a6e3a1">Rotate:</b> Drag the <span style="color:#a6e3a1">↻</span> green handle above the block<br>
+          <b style="color:#a6e3a1">Fine rotate:</b> Use ±1° / ±5° buttons in Blocks tab<br>
+          <b style="color:#a6e3a1">Snap:</b> Corners snap to adjacent blocks automatically
+        </div>
+
+        <input type="hidden" id="edNewBlockName">
+        <input type="hidden" id="edNewBlockPts">
+      </div>
+    </div>
+
+   </div><!-- end ed-left -->
+
    <!-- Right: live canvas -->
    <div class="ed-right">
     <div class="ed-canvas-hdr">
-      <span>Live Preview — <b style="color:#cba6f7">SVG 1600×1120</b></span>
-      <span id="edCursorPos" style="margin-left:auto;color:#6c7086;font-family:monospace"></span>
-      <label style="display:flex;align-items:center;gap:5px;cursor:pointer">
-        <input type="checkbox" id="edShowA4" checked onchange="edPreview()">
-        <span>Show A4 frame</span>
+      <span>Live Preview <b style="color:#cba6f7">1600x1120</b></span>
+      <span id="edCursorPos" style="color:#89b4fa;font-family:monospace;font-size:11px;min-width:130px;margin-left:8px"></span>
+      <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:11px;color:#7c7f93;margin-left:auto">
+        <input type="checkbox" id="edShowA4" checked onchange="edPreview()">A4 frame
       </label>
+      <select id="edZoom" class="ed-select" style="width:76px;padding:2px 4px;font-size:11px;margin-left:8px" onchange="edScale=+this.value;setupEdCanvas();edPreview()">
+        <option value="0.3">30%</option>
+        <option value="0.42" selected>42%</option>
+        <option value="0.55">55%</option>
+        <option value="0.7">70%</option>
+      </select>
+      <button id="edCloneToggle" onclick="edCloneMode=!edCloneMode;this.style.background=edCloneMode?'#cba6f7':'';this.style.color=edCloneMode?'#1e1e2e':'#a6adc8'" title="Clone Mode: drag a block to create a copy" style="margin-left:6px;padding:3px 9px;border-radius:5px;border:1px solid #45475a;background:transparent;color:#a6adc8;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">&#10021; Clone</button>
     </div>
     <div class="ed-canvas-wrap">
       <canvas id="edCanvas"></canvas>
     </div>
-    <div class="ed-a4-note" id="edA4Note">A4 landscape at 96dpi ≈ 1123×794px. Red dashed frame shows what fits on one page.</div>
+    <div class="ed-status">
+      <span>Selected: <b id="edStatusBlock" style="color:#cba6f7">none</b></span>
+      <span>Active blocks: <b id="edStatusCount" style="color:#a6e3a1">--</b></span>
+      <span style="margin-left:auto;color:#585b70;font-size:10px">Drag block to move &middot; Drag &bull; to move vertex</span>
+    </div>
    </div>
+
+  </div><!-- end ed-body -->
+ </div><!-- end ed-panel -->
+</div><!-- end ed-overlay -->
+
+<!-- ══ Villa Count Editor ═══════════════════════════════════════════════════ -->
+<div class="ve-overlay" id="veOverlay" style="display:none" onclick="if(event.target===this)closeVillaEditor()">
+ <div class="ve-modal" onclick="event.stopPropagation()">
+  <div class="ve-hdr">
+    <div>
+      <h2>&#9998; Edit Villa Counts</h2>
+      <p>Edit block display names and villa counts. Changes apply to the map immediately on Save.</p>
+    </div>
+    <button class="ve-close" onclick="closeVillaEditor()">&#10005;</button>
+  </div>
+  <div class="ve-body">
+    <input class="ve-search" id="veSearch" placeholder="Search block name..." oninput="filterVeCards()">
+    <div class="ve-grid" id="veGrid"></div>
+  </div>
+  <div class="ve-footer">
+    <div class="ve-footer-stat" id="veFooterStat">Total: <b>--</b> villas across <b>--</b> blocks</div>
+    <button class="ve-fbtn ve-fbtn-reset" onclick="resetVillaCounts()">&#8634; Reset Names &amp; Counts</button>
+    <button class="ve-fbtn ve-fbtn-apply" onclick="applyVillaCounts()">&#10003; Apply &amp; Close</button>
   </div>
  </div>
 </div>
 
 
-<!-- ══ Villa Count Editor ═══════════════════════════════════════════════ -->
-<div class="ve-overlay" id="veOverlay" style="display:none" onclick="if(event.target===this)closeVillaEditor()">
- <div class="ve-modal" onclick="event.stopPropagation()">
-  <div class="ve-hdr">
+<!-- ══ Map Manager ══════════════════════════════════════════════════════════ -->
+<div class="mm-overlay" id="mapMgrOverlay" style="display:none" onclick="if(event.target===this)closeMapManager()">
+ <div class="mm-modal" onclick="event.stopPropagation()">
+  <div class="mm-hdr">
     <div>
-      <h2>✎ Edit Villa Counts</h2>
-      <p>Set the number of villas in each block. Used for all progress calculations.</p>
+      <h2>&#128506; Map Manager</h2>
+      <p>Add, rename, or delete map pages. Upload a 2D site plan image as a tracing background.</p>
     </div>
-    <button class="ve-close" onclick="closeVillaEditor()">✕</button>
+    <button class="mm-close" onclick="closeMapManager()">&#10005;</button>
   </div>
-  <div class="ve-body">
-    <input class="ve-search" id="veSearch" placeholder="Search block name…" oninput="filterVeCards()">
-    <div class="ve-grid" id="veGrid"></div>
+  <div class="mm-body">
+    <div style="background:#fffbeb;border:1.5px solid #d97706;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#92400e;line-height:1.5">
+      <b>How to trace a site plan:</b> Upload your 2D drawing (PNG/JPG/PDF screenshot) — it appears as a semi-transparent overlay on the Layout Editor canvas. Then use <b>Draw Rect Mode</b> (Add Block tab) to draw blocks over it.
+    </div>
+    <div id="mmPageList"></div>
   </div>
-  <div class="ve-footer">
-    <div class="ve-footer-stat" id="veFooterStat">Total: <b>—</b> villas across <b>—</b> blocks</div>
-    <button class="ve-fbtn ve-fbtn-reset" onclick="resetVillaCounts()">↺ Reset All</button>
-    <button class="ve-fbtn ve-fbtn-apply" onclick="applyVillaCounts()">✓ Apply &amp; Close</button>
+  <div class="mm-footer">
+    <button onclick="addNewMapPage()" style="padding:8px 18px;border-radius:7px;border:none;background:#1a4c8c;color:#fff;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit">+ Add New Map Page</button>
+    <span style="font-size:11px;color:#aaa;margin-left:6px">Each page is an independent progress map (e.g. Electrical, Plumbing, HVAC)</span>
+    <button onclick="closeMapManager()" style="margin-left:auto;padding:8px 16px;border-radius:7px;border:1.5px solid #ccc;background:#fff;color:#555;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit">Close</button>
+  </div>
+ </div>
+</div>
+
+
+<!-- ══ Add Block Size Dialog ═══════════════════════════════════════════════ -->
+<div class="abd-overlay" id="addBlockDlg" style="display:none" onclick="if(event.target===this)cancelAddBlock()">
+ <div class="abd-modal" onclick="event.stopPropagation()">
+  <h3>&#9998; New Block</h3>
+  <p>Set the block name and dimensions, then click Add. After adding, drag it to position and use ↻ to rotate.</p>
+  <div class="abd-row">
+    <label>Block name</label>
+    <input class="abd-inp" id="abdName" placeholder="e.g. TH-R34" maxlength="40"
+      onkeydown="if(event.key==='Enter')document.getElementById('abdW').focus()">
+  </div>
+  <div class="abd-row">
+    <label>Width</label>
+    <input class="abd-inp" id="abdW" type="number" min="10" max="2000" value="100"
+      onkeydown="if(event.key==='Enter')document.getElementById('abdH').focus()">
+    <span class="abd-unit">px</span>
+  </div>
+  <div class="abd-row">
+    <label>Height</label>
+    <input class="abd-inp" id="abdH" type="number" min="10" max="2000" value="60"
+      onkeydown="if(event.key==='Enter')confirmAddBlock()">
+    <span class="abd-unit">px</span>
+  </div>
+  <div class="abd-btns">
+    <button class="abd-btn abd-cancel" onclick="cancelAddBlock()">Cancel</button>
+    <button class="abd-btn abd-ok" onclick="confirmAddBlock()">&#10003; Add Block</button>
+  </div>
+ </div>
+</div>
+
+
+<!-- ══ Format Header Modal ═══════════════════════════════════════════════════ -->
+<div class="fh-overlay" id="fhOverlay" style="display:none" onclick="if(event.target===this)closeFmtModal()">
+ <div class="fh-modal" onclick="event.stopPropagation()">
+  <div class="fh-hdr">
+    <h2>&#9881; Format Map Header</h2>
+    <button class="fh-close" onclick="closeFmtModal()">&#10005;</button>
+  </div>
+  <div class="fh-body">
+
+   <!-- Live preview at top -->
+   <div class="fh-preview" id="fhPreviewBox" style="min-height:90px"></div>
+
+   <!-- Title row -->
+   <div class="fh-section">
+    <div class="fh-section-title">&#9654; Map Title (large heading)</div>
+    <div class="fh-row">
+      <label>Font size</label>
+      <input type="range" id="fhTitleSize" min="24" max="90" step="2" value="52"
+        oninput="fhChange('titleSize',+this.value,'fhTitleSizeVal','px')">
+      <span class="fh-val" id="fhTitleSizeVal">52px</span>
+    </div>
+    <div class="fh-row">
+      <label>Weight</label>
+      <select id="fhTitleWeight" onchange="fhChange('titleWeight',this.value)">
+        <option value="400">Regular (400)</option>
+        <option value="600">Semi-Bold (600)</option>
+        <option value="700">Bold (700)</option>
+        <option value="900" selected>Extra Bold (900)</option>
+      </select>
+    </div>
+    <div class="fh-row">
+      <label>Font</label>
+      <select id="fhTitleFont" onchange="fhChange('titleFont',this.value)">
+        <option value="Arial" selected>Arial</option>
+        <option value="Georgia">Georgia (serif)</option>
+        <option value="Verdana">Verdana</option>
+        <option value="Tahoma">Tahoma</option>
+        <option value="Trebuchet MS">Trebuchet MS</option>
+        <option value="Times New Roman">Times New Roman</option>
+      </select>
+    </div>
+    <div class="fh-row">
+      <label>Colour</label>
+      <input type="color" id="fhTitleColor" value="#111111" oninput="fhChange('titleColor',this.value)">
+      <span class="fh-hint">Title text colour</span>
+    </div>
+   </div>
+
+   <!-- Stats + project name -->
+   <div class="fh-section">
+    <div class="fh-section-title">&#9654; Stats Line &amp; Project Name</div>
+    <div class="fh-row">
+      <label>Stats size</label>
+      <input type="range" id="fhStatsSize" min="12" max="36" step="1" value="21"
+        oninput="fhChange('statsSize',+this.value,'fhStatsSizeVal','px')">
+      <span class="fh-val" id="fhStatsSizeVal">21px</span>
+    </div>
+    <div class="fh-row">
+      <label>Stats colour</label>
+      <input type="color" id="fhStatsColor" value="#cc1a1a" oninput="fhChange('statsColor',this.value)">
+      <span class="fh-hint">"X / Y Villas Done" line</span>
+    </div>
+    <div class="fh-row">
+      <label>Proj name size</label>
+      <input type="range" id="fhProjSize" min="10" max="32" step="1" value="18"
+        oninput="fhChange('projSize',+this.value,'fhProjSizeVal','px')">
+      <span class="fh-val" id="fhProjSizeVal">18px</span>
+    </div>
+    <div class="fh-row">
+      <label>Proj colour</label>
+      <input type="color" id="fhProjColor" value="#1a4c8c" oninput="fhChange('projColor',this.value)">
+      <span class="fh-hint">Project name colour</span>
+    </div>
+   </div>
+
+   <!-- Border -->
+   <div class="fh-section">
+    <div class="fh-section-title">&#9654; Border</div>
+    <div class="fh-row">
+      <label>Colour</label>
+      <input type="color" id="fhBorderColor" value="#cc1a1a" oninput="fhChange('borderColor',this.value)">
+    </div>
+    <div class="fh-row">
+      <label>Thickness</label>
+      <input type="range" id="fhBorderWidth" min="1" max="10" step="0.5" value="3.5"
+        oninput="fhChange('borderWidth',+this.value,'fhBorderWidthVal','px')">
+      <span class="fh-val" id="fhBorderWidthVal">3.5px</span>
+    </div>
+   </div>
+
+  </div>
+  <div class="fh-footer">
+    <button class="fh-btn fh-reset" onclick="resetFmt()">&#8634; Reset Defaults</button>
+    <button class="fh-btn fh-ok" onclick="closeFmtModal()">&#10003; Done</button>
   </div>
  </div>
 </div>
