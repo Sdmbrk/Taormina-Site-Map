@@ -475,9 +475,41 @@ const BLOCK_SUBS = {
 };
 
 // All block IDs sorted
-const ALL_BLOCKS = Object.keys(BLOCK_POLYS).sort();
-// All parent IDs (unique rows)
-const ALL_PARENTS = Object.keys(PARENT_GROUPS).sort();
+// ALL_BLOCKS and ALL_PARENTS are now per-project (reassigned on project switch)
+let ALL_BLOCKS = Object.keys(BLOCK_POLYS).sort();
+let ALL_PARENTS = Object.keys(PARENT_GROUPS).sort();
+// Snapshot Taormina original blocks for first project
+const _TAORMINA_POLYS   = Object.assign({}, BLOCK_POLYS);
+const _TAORMINA_SUBS    = Object.assign({}, BLOCK_SUBS);
+const _TAORMINA_PARENTS = Object.assign({}, PARENT_GROUPS);
+const _TAORMINA_BLOCKS  = Object.keys(BLOCK_POLYS).sort();
+
+// ── Editor state — declared here so _loadProjectBlocks() can reference them
+let ED_POLYS   = {};
+let ED_LABELS  = {};
+let ED_DELETED = {};
+let ED_ORIG    = {};
+let edSelBlock = null;
+let edSelVtx   = null;
+let edDrag     = null;
+let edBD=18, edBW=3.5, edTitleH=120;
+let edActiveTab = 'layout';
+const ED_SVG_W  = 1600, ED_SVG_H = 1000;
+let edScale     = 0.42;
+const ED_TOTAL_H = ()=>ED_SVG_H+edTitleH;
+let edSnapEnabled = true;
+const SNAP_RADIUS = 18;
+let edRotateMode  = false;
+let edCloneMode   = false;
+let edMagnetSnap  = null;
+let edRotateDrag  = null;
+const ROT_HANDLE_R = 12;
+let edDrawMode    = false;
+let edDrawStart   = null;
+let edDrawCurrent = null;
+let edBgImages    = {};          // 'projIdx_pageIdx' -> dataURL
+let edBgOpacity   = 0.35;
+let edBgImage     = null;
 
 const SVG_W=1600, SVG_H=1000, TH=120, TOTAL_H=SVG_H+TH;
 
@@ -511,10 +543,41 @@ let curPage  = 0;           // active page inside curProj
 let mode = 'green', selBlock = null;
 // Convenience accessors (legacy refs still work)
 function getPages(){ return projects[curProj]?.pages || []; }
+
+// ── Swap block data for the active project into runtime globals ─────────
+function _loadProjectBlocks(pi){
+  const proj = projects[pi];
+  if(!proj) return;
+  const blk = proj.blocks || {};
+  // Replace BLOCK_POLYS contents
+  Object.keys(BLOCK_POLYS).forEach(k=>delete BLOCK_POLYS[k]);
+  Object.assign(BLOCK_POLYS, blk.polys || {});
+  // Replace BLOCK_SUBS contents
+  Object.keys(BLOCK_SUBS).forEach(k=>delete BLOCK_SUBS[k]);
+  Object.assign(BLOCK_SUBS, blk.subs || {});
+  // Replace PARENT_GROUPS contents
+  Object.keys(PARENT_GROUPS).forEach(k=>delete PARENT_GROUPS[k]);
+  Object.assign(PARENT_GROUPS, blk.parents || {});
+  // Rebuild ALL_BLOCKS
+  ALL_BLOCKS.length=0;
+  Object.keys(BLOCK_POLYS).sort().forEach(b=>ALL_BLOCKS.push(b));
+  // Reset editor state
+  ED_POLYS={}; ED_ORIG={}; ED_LABELS={}; ED_DELETED={};
+}
+
+// ── Save current runtime blocks back to the active project ─────────────
+function _saveProjectBlocks(){
+  if(!projects[curProj]) return;
+  projects[curProj].blocks = {
+    polys:   Object.assign({}, BLOCK_POLYS),
+    subs:    Object.assign({}, BLOCK_SUBS),
+    parents: Object.assign({}, PARENT_GROUPS)
+  };
+}
 function getProjectName(){ return projects[curProj]?.name || 'Project'; }
 function getFmt(){
   const defaults={
-    titleSize:52, titleColor:'#111111', titleWeight:'900', titleFont:'Arial',
+    titleSize:36, titleColor:'#111111', titleWeight:'900', titleFont:'Arial',
     statsSize:21, statsColor:'#cc1a1a',
     projSize:18,  projColor:'#1a4c8c',
     borderColor:'#cc1a1a', borderWidth:3.5
@@ -572,6 +635,16 @@ projects = loadProjects() || [{
   name:'Taormina Village',
   pages:[{title:'WATER TANK INSTALLATION', states:{'TH-18':'green','TH-21':'brown'}}]
 }];
+// Ensure first project (Taormina) has its blocks stored
+if(!projects[0].blocks){
+  projects[0].blocks = {
+    polys:   Object.assign({}, _TAORMINA_POLYS),
+    subs:    Object.assign({}, _TAORMINA_SUBS),
+    parents: Object.assign({}, _TAORMINA_PARENTS)
+  };
+}
+// Load active project blocks into runtime
+_loadProjectBlocks(curProj);
 
 function setMode(m){
   mode=m;
@@ -820,6 +893,7 @@ function renderAll(){
   });
   updateProjectNameUI();
   document.title = getProjectName()+' – Site Map';
+  setTimeout(updateBaseMapBtnState, 0);
 }
 
 // ── Sidebar ───────────────────────────────────────────────────────────────
@@ -960,31 +1034,7 @@ document.body.insertAdjacentHTML('beforeend',`
 // LAYOUT EDITOR  — full block/vertex editing
 // ══════════════════════════════════════════════════════════════
 
-let ED_POLYS   = {};   // bid -> pts string
-let ED_LABELS  = {};   // bid -> display label override
-let ED_DELETED = {};   // bid -> true (hidden/deleted)
-let ED_ORIG    = {};   // original pts for reset
-let edSelBlock = null;
-let edSelVtx   = null; // index of selected vertex
-let edDrag     = null; // {type:'block'|'vtx', ...}
-let edBD=18, edBW=3.5, edTitleH=120;
-let edActiveTab = 'layout';
-const ED_SVG_W=1600, ED_SVG_H=1000;
-let edScale=0.42;
-const ED_TOTAL_H=()=>ED_SVG_H+edTitleH;
-let edSnapEnabled = true;       // magnetic snap on/off
-const SNAP_RADIUS = 18;         // snap distance in raw SVG units
-let edRotateMode  = false;      // rotate mode active
-let edCloneMode   = false;      // clone-on-drag mode
-let edMagnetSnap  = null;       // {x,y} last snapped position for highlight
-let edRotateDrag  = null;       // {bid, cx, cy, startAngle} rotate handle drag state
-const ROT_HANDLE_R = 12;        // rotation handle radius in SVG units
-let edDrawMode   = false;       // draw-rect mode active
-let edDrawStart  = null;        // {mx,my} canvas start point of draw
-let edDrawCurrent= null;        // {mx,my} current mouse while drawing
-let edBgImages   = {};          // 'projIdx_pageIdx' -> dataURL background image
-let edBgOpacity  = 0.35;        // 0-1, how visible base map is in editor
-let edBgImage    = null;        // current rendered Image obj for canvas
+// (editor state declared at top of script — see below)
 
 // ── Init ─────────────────────────────────────────────────────
 function initEditorState(){
@@ -1016,7 +1066,7 @@ function openEditor(){
 function closeEditor(){ document.getElementById('edOverlay').style.display='none'; }
 
 function saveEditor(){
-  commitEditorToMap();
+  commitEditorToMap();   // also calls _saveProjectBlocks internally
   renderAll();
   save();
   closeEditor();
@@ -1377,10 +1427,51 @@ function openAddBlockManual(){
 
 // ── Background Image ──────────────────────────────────────────
 function loadBgImage(dataUrl){
-  if(!dataUrl){ edBgImage=null; edPreview(); return; }
+  if(!dataUrl){ edBgImage=null; if(typeof edPreview==='function') edPreview(); return; }
   const img=new Image();
-  img.onload=()=>{ edBgImage=img; edPreview(); };
+  img.onload=()=>{ edBgImage=img; if(typeof edPreview==='function') edPreview(); };
   img.src=dataUrl;
+}
+
+// Upload base map for current page directly from toolbar or editor
+function uploadBaseMap(){
+  const inp=document.createElement('input');
+  inp.type='file'; inp.accept='image/*';
+  inp.onchange=function(){
+    const file=inp.files[0]; if(!file) return;
+    const reader=new FileReader();
+    reader.onload=function(ev){
+      const key=curProj+'_'+curPage;
+      edBgImages[key]=ev.target.result;
+      loadBgImage(ev.target.result);
+      updateBaseMapBtnState();
+    };
+    reader.readAsDataURL(file);
+  };
+  inp.click();
+}
+
+function removeBaseMap(){
+  const key=curProj+'_'+curPage;
+  delete edBgImages[key];
+  edBgImage=null;
+  if(typeof edPreview==='function') edPreview();
+  updateBaseMapBtnState();
+}
+
+function updateBaseMapBtnState(){
+  const key=curProj+'_'+curPage;
+  const hasBg=!!edBgImages[key];
+  const btn=document.getElementById('baseMapBtn');
+  const del=document.getElementById('baseMapDelBtn');
+  const edDel=document.getElementById('edDelBgBtn');
+  if(btn){
+    btn.textContent = hasBg ? '📷 Replace Base Map' : '📷 Upload Base Map';
+    btn.style.borderColor = hasBg ? '#0e7490' : '#bbb';
+    btn.style.color = hasBg ? '#0e7490' : '#555';
+  }
+  if(del) del.style.display = hasBg ? 'inline-block' : 'none';
+  if(edDel) edDel.style.display = hasBg ? 'inline-block' : 'none';
 }
 
 function setBgForCurrentPage(dataUrl){
@@ -1864,6 +1955,7 @@ function commitEditorToMap(){
     }
   });
   window.LIVE_BD=edBD; window.LIVE_BW=edBW; window.LIVE_TH=edTitleH;
+  _saveProjectBlocks();   // persist block edits to active project
   for(let i=0;i<pages.length;i++){ const w=document.getElementById('mw'+i); if(w) renderMap(i); }
 }
 
@@ -2067,7 +2159,10 @@ function deleteMapPage(pi){
 
 // ── Project Management ───────────────────────────────────────────────────
 function switchProject(idx){
+  _saveProjectBlocks();   // persist current project's block edits
+  save();
   curProj=idx; curPage=0;
+  _loadProjectBlocks(idx);  // load new project's blocks into globals
   document.title=getProjectName()+' – Site Map';
   renderAll();
 }
@@ -2075,22 +2170,19 @@ function switchProject(idx){
 function addProject(){
   const name=prompt('New project name:','My Project');
   if(!name||!name.trim()) return;
-  // NEW project: completely blank — no BLOCK_POLYS, fresh canvas
+  // Save current project's blocks first
+  _saveProjectBlocks();
+  // Push new BLANK project — zero blocks
   projects.push({
     name: name.trim(),
     pages: [{title:'Map 1', states:{}}],
-    fmt: {                          // header format settings
-      titleSize:52, titleColor:'#111111', titleWeight:'900', titleFont:'Arial',
-      statsColor:'#cc1a1a', projColor:'#1a4c8c',
-      borderColor:'#cc1a1a', borderWidth:3.5
-    },
-    ownBlocks: {}                   // project-specific blocks (future use)
+    blocks: { polys:{}, subs:{}, parents:{} },  // completely empty
+    fmt: {}
   });
   curProj=projects.length-1; curPage=0;
-  // Clear editor state so new project starts fresh
-  ED_POLYS={}; ED_ORIG={}; ED_LABELS={}; ED_DELETED={};
+  // Load the empty block set into runtime globals
+  _loadProjectBlocks(curProj);
   save(); renderAll();
-  alert('New project "'+name.trim()+'" created!\n\nThis project starts blank. Use the Layout Editor to draw your blocks,\nor upload a base map image (Map Manager) to trace over.');
 }
 
 function renameProject(idx){
@@ -2474,6 +2566,8 @@ renderAll();
         <option value="0.7">70%</option>
       </select>
       <button id="edCloneToggle" onclick="edCloneMode=!edCloneMode;this.style.background=edCloneMode?'#cba6f7':'';this.style.color=edCloneMode?'#1e1e2e':'#a6adc8'" title="Clone Mode: drag a block to create a copy" style="margin-left:6px;padding:3px 9px;border-radius:5px;border:1px solid #45475a;background:transparent;color:#a6adc8;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">&#10021; Clone</button>
+      <button onclick="uploadBaseMap()" title="Upload site plan image as tracing background" style="margin-left:4px;padding:3px 9px;border-radius:5px;border:1px solid #45475a;background:transparent;color:#a6adc8;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">&#128248; Base Map</button>
+      <button id="edDelBgBtn" onclick="removeBaseMap()" title="Remove base map" style="display:none;margin-left:2px;padding:3px 7px;border-radius:5px;border:1px solid #f38ba8;background:transparent;color:#f38ba8;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">&#10005;</button>
     </div>
     <div class="ed-canvas-wrap">
       <canvas id="edCanvas"></canvas>
@@ -2584,9 +2678,9 @@ renderAll();
     <div class="fh-section-title">&#9654; Map Title (large heading)</div>
     <div class="fh-row">
       <label>Font size</label>
-      <input type="range" id="fhTitleSize" min="24" max="90" step="2" value="52"
+      <input type="range" id="fhTitleSize" min="20" max="90" step="2" value="36"
         oninput="fhChange('titleSize',+this.value,'fhTitleSizeVal','px')">
-      <span class="fh-val" id="fhTitleSizeVal">52px</span>
+      <span class="fh-val" id="fhTitleSizeVal">36px</span>
     </div>
     <div class="fh-row">
       <label>Weight</label>
